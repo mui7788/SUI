@@ -1,7 +1,6 @@
 .container
 {
     width: 100%;
-    height:30px;
 }
 .label
 {
@@ -24,10 +23,6 @@
     font-size: 12px;
     line-height: 30px;
 }
-.color
-{
-    color:#888;
-}
 .big
 {
     width:300px;
@@ -43,10 +38,17 @@
 .text
 {
     border:1px #888 solid;
-    outline:none;
     height:20px;
 }
 .text-hover
 {
-    border:1px #DA5050 solid;
+    border:1px #39F solid;
+}
+.text-actived
+{
+    border:1px #888 solid;
+}
+.color
+{
+    color:#888;
 }

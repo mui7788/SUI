@@ -26,7 +26,8 @@
                         isReadonly: false,
                         isDisabled: false,
                         isRequired: true,
-                        textType:"int"
+                        textType:"int",
+                        regexErrorNotice:"联系电话输错了"
                     },
                     inputOpts3: {
                         title: "联系地址",
@@ -37,15 +38,26 @@
                         isRequired: true,
                         widthType: "big"
                     },
+                    inputOpts4: {
+                        title: "月    份",
+                        value: "",
+                        regexContent:"^\\d{1,2}$",
+                        widthType:"small",
+                        regexErrorNotice:"error"
+                    },
                     set:function()
                     {
-                        alert(avalon.vmodels.name.value)
+                        alert(avalon.vmodels.test1.value)
                         //avalon.log(tvm.value)
                         tvm.isDisabled=true;
                     },
                     getVM:function(vm)
                     {
                         tvm=vm
+                    },
+                    check:function()
+                    {
+                        avalon.vmodels.test1.check()
                     }
                 })
                 avalon.scan()
@@ -59,7 +71,9 @@
         <div><ms:input config="inputOpts3" on-init="getVM"></ms:input></div>
         <div><ms:input title="http" width-Type="big" text-Type="url" ></ms:input></div>
         <div><ms:input title="email" width-Type="normal" text-Type="email"></ms:input></div>
-        <input type="button" ms-click="set">
+        <div><ms:input config="inputOpts4"></ms:input></div>
+        <div><ms:input  text-Type="chs"  title="姓    名" regexErrorNotice="aaa"></ms:input></div>
+        <input type="button" ms-click="check" value="check">
     </body>
 
 
