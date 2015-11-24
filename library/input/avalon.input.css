@@ -1,0 +1,47 @@
+.container
+{
+    width: 100%;
+    height:30px;
+}
+.label
+{
+    width: 70px;
+    height: 30px;
+    display: inline-block;
+    padding-left:3px;
+    color:#888;
+}
+.notice
+{
+    display: inline-block;
+    margin-left: 10px;
+    font-family: "宋体";
+    color:#DA5050;
+}
+.font
+{
+    font-size: 12px;
+    line-height: 30px;
+}
+.color
+{
+    color:#888;
+}
+.big
+{
+    width:300px;
+}
+.normal
+{
+    width:150px;
+}
+.text
+{
+    border:1px #888 solid;
+    outline:none;
+    height:20px;
+}
+.text-hover
+{
+    border:1px #DA5050 solid;
+}
