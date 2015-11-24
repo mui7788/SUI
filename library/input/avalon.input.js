@@ -5,14 +5,16 @@ define(["avalon", "text!./avalon.input.html", "css!./avalon.input.css"], functio
 
     avalon.component("ms:input", {
         //内部变量
-        _focusing:false,
+        _focusing: false,
         _notice: "",
         //内部方法
         _blur: _interface,
         _focus: _interface,
         onInit: _interface, //必须定义此接口
         check: _interface,
+        setFocus: _interface,
         //配置项
+        id: "",
         title: "",
         value: "",
         notice: "该项为必填项",
@@ -26,7 +28,7 @@ define(["avalon", "text!./avalon.input.html", "css!./avalon.input.css"], functio
         textType: "",
         //类型校验错误信息
         regexErrorNotice: "",
-        theme:"red",
+        theme: "default",
         //模板
         $template: template,
         //替换自定义标签
@@ -54,7 +56,7 @@ define(["avalon", "text!./avalon.input.html", "css!./avalon.input.css"], functio
                 if (vm.isRequired && this.value.trim() == "")
                 {
                     vm.notice = vm._notice;
-                    return;
+                    return false;
                 }
                 else
                 {
@@ -62,26 +64,26 @@ define(["avalon", "text!./avalon.input.html", "css!./avalon.input.css"], functio
                 }
 
                 //校验自定义正则
-                if(vm.regexContent!="" && this.value.trim() != "")
+                if (vm.regexContent != "" && this.value.trim() != "")
                 {
                     var re = new RegExp(vm.regexContent);
-                    if(!re.test(this.value.trim()))
+                    if (!re.test(this.value.trim()))
                     {
                         vm.notice = vm.regexErrorNotice;
-                        return;
+                        return false;
                     }
                     else
                     {
-                        vm.notice="";
+                        vm.notice = "";
                     }
-                  
+
                 }
 
                 //校验类型
                 if (vm.textType != "" && this.value.trim() != "")
                 {
                     var msg = checkTextType(vm.textType, this.value);
-                    if (msg != "")
+                    if (msg != undefined)
                     {
                         if (vm.regexErrorNotice != "")
                         {
@@ -91,17 +93,30 @@ define(["avalon", "text!./avalon.input.html", "css!./avalon.input.css"], functio
                         {
                             vm.notice = msg;
                         }
+                        return false;
+                    }
+                    else
+                    {
+                        vm.notice = "";
                     }
                 }
+                return true;
             }
-            vm._blur = function ()
+            vm._blur = function (e)
             {
-                vm._focusing=false;
+                vm._focusing = false;
                 vm.check();
             }
             vm._focus = function ()
             {
-                   vm._focusing=true;
+                vm._focusing = true;
+            }
+            vm.setFocus = function ()
+            {
+                if (vm.id)
+                {
+                    document.getElementById(vm.id).focus();
+                }
             }
 
             //            vm.$watch("isDisabled",function(n,o){
@@ -114,12 +129,8 @@ define(["avalon", "text!./avalon.input.html", "css!./avalon.input.css"], functio
         }
 
     })
-    
-    function setFocus(element)
-    {
-        //var input = element.children[1];
-        //input.focus()
-    }
+
+
     function setlostFocus(element)
     {
         //var input = element.children[1];

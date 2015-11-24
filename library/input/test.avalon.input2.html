@@ -20,6 +20,7 @@
                         isRequired: false
                     },
                     inputOpts2: {
+                        id:"phone",
                         title: "联系电话",
                         value: "",
                         notice: "请输入联系电话",
@@ -30,6 +31,7 @@
                         regexErrorNotice:"联系电话输错了"
                     },
                     inputOpts3: {
+                        id:"address",
                         title: "联系地址",
                         value: "",
                         notice: "请输入联系地址",
@@ -57,7 +59,10 @@
                     },
                     check:function()
                     {
-                        avalon.vmodels.test1.check()
+                        if(!avalon.vmodels.test1.check())
+                        {
+                            avalon.vmodels.test1.setFocus()
+                        }
                     }
                 })
                 avalon.scan()
