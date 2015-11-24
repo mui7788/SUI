@@ -21,15 +21,16 @@
                     },
                     inputOpts2: {
                         title: "联系电话",
-                        value: "赵水运",
+                        value: "",
                         notice: "请输入联系电话",
                         isReadonly: false,
                         isDisabled: false,
                         isRequired: true,
+                        textType:"int"
                     },
                     inputOpts3: {
                         title: "联系地址",
-                        value: "河北省唐山市",
+                        value: "",
                         notice: "请输入联系地址",
                         isReadonly: false,
                         isDisabled: false,
@@ -53,9 +54,11 @@
         </script>
     </head>
     <body ms-controller="test">
-        <div><ms:input title="联  系  人" width-Type="small" value="abc" is-Required="true" ms-attr-identifier="value" ></ms:input></div>
+        <div><ms:input title="联  系  人" width-Type="small" is-Required="true" ms-attr-identifier="value" ></ms:input></div>
         <div><ms:input config="inputOpts2" $id="test1"></ms:input></div>
         <div><ms:input config="inputOpts3" on-init="getVM"></ms:input></div>
+        <div><ms:input title="http" width-Type="big" text-Type="url" ></ms:input></div>
+        <div><ms:input title="email" width-Type="normal" text-Type="email"></ms:input></div>
         <input type="button" ms-click="set">
     </body>
 
