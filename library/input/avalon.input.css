@@ -10,6 +10,7 @@
     display: inline-block;
     padding-left:3px;
     color:#888;
+    font-family: "宋体";
 }
 .notice
 {
@@ -34,6 +35,10 @@
 .normal
 {
     width:150px;
+}
+.small
+{
+    width:70px;
 }
 .text
 {
