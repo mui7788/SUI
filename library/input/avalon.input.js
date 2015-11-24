@@ -26,6 +26,7 @@ define(["avalon", "text!./avalon.input.html", "css!./avalon.input.css"], functio
         textType: "",
         //类型校验错误信息
         regexErrorNotice: "",
+        theme:"red",
         //模板
         $template: template,
         //替换自定义标签
@@ -124,7 +125,6 @@ define(["avalon", "text!./avalon.input.html", "css!./avalon.input.css"], functio
         //var input = element.children[1];
         //input.blur();
     }
-
     function checkTextType(type, value)
     {
         switch (type)
