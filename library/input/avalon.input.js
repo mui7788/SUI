@@ -13,6 +13,7 @@ define(["avalon", "text!./avalon.input.html", "css!./avalon.input.css"], functio
         _focus: _interface,
         _keyup: _interface,
         onInit: _interface, //必须定义此接口
+        onChange:_interface, //值修改时触发外部事件
         check: _interface,
         setFocus: _interface,
         //配置项
@@ -36,7 +37,7 @@ define(["avalon", "text!./avalon.input.html", "css!./avalon.input.css"], functio
         //模板
         $template: template,
         //替换自定义标签
-        $replace: 1,
+        //$replace: 1,
         $construct: function (defaultConfig, vmConfig, eleConfig) {
             var options = avalon.mix(defaultConfig, vmConfig, eleConfig)
             return options
@@ -52,10 +53,11 @@ define(["avalon", "text!./avalon.input.html", "css!./avalon.input.css"], functio
             {
                 vm.notice = "";
             }
-        },
-        $childReady:function(vm,element)
-        {
-            avalon.log("子组件加载成功");
+            //监控属性
+            vm.$watch("value",function(n,o){
+                vm.onChange(n,o)
+            })
+
         },
         $ready: function (vm, element) {
             vm.onInit(vm);
@@ -140,10 +142,6 @@ define(["avalon", "text!./avalon.input.html", "css!./avalon.input.css"], functio
                     document.getElementById(vm.did).focus();
                 }
             }
-
-            //            vm.$watch("isDisabled",function(n,o){
-            //                alert(n)
-            //            })
         },
         $dispose: function (vm, element)
         {
@@ -151,7 +149,6 @@ define(["avalon", "text!./avalon.input.html", "css!./avalon.input.css"], functio
         }
 
     })
-
 
     function setlostFocus(element)
     {

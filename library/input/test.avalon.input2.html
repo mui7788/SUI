@@ -71,13 +71,18 @@
                     },
                     set: function ()
                     {
-                        alert(avalon.vmodels.test1.value)
+                        //avalon.vmodels.idcard.isDisabled=true;
+                        //alert(avalon.vmodels.user.value)
                         //avalon.log(tvm.value)
-                        tvm.isDisabled = true;
+                        //tvm.isDisabled = true;
                     },
                     getVM: function (vm)
                     {
                         tvm = vm
+                    },
+                    changeValue:function(n,o)
+                    {
+                        avalon.log(n+"_"+o)
                     },
                     check: function ()
                     {
@@ -130,8 +135,8 @@
         </script>
     </head>
     <body ms-controller="test">
-        <div><ms:input config="inputOpts" $id="user"></ms:input></div>
-        <div><ms:input config="inputOpts2" $id="phone"></ms:input></div>
+        <div><ms:input config="inputOpts" $id="user" on-change="changeValue"></ms:input></div>
+        <div><ms:input config="inputOpts2" $id="phone" on-change="set" on-init="getVM"></ms:input></div>
         <div><ms:input config="inputOpts3" $id="address"></ms:input></div>
         <div><ms:input title="http" width-Type="big" regex-Type="url" ></ms:input></div>
         <div><ms:input title="email" width-Type="normal" regex-Type="email"></ms:input></div>
@@ -143,6 +148,7 @@
         <div><ms:input  regex-Type="date"  title="出生日期" ></ms:input></div>
         <div><ms:input  config="inputOpts7" $id="must"></ms:input></div>
         <input type="button" ms-click="check" value="check">
+        <input type="button" ms-click="kan" value="test">
     </body>
 
 
