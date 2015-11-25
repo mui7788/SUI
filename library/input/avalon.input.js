@@ -25,6 +25,8 @@ define(["avalon", "text!./avalon.input.html", "css!./avalon.input.css"], functio
         isDisabled: false,
         isReadonly: false,
         widthType: "normal",
+        width:0,
+        height:100,
         //自定义正则表达式
         regexContent: "",
         //校验类型
@@ -37,7 +39,7 @@ define(["avalon", "text!./avalon.input.html", "css!./avalon.input.css"], functio
         //模板
         $template: template,
         //替换自定义标签
-        //$replace: 1,
+        $replace: 1,
         $construct: function (defaultConfig, vmConfig, eleConfig) {
             var options = avalon.mix(defaultConfig, vmConfig, eleConfig)
             return options
