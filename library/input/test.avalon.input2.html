@@ -11,16 +11,17 @@
                     $id: "test",
                     $skipArray: ["inuptOpts"],
                     inputOpts: {
-                        id: "name",
+                        did: "name",
                         title: "名　　称",
                         value: "",
                         notice: "请输入名称",
                         isReadonly: false,
                         isDisabled: false,
-                        isRequired: true
+                        isRequired: true,
+                        isShowNoticeImage: true
                     },
                     inputOpts2: {
-                        id: "phone",
+                        did: "phone",
                         title: "联系电话",
                         value: "",
                         notice: "请输入联系电话",
@@ -31,7 +32,7 @@
                         regexErrorNotice: "联系电话输错了"
                     },
                     inputOpts3: {
-                        id: "address",
+                        did: "address",
                         title: "联系地址",
                         value: "",
                         notice: "请输入联系地址",
@@ -52,15 +53,21 @@
                         value: "",
                         widthType: "small",
                         regexErrorNotice: "密码格式不正确",
-                        type:"password",
-                        isRequired:true
+                        type: "password",
+                        isRequired: true
                     },
                     inputOpts6: {
                         title: "详细信息",
                         value: "",
                         widthType: "big",
-                        type:"textarea",
-                        isRequired:true
+                        type: "textarea",
+                        isRequired: true
+                    },
+                    inputOpts7: {
+                        did:"must",
+                        title: "允许不填",
+                        value: "111",
+                        regexType:"alpha"
                     },
                     set: function ()
                     {
@@ -98,7 +105,23 @@
                                 avalon.vmodels.address.setFocus()
                                 _focus = true;
                             }
-                        }                        
+                        }
+                        if (!avalon.vmodels.idcard.check())
+                        {
+                            if (!_focus)
+                            {
+                                avalon.vmodels.idcard.setFocus()
+                                _focus = true;
+                            }
+                        }
+                        if (!avalon.vmodels.must.check())
+                        {
+                            if (!_focus)
+                            {
+                                avalon.vmodels.must.setFocus()
+                                _focus = true;
+                            }
+                        }
                     }
                 })
                 avalon.scan()
@@ -110,12 +133,15 @@
         <div><ms:input config="inputOpts" $id="user"></ms:input></div>
         <div><ms:input config="inputOpts2" $id="phone"></ms:input></div>
         <div><ms:input config="inputOpts3" $id="address"></ms:input></div>
-        <div><ms:input title="http" width-Type="big" text-Type="url" ></ms:input></div>
-        <div><ms:input title="email" width-Type="normal" text-Type="email"></ms:input></div>
+        <div><ms:input title="http" width-Type="big" regex-Type="url" ></ms:input></div>
+        <div><ms:input title="email" width-Type="normal" regex-Type="email"></ms:input></div>
         <div><ms:input config="inputOpts4"></ms:input></div>
-        <div><ms:input  text-Type="chs"  title="姓    名" regexErrorNotice="aaa"></ms:input></div>
-        <div><ms:input  config="inputOpts5"></ms:input></div>
+
+        <div><ms:input  config="inputOpts5" regex-Type="alpha_dash"></ms:input></div>
         <div><ms:input  config="inputOpts6"></ms:input></div>
+        <div><ms:input  regex-Type="idcard"  title="身份证号" $id="idcard" did="idcard"></ms:input></div>
+        <div><ms:input  regex-Type="date"  title="出生日期" ></ms:input></div>
+        <div><ms:input  config="inputOpts7" $id="must"></ms:input></div>
         <input type="button" ms-click="check" value="check">
     </body>
 

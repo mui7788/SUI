@@ -1,5 +1,5 @@
 <div ms-class="container">
-    <label ms-class="label font" ms-class-1="top:type=='textarea'">{{title}}</label>
+    <label ms-class="label" ms-class-1="font:type!='textarea'" ms-class-2="font-area:type=='textarea'">{{title}}</label>
     <input ms-class-1="text"
            ms-class-2="big:widthType==='big'"
            ms-class-3="normal:widthType==='normal'"
@@ -14,7 +14,7 @@
            ms-blur="_blur"
            ms-focus="_focus"
            ms-keyup="_keyup"
-           ms-attr-id="id"
+           ms-attr-id="did"
            ms-if="type=='text'"
            />
         <input ms-class-1="text"
@@ -31,7 +31,7 @@
            ms-blur="_blur"
            ms-focus="_focus"
            ms-keyup="_keyup"
-           ms-attr-id="id"
+           ms-attr-id="did"
            ms-if="type=='password'"
            />
         <textarea
@@ -42,16 +42,13 @@
            ms-class-5="large:widthType==='large'"
            ms-class-6="text-actived:_focusing"
            ms-hover="{{theme}}-text-hover"
-           type="password"
            ms-duplex="value"
            ms-attr-disabled="isDisabled"
            ms-attr-readonly="isReadonly"
            ms-blur="_blur"
            ms-focus="_focus"
-           ms-attr-id="id"
-           ms-if="type=='textarea'"
-            >
-            
-        </textarea>
-    <label ms-class="notice font" ms-class-1="{{theme}}-notice-color">{{notice}}</label>
+           ms-attr-id="did"
+           ms-if="type=='textarea'"></textarea>
+        <img src="notice.png" ms-if="_showNoticeImage && isShowNoticeImage" ms-class="middle">
+        <label ms-class="notice font" ms-class-1="{{theme}}-notice-color" >{{notice}}</label>
 </div>

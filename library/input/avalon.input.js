@@ -7,6 +7,7 @@ define(["avalon", "text!./avalon.input.html", "css!./avalon.input.css"], functio
         //内部变量
         _focusing: false,
         _notice: "",
+        _showNoticeImage: false,
         //内部方法
         _blur: _interface,
         _focus: _interface,
@@ -15,7 +16,7 @@ define(["avalon", "text!./avalon.input.html", "css!./avalon.input.css"], functio
         check: _interface,
         setFocus: _interface,
         //配置项
-        id: "",
+        did: "",
         title: "",
         value: "",
         notice: "该项为必填项",
@@ -30,7 +31,8 @@ define(["avalon", "text!./avalon.input.html", "css!./avalon.input.css"], functio
         //类型校验错误信息
         regexErrorNotice: "",
         theme: "default",
-        type:"text",
+        type: "text",
+        isShowNoticeImage: false,
         //模板
         $template: template,
         //替换自定义标签
@@ -51,17 +53,23 @@ define(["avalon", "text!./avalon.input.html", "css!./avalon.input.css"], functio
                 vm.notice = "";
             }
         },
+        $childReady:function(vm,element)
+        {
+            avalon.log("子组件加载成功");
+        },
         $ready: function (vm, element) {
             vm.onInit(vm);
             vm.check = function ()
             {
                 if (vm.isRequired && this.value.trim() == "")
                 {
+                    vm._showNoticeImage = true;
                     vm.notice = vm._notice;
                     return false;
                 }
                 else
                 {
+                    vm._showNoticeImage = false;
                     vm.notice = "";
                 }
 
@@ -71,11 +79,13 @@ define(["avalon", "text!./avalon.input.html", "css!./avalon.input.css"], functio
                     var re = new RegExp(vm.regexContent);
                     if (!re.test(this.value.trim()))
                     {
+                        vm._showNoticeImage = true;
                         vm.notice = vm.regexErrorNotice;
                         return false;
                     }
                     else
                     {
+                        vm._showNoticeImage = false;
                         vm.notice = "";
                     }
 
@@ -87,6 +97,7 @@ define(["avalon", "text!./avalon.input.html", "css!./avalon.input.css"], functio
                     var msg = checkTextType(vm.regexType, this.value);
                     if (msg != undefined)
                     {
+                        vm._showNoticeImage = true;
                         if (vm.regexErrorNotice != "")
                         {
                             vm.notice = vm.regexErrorNotice;
@@ -99,6 +110,7 @@ define(["avalon", "text!./avalon.input.html", "css!./avalon.input.css"], functio
                     }
                     else
                     {
+                        vm._showNoticeImage = false;
                         vm.notice = "";
                     }
                 }
@@ -123,9 +135,9 @@ define(["avalon", "text!./avalon.input.html", "css!./avalon.input.css"], functio
             }
             vm.setFocus = function ()
             {
-                if (vm.id)
+                if (vm.did)
                 {
-                    document.getElementById(vm.id).focus();
+                    document.getElementById(vm.did).focus();
                 }
             }
 
@@ -180,11 +192,73 @@ define(["avalon", "text!./avalon.input.html", "css!./avalon.input.css"], functio
                     return "请输入正确的email";
                 }
                 break;
+            case "idcard":
+                if (!idCard(value))
+                {
+                    return "请输入正确的身份证号";
+                }
+                break;
+            case "date":
+                if(!isCorrectDate(value))
+                {
+                    return "请输入正确的日期格式";
+                }
+            break;
+            case "alpha":
+                if(!/^[a-z]+$/i.test(value))
+                {
+                    return "请输入字母";
+                }
+            break;    
+            case "alpha_numeric":
+                if(!/^[a-z0-9]+$/i.test(value))
+                {
+                    return "请输入字母或数字";
+                }
+            break;   
+            case "alpha_dash":
+                if(!/^[a-z0-9_\-]+$/i.test(value))
+                {
+                    return "请输入字母或数字及下划线等特殊字符";
+                }
+            break;           
             default:
                 return  "不支持的验证类型";
                 break;
         }
     }
 
+    function idCard(val) {
+        if ((/^\d{15}$/).test(val)) {
+            return true;
+        } else if ((/^\d{17}[0-9xX]$/).test(val)) {
+            var vs = "1,0,x,9,8,7,6,5,4,3,2".split(","),
+                    ps = "7,9,10,5,8,4,2,1,6,3,7,9,10,5,8,4,2".split(","),
+                    ss = val.toLowerCase().split(""),
+                    r = 0;
+            for (var i = 0; i < 17; i++) {
+                r += ps[i] * ss[i];
+            }
+            return (vs[r % 11] == ss[17]);
+        }
+    }
+
+    function isCorrectDate(value) {
+        if (typeof value === "string" && value) { //是字符串但不能是空字符
+            var arr = value.split("-") //可以被-切成3份，并且第1个是4个字符
+            if (arr.length === 3 && arr[0].length === 4) {
+                var year = ~~arr[0] //全部转换为非负整数
+                var month = ~~arr[1] - 1
+                var date = ~~arr[2]
+                var d = new Date(year, month, date)
+                return d.getFullYear() === year && d.getMonth() === month && d.getDate() === date
+            }
+        }
+        return false
+    }
+
     return avalon
 })
+
+
+//
