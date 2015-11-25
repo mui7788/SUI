@@ -1,0 +1,106 @@
+.container
+{
+    width: 100%;
+    margin:5px 0;
+}
+.label
+{
+    width: 70px;
+    display: inline-block;
+    padding-left:3px;
+    color:#888;
+    font-family: "宋体";
+}
+.notice
+{
+    display: inline-block;
+    margin-left: 5px;
+    font-family: "宋体";
+}
+.font
+{
+    font-size: 12px;
+//    line-height: 35px;
+}
+.font-area
+{
+    font-size: 12px;
+//    line-height: 90px;
+}
+
+.checkbox
+{
+    height:25px;
+    vertical-align:middle;
+}
+.text-area
+{
+    border:1px #CCC solid;
+    height:80px;
+    vertical-align:middle;
+}
+.text-actived
+{
+    border:1px #ccc solid;
+}
+.color
+{
+    color:#888;
+}
+
+.default-text-hover
+{
+    border:1px #39F solid;
+}
+
+.default-notice-color
+{
+    color:#39F;
+}
+
+.red-text-hover
+{
+    border:1px #DA5050 solid;
+}
+
+.red-notice-color
+{
+    color:#DA5050;
+}
+.top
+{
+    vertical-align:top;
+}
+.bottom
+{
+    vertical-align:bottom;
+}
+.middle
+{
+    vertical-align:middle;
+}
+
+.large
+{
+    width:450px;
+}
+.big
+{
+    width:300px;
+}
+.normal
+{
+    width:150px;
+}
+.small
+{
+    width:70px;
+}
+
+.avalon-radio-item-label
+{
+    display: inline-block;
+    font-family: "宋体";
+    margin-right: 5px;
+    margin-left: 3px;
+}
