@@ -22,6 +22,10 @@
     font-size: 12px;
     line-height: 30px;
 }
+.large
+{
+    width:450px;
+}
 .big
 {
     width:300px;
@@ -38,6 +42,11 @@
 {
     border:1px #CCC solid;
     height:20px;
+}
+.text-area
+{
+    border:1px #CCC solid;
+    height:80px;
 }
 .text-actived
 {
@@ -66,4 +75,8 @@
 .red-notice-color
 {
     color:#DA5050;
+}
+.top
+{
+    vertical-align: top;
 }

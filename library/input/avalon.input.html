@@ -1,10 +1,11 @@
 <div ms-class="container">
-    <label ms-class="label font">{{title}}</label>
+    <label ms-class="label font" ms-class-1="top:type=='textarea'">{{title}}</label>
     <input ms-class-1="text"
            ms-class-2="big:widthType==='big'"
            ms-class-3="normal:widthType==='normal'"
            ms-class-4="small:widthType==='small'"
-           ms-class-5="text-actived:_focusing"
+           ms-class-5="large:widthType==='large'"
+           ms-class-6="text-actived:_focusing"
            ms-hover="{{theme}}-text-hover"
            type="text"
            ms-duplex="value"
@@ -14,6 +15,43 @@
            ms-focus="_focus"
            ms-keyup="_keyup"
            ms-attr-id="id"
+           ms-if="type=='text'"
            />
+        <input ms-class-1="text"
+           ms-class-2="big:widthType==='big'"
+           ms-class-3="normal:widthType==='normal'"
+           ms-class-4="small:widthType==='small'"
+           ms-class-5="large:widthType==='large'"
+           ms-class-6="text-actived:_focusing"
+           ms-hover="{{theme}}-text-hover"
+           type="password"
+           ms-duplex="value"
+           ms-attr-disabled="isDisabled"
+           ms-attr-readonly="isReadonly"
+           ms-blur="_blur"
+           ms-focus="_focus"
+           ms-keyup="_keyup"
+           ms-attr-id="id"
+           ms-if="type=='password'"
+           />
+        <textarea
+           ms-class-1="text-area"
+           ms-class-2="big:widthType==='big'"
+           ms-class-3="normal:widthType==='normal'"
+           ms-class-4="small:widthType==='small'"
+           ms-class-5="large:widthType==='large'"
+           ms-class-6="text-actived:_focusing"
+           ms-hover="{{theme}}-text-hover"
+           type="password"
+           ms-duplex="value"
+           ms-attr-disabled="isDisabled"
+           ms-attr-readonly="isReadonly"
+           ms-blur="_blur"
+           ms-focus="_focus"
+           ms-attr-id="id"
+           ms-if="type=='textarea'"
+            >
+            
+        </textarea>
     <label ms-class="notice font" ms-class-1="{{theme}}-notice-color">{{notice}}</label>
 </div>

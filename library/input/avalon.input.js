@@ -25,11 +25,12 @@ define(["avalon", "text!./avalon.input.html", "css!./avalon.input.css"], functio
         widthType: "normal",
         //自定义正则表达式
         regexContent: "",
-        //文本类型
-        textType: "",
+        //校验类型
+        regexType: "",
         //类型校验错误信息
         regexErrorNotice: "",
         theme: "default",
+        type:"text",
         //模板
         $template: template,
         //替换自定义标签
@@ -81,9 +82,9 @@ define(["avalon", "text!./avalon.input.html", "css!./avalon.input.css"], functio
                 }
 
                 //校验类型
-                if (vm.textType != "" && this.value.trim() != "")
+                if (vm.regexType != "" && this.value.trim() != "")
                 {
-                    var msg = checkTextType(vm.textType, this.value);
+                    var msg = checkTextType(vm.regexType, this.value);
                     if (msg != undefined)
                     {
                         if (vm.regexErrorNotice != "")

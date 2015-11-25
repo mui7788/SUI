@@ -9,76 +9,113 @@
             require(["./input/avalon.input"], function () {
                 var vm = avalon.define({
                     $id: "test",
-                    value:"a",
-                    show:false,
                     $skipArray: ["inuptOpts"],
                     inputOpts: {
+                        id: "name",
                         title: "名　　称",
                         value: "",
                         notice: "请输入名称",
                         isReadonly: false,
                         isDisabled: false,
-                        isRequired: false
+                        isRequired: true
                     },
                     inputOpts2: {
-                        id:"phone",
+                        id: "phone",
                         title: "联系电话",
                         value: "",
                         notice: "请输入联系电话",
                         isReadonly: false,
                         isDisabled: false,
                         isRequired: true,
-                        textType:"int",
-                        regexErrorNotice:"联系电话输错了"
+                        regexType: "int",
+                        regexErrorNotice: "联系电话输错了"
                     },
                     inputOpts3: {
-                        id:"address",
+                        id: "address",
                         title: "联系地址",
                         value: "",
                         notice: "请输入联系地址",
                         isReadonly: false,
                         isDisabled: false,
                         isRequired: true,
-                        widthType: "big"
+                        widthType: "large"
                     },
                     inputOpts4: {
                         title: "月    份",
                         value: "",
-                        regexContent:"^\\d{1,2}$",
-                        widthType:"small",
-                        regexErrorNotice:"error"
+                        regexContent: "^\\d{1,2}$",
+                        widthType: "small",
+                        regexErrorNotice: "error"
                     },
-                    set:function()
+                    inputOpts5: {
+                        title: "登录密码",
+                        value: "",
+                        widthType: "small",
+                        regexErrorNotice: "密码格式不正确",
+                        type:"password",
+                        isRequired:true
+                    },
+                    inputOpts6: {
+                        title: "详细信息",
+                        value: "",
+                        widthType: "big",
+                        type:"textarea",
+                        isRequired:true
+                    },
+                    set: function ()
                     {
                         alert(avalon.vmodels.test1.value)
                         //avalon.log(tvm.value)
-                        tvm.isDisabled=true;
+                        tvm.isDisabled = true;
                     },
-                    getVM:function(vm)
+                    getVM: function (vm)
                     {
-                        tvm=vm
+                        tvm = vm
                     },
-                    check:function()
+                    check: function ()
                     {
-                        if(!avalon.vmodels.test1.check())
+                        var _focus = false;
+                        if (!avalon.vmodels.user.check())
                         {
-                            avalon.vmodels.test1.setFocus()
+                            if (!_focus)
+                            {
+                                avalon.vmodels.user.setFocus()
+                                _focus = true;
+                            }
                         }
+                        if (!avalon.vmodels.phone.check())
+                        {
+                            if (!_focus)
+                            {
+                                avalon.vmodels.phone.setFocus()
+                                _focus = true;
+                            }
+                        }
+                        if (!avalon.vmodels.address.check())
+                        {
+                            if (!_focus)
+                            {
+                                avalon.vmodels.address.setFocus()
+                                _focus = true;
+                            }
+                        }                        
                     }
                 })
                 avalon.scan()
-                
+
             })
         </script>
     </head>
     <body ms-controller="test">
-        <div><ms:input title="联  系  人" width-Type="small" is-Required="true" ms-attr-identifier="value" ></ms:input></div>
-        <div><ms:input config="inputOpts2" $id="test1"></ms:input></div>
-        <div><ms:input config="inputOpts3" on-init="getVM"></ms:input></div>
+        <div><ms:input config="inputOpts" $id="user"></ms:input></div>
+        <div><ms:input config="inputOpts2" $id="phone"></ms:input></div>
+        <div><ms:input config="inputOpts3" $id="address"></ms:input></div>
         <div><ms:input title="http" width-Type="big" text-Type="url" ></ms:input></div>
         <div><ms:input title="email" width-Type="normal" text-Type="email"></ms:input></div>
         <div><ms:input config="inputOpts4"></ms:input></div>
         <div><ms:input  text-Type="chs"  title="姓    名" regexErrorNotice="aaa"></ms:input></div>
+        <div><ms:input  config="inputOpts5"></ms:input></div>
+        <div><ms:input  config="inputOpts6"></ms:input></div>
         <input type="button" ms-click="check" value="check">
     </body>
 
