@@ -42,6 +42,10 @@ define(["avalon", "text!./avalon.radio.html", "css!./avalon.radio.css"], functio
         },
         $ready: function (vm, element) {
             vm.onInit(vm);
+            vm._focus=function()
+            {
+               // vm._focusing=true;
+            }
             vm.check = function ()
             {
 
