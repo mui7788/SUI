@@ -1,0 +1,79 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <META http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <META content="text/html; charset=UTF-8" http-equiv=Content-Type>
+        <script src="../avalon.js"></script> 
+        <script>
+            require(["./input/avalon.input", "./radio/avalon.radio"], function () {
+                var vm = avalon.define({
+                    $id: "test",
+                    $skipArray: ["inuptOpts"],
+                    inputOpts: {
+                        did: "name",
+                        title: "名　　称",
+                        value: "",
+                        notice: "请输入名称",
+                        isReadonly: false,
+                        isDisabled: false,
+                        isRequired: true,
+                        isShowNoticeImage: true
+                    },
+                    inputOpts2: {
+                        did: "phone",
+                        title: "联系电话",
+                        value: "",
+                        notice: "请输入联系电话",
+                        isReadonly: false,
+                        isDisabled: false,
+                        isRequired: true,
+                        regexType: "int",
+                        regexErrorNotice: "联系电话输错了"
+                    },
+                    inputOpts3: {
+                        did: "sex",
+                        title: "性别设置",
+                        value:1,
+                        theme:"red",
+                        data: [
+                            {title: "男", value: 1},
+                            {title: "女", value: 2},
+                            {title: "保密", value: 3}
+                        ],
+                        isDisabled: false
+                    },
+                    change:function(n,o)
+                    {
+                        if(n==1)
+                        {
+                        avalon.vmodels.user.isDisabled=true;
+                        }
+                        else
+                        {
+                            avalon.vmodels.user.isDisabled=false;
+                        }
+                    },
+                    check:function()
+                    {
+                        if(!avalon.vmodels.sex.check())
+                        {
+                            return false;
+                        }
+                    }
+
+                })
+                avalon.scan()
+
+            })
+        </script>
+    </head>
+    <body ms-controller="test">
+        <div><ms:input config="inputOpts" $id="user" on-change="changeValue"></ms:input></div>
+        <div><ms:input config="inputOpts2" $id="phone" on-change="set" on-init="getVM"></ms:input></div>
+        <div><ms:radio config="inputOpts3" $id="sex" on-change="change"></ms:input></div>
+
+        <input type="button" ms-click="check" value="check">
+    </body>
+
+
+

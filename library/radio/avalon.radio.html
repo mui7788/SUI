@@ -1,0 +1,18 @@
+<div ms-class="container">
+    <label ms-class="label font">{{title}}</label>
+    <span ms-repeat="data"><input 
+           ms-class-1="text"
+           ms-class-6="text-actived:_focusing"
+           ms-hover="{{theme}}-text-hover"
+           type="radio"
+           ms-duplex-string="value" 
+           ms-attr-value="el.value"
+           ms-attr-disabled="isDisabled"
+           ms-blur="_blur"
+           ms-focus="_focus"
+           ms-attr-id="did"
+           /><label ms-class="avalon-radio-item-label font color">{{el.title}}</label>
+    </span>
+        <img src="notice.png" ms-if="_showNoticeImage && isShowNoticeImage" ms-class="middle">
+        <label ms-class="notice font" ms-class-1="{{theme}}-notice-color" >{{notice}}</label>
+</div>
