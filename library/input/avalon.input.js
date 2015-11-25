@@ -10,6 +10,7 @@ define(["avalon", "text!./avalon.input.html", "css!./avalon.input.css"], functio
         //内部方法
         _blur: _interface,
         _focus: _interface,
+        _keyup: _interface,
         onInit: _interface, //必须定义此接口
         check: _interface,
         setFocus: _interface,
@@ -106,6 +107,14 @@ define(["avalon", "text!./avalon.input.html", "css!./avalon.input.css"], functio
             {
                 vm._focusing = false;
                 vm.check();
+            }
+            vm._keyup = function (e)
+            {
+                if (e.which == 13)
+                {
+                    //window.event.keyCode=9
+                    e.target.blur();
+                }
             }
             vm._focus = function ()
             {
