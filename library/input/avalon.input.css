@@ -9,6 +9,7 @@
     border:1px #CCC solid;
     height:25px;
     vertical-align:middle;
+    line-height: 25px;
 }
 .text-area
 {
@@ -32,20 +33,4 @@
 .green-text-hover
 {
     border:1px limegreen solid;
-}
-.large
-{
-    width:450px;
-}
-.big
-{
-    width:300px;
-}
-.normal
-{
-    width:150px;
-}
-.small
-{
-    width:70px;
 }

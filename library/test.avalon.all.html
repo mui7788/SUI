@@ -7,9 +7,11 @@
         <script>
             require(["input/avalon.input",
                 "radio/avalon.radio",
-                "checkbox/avalon.checkbox"], function () {
+                "checkbox/avalon.checkbox",
+                "select/avalon.select"], function () {
                 var vm = avalon.define({
                     $id: "test",
+                    el: "lxr,lxdh,address,sex,love,love1,memo",
                     $skipArray: ["inuptOpts"],
                     inputOpts0: {
                         title: "联系电话",
@@ -66,16 +68,10 @@
                     },
                     check: function ()
                     {
-                        avalon.log(vm.method);
-                        alert(JSON.stringify(vm.method))
-                        //alert(avalon.vmodels.sex.getValue())
-                        if (!avalon.vmodels.sex.check())
+                        var arr = vm.el.split(",");
+                        for (var i=0;i<arr.length;i++)
                         {
-                            //return false;
-                        }
-                        if (!avalon.vmodels.method.check())
-                        {
-                            //return false;
+                            avalon.vmodels[arr[i]].check();
                         }
                     }
 
@@ -86,12 +82,13 @@
         </script>
     </head>
     <body ms-controller="test">
-        <div><ms:input title="联  系  人"  is-Required="true" $id="lxr"></ms:input></div>
+        <div><ms:input title="联  系  人"  is-Required="true" $id="lxr"></ms:input><input type="button" value="aaa"></div>
         <div><ms:input config="inputOpts0" $id="lxdh"></ms:input></div>
         <div><ms:input config="inputOpts1" $id="address"></ms:input></div>        
-        <div><ms:radio config="inputOpts2" $id="sex"></ms:input></div>
+        <div><ms:radio config="inputOpts2" $id="sex"></ms:radio></div>
         <div><ms:checkbox config="inputOpts3" $id="love"></ms:checkbox></div>
-        <div><ms:input config="inputOpts4"></ms:input></div>
+        <div><ms:select config="inputOpts3" $id="love1"></ms:select></div>
+        <div><ms:input config="inputOpts4" $id="memo"></ms:input></div>
         <input type="button" ms-click="check" value="check">
 
 

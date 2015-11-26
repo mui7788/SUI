@@ -1,6 +1,7 @@
 .select
 {
-    height:25px;
+    border:1px #CCC solid;
+    height:30px;
     vertical-align:middle;
 }
 
@@ -11,20 +12,15 @@
     margin-right: 5px;
     margin-left: 3px;
 }
-
-.large
+.default-select-hover
 {
-    width:450px;
+    border:1px #39F solid;
 }
-.big
+.red-select-hover
 {
-    width:300px;
+    border:1px #DA5050 solid;
 }
-.normal
+.green-select-hover
 {
-    width:150px;
-}
-.small
-{
-    width:70px;
+    border:1px limegreen solid;
 }

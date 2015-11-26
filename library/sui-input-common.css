@@ -1,7 +1,7 @@
 .container
 {
-    width: 100%;
-    margin:5px 0;
+    margin:3px 0;
+    display: inline-block;
 }
 .label
 {
@@ -49,4 +49,20 @@
 .middle
 {
     vertical-align:middle;
+}
+.large
+{
+    width:450px;
+}
+.big
+{
+    width:300px;
+}
+.normal
+{
+    width:150px;
+}
+.small
+{
+    width:70px;
 }

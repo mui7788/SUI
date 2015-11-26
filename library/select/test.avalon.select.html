@@ -6,8 +6,10 @@
         <script src="../avalon.js"></script> 
         <script>
             require(["./select/avalon.select"], function () {
+                
                 var vm = avalon.define({
                     $id: "test",
+                    el:"sex,method,month",
                     method:null,
                     index:null,
                     $skipArray: ["inuptOpts"],
@@ -55,7 +57,7 @@
                     {
                         // alert(v)
                     },
-                    check: function ()
+                    check2: function ()
                     {
                         avalon.log(vm.method);
                         //alert(JSON.stringify(vm.method))
@@ -67,6 +69,14 @@
                         if (!avalon.vmodels.method.check())
                         {
                             //return false;
+                        }
+                    },
+                    check:function()
+                    {
+                        var arr=vm.el.split(",");
+                        for(var i in arr)
+                        {
+                            avalon.vmodels[arr[i]].check();
                         }
                     }
 

@@ -65,7 +65,7 @@ define(["avalon", "text!./avalon.input.html", "css!../sui-input-common.css","css
             vm.onInit(vm);
             vm.check = function ()
             {
-                if (vm.isRequired && this.value.trim() == "")
+                if (vm.isRequired && vm.value.trim() == "")
                 {
                     vm._showNoticeImage = true;
                     vm.notice = vm._notice;
@@ -78,10 +78,10 @@ define(["avalon", "text!./avalon.input.html", "css!../sui-input-common.css","css
                 }
 
                 //校验自定义正则
-                if (vm.regexContent != "" && this.value.trim() != "")
+                if (vm.regexContent != "" && vm.value.trim() != "")
                 {
                     var re = new RegExp(vm.regexContent);
-                    if (!re.test(this.value.trim()))
+                    if (!re.test(vm.value.trim()))
                     {
                         vm._showNoticeImage = true;
                         vm.notice = vm.regexErrorNotice;
@@ -96,9 +96,9 @@ define(["avalon", "text!./avalon.input.html", "css!../sui-input-common.css","css
                 }
 
                 //校验类型
-                if (vm.regexType != "" && this.value.trim() != "")
+                if (vm.regexType != "" && vm.value.trim() != "")
                 {
-                    var msg = checkTextType(vm.regexType, this.value);
+                    var msg = checkTextType(vm.regexType, vm.value);
                     if (msg != undefined)
                     {
                         vm._showNoticeImage = true;
