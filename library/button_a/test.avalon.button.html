@@ -1,0 +1,32 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <META http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <META content="text/html; charset=UTF-8" http-equiv=Content-Type>
+        <script src="../avalon.js"></script> 
+        <script>
+            var tvm;
+            require(["./button_a/avalon.button"], function () {
+                var vm = avalon.define({
+                    $id: "test",
+                    $skipArray: ["inuptOpts","inputOpts2","inputOpts3"],
+                    buttonOpts: {
+                        value: "保存数据",
+                        isDisabled:true,
+                        onClick:function(e)
+                        {
+                            alert("click");
+                        }
+                    }
+                })
+                avalon.scan()
+                
+            })
+        </script>
+    </head>
+    <body ms-controller="test">
+    <ms:button config="buttonOpts"></ms:button>
+    </body>
+
+
+
