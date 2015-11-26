@@ -26,7 +26,8 @@ define(["avalon", "text!./avalon.input.html", "css!../sui-input-common.css","css
         isReadonly: false,
         widthType: "normal",
         width:0,
-        height:100,
+        height:0,
+        maxlength:0,
         //自定义正则表达式
         regexContent: "",
         //校验类型
@@ -42,6 +43,14 @@ define(["avalon", "text!./avalon.input.html", "css!../sui-input-common.css","css
         $replace: 1,
         $construct: function (defaultConfig, vmConfig, eleConfig) {
             var options = avalon.mix(defaultConfig, vmConfig, eleConfig)
+            if(options.width==0)
+            {
+                options.width="";
+            }
+            if(options.height==0)
+            {
+                options.height="";
+            }         
             return options
         },
         $init: function (vm) {
