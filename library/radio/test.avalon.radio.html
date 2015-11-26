@@ -8,6 +8,7 @@
             require(["./input/avalon.input", "./radio/avalon.radio"], function () {
                 var vm = avalon.define({
                     $id: "test",
+                    age:1,
                     $skipArray: ["inuptOpts"],
                     inputOpts: {
                         did: "name",
@@ -41,6 +42,22 @@
                         ],
                         isDisabled: false
                     },
+                    inputOpts4: {
+                        did: "age",
+                        title: "年龄段",
+                        value:1,
+                        data: [
+                            {title: "0-20", value: 1},
+                            {title: "21-40", value: 2},
+                            {title: "41-60", value: 3},
+                            {title: "60以上", value: 4}
+                        ],
+                        isDisabled: false,
+                        onChange:function(n,o)
+                        {
+                            vm.age=n;
+                        }
+                    },
                     change:function(n,o)
                     {
                         if(n==1)
@@ -70,8 +87,9 @@
         <div><ms:input config="inputOpts" $id="user" on-change="changeValue"></ms:input></div>
         <div><ms:input config="inputOpts2" $id="phone" on-change="set" on-init="getVM"></ms:input></div>
         <div><ms:radio config="inputOpts3" $id="sex" on-change="change"></ms:input></div>
-
+        <div><ms:radio config="inputOpts4" $id="age" ></ms:input></div>
         <input type="button" ms-click="check" value="check">
+        年龄段：{{age}}
     </body>
 
 
