@@ -8,6 +8,7 @@
            ms-attr-value="el.value"
            ms-attr-disabled="isDisabled"
            ms-attr-id="{{did}}_{{$index}}"
+           ms-click="_click($event,$index)"
            /><label ms-class="avalon-radio-item-label font color">{{el.title}}</label>
     </span>
         <img src="notice.png" ms-if="_showNoticeImage && isShowNoticeImage" ms-class="middle">

@@ -1,0 +1,49 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <META http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <META content="text/html; charset=UTF-8" http-equiv=Content-Type>
+        <script src="../avalon.js"></script> 
+        <script>
+            require(["./checkbox/avalon.checkbox"], function () {
+                var vm = avalon.define({
+                    $id: "test",
+                    $skipArray: ["inuptOpts"],
+                    inputOpts3: {
+                        did: "sex",
+                        title: "是否启用",
+                        value: [1],
+                        data: [
+                            {title: "", value: 1}
+                        ],
+                        isDisabled: false,
+                        isRequired: false,
+                        notice: "我靠，一个爱好也没有！"
+                    },
+                    change: function (n, o)
+                    {
+                        alert(n+"_"+o)
+                    },
+                    check: function ()
+                    {
+                        alert(JSON.stringify(avalon.vmodels.sex.$model))
+                        if (!avalon.vmodels.sex.check())
+                        {
+                            return false;
+                        }
+                    }
+
+                })
+                avalon.scan()
+
+            })
+        </script>
+    </head>
+    <body ms-controller="test">
+        <div><ms:checkbox config="inputOpts3" $id="sex" on-change="change"></ms:checkbox></div>
+
+        <input type="button" ms-click="check" value="check">
+    </body>
+
+
+

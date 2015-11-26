@@ -12,10 +12,13 @@ define(["avalon", "text!./avalon.checkbox.html", "css!./avalon.checkbox.css"], f
         _blur: _interface,
         _focus: _interface,
         _keyup: _interface,
+        _click:_interface,
+        //回调方法
         onInit: _interface, //必须定义此接口
         onChange: _interface, //值修改时触发外部事件
+        onClick:_interface, //点击某一项时触发
         check: _interface,
-        setFocus: _interface,
+        getValue:_interface,
         //配置项
         did: "",
         title: "",
@@ -39,10 +42,14 @@ define(["avalon", "text!./avalon.checkbox.html", "css!./avalon.checkbox.css"], f
             vm.notice = "";
             vm.title = vm.title + "：";
             //设置默认值后，触发外部事件。
-            vm.onChange(vm.value)
+            //vm.onChange(vm.value)
         },
         $ready: function (vm, element) {
             vm.onInit(vm);
+            vm._click=function(e,index)
+            {
+                vm.onClick(e,vm.$model.value,index);
+            }
             vm.check = function ()
             {
                 if (vm.isRequired)
@@ -68,6 +75,10 @@ define(["avalon", "text!./avalon.checkbox.html", "css!./avalon.checkbox.css"], f
                 }
 
             }
+            vm.getValue=function()
+            {
+                return vm.value;
+            }
             //监控属性
             vm.$watch("value.length", function (n, o) {
                 if (vm.value.length == 0)
@@ -82,8 +93,7 @@ define(["avalon", "text!./avalon.checkbox.html", "css!./avalon.checkbox.css"], f
                 {
                     vm.notice = "";
                 }
-
-                vm.onChange(n, o);
+                vm.onChange(n, o, vm.value);
             })
         },
         $dispose: function (vm, element)

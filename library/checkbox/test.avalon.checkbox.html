@@ -5,47 +5,84 @@
         <META content="text/html; charset=UTF-8" http-equiv=Content-Type>
         <script src="../avalon.js"></script> 
         <script>
-                    require(["./checkbox/avalon.checkbox"], function () {
-                    var vm = avalon.define({
+            require(["./checkbox/avalon.checkbox"], function () {
+                var vm = avalon.define({
                     $id: "test",
-                            $skipArray: ["inuptOpts"],
-                            inputOpts3: {
-                            did: "sex",
-                                    title: "兴趣爱好",
-                                    value:[],
-                                    data: [
-                                    {title: "钓鱼", value: 1},
-                                    {title: "运动", value: 2},
-                                    {title: "唱歌", value: 3},
-                                    {title: "睡觉", value: 4}
-                                    ],
-                                    isDisabled: false,
-                                    isRequired:true,
-                                    notice:"我靠，一个爱好也没有！",
-                                    theme:"red"
-                            },
-                            change:function(n, o)
-                            {
+                    method: [1],
+                    index:null,
+                    method_get: {
+                        get: function () {
+                            return vm.method.join("-")
+                        }
+                    },
+                    $skipArray: ["inuptOpts"],
+                    inputOpts3: {
+                        did: "sex",
+                        title: "兴趣爱好",
+                        value: [],
+                        data: [
+                            {title: "钓鱼", value: 1},
+                            {title: "运动", value: 2},
+                            {title: "唱歌", value: 3},
+                            {title: "睡觉", value: 4}
+                        ],
+                        isDisabled: false,
+                        isRequired: true,
+                        notice: "我靠，一个爱好也没有！"
+                    },
+                    inputOpts4: {
+                        did: "method",
+                        title: "方式选择",
+                        value: [1],
+                        data: [
+                            {title: "电视", value: 1},
+                            {title: "网络", value: 2},
+                            {title: "朋友", value: 3},
+                            {title: "报纸", value: 4}
+                        ],
+                        isDisabled: false,
+                        isRequired: true,
+                        notice: "求求啦，怎么知道的说一下吧！",
+                        onChange: function (n, o, v)
+                        {
+                            //vm.method = v;
+                        },
+                        onClick:function(e,v,index)
+                        {
+                            vm.index=index;
+                            vm.method=v;
+                        }
+                    },
+                    change: function (n, o, v)
+                    {
+                        // alert(v)
+                    },
+                    check: function ()
+                    {
+                        avalon.log(vm.method);
+                        alert(JSON.stringify(vm.method))
+                        //alert(avalon.vmodels.sex.getValue())
+                        if (!avalon.vmodels.sex.check())
+                        {
+                            //return false;
+                        }
+                        if (!avalon.vmodels.method.check())
+                        {
+                            //return false;
+                        }
+                    }
 
-                            },
-                            check:function()
-                            {
-                            if (!avalon.vmodels.sex.check())
-                            {
-                            return false;
-                            }
-                            }
+                })
+                avalon.scan()
 
-                    })
-                            avalon.scan()
-
-                    })
+            })
         </script>
     </head>
     <body ms-controller="test">
         <div><ms:checkbox config="inputOpts3" $id="sex" on-change="change"></ms:checkbox></div>
-
+        <div><ms:checkbox config="inputOpts4" $id="method" ></ms:checkbox></div>
         <input type="button" ms-click="check" value="check">
+        {{method}}<br>{{method_get}}<bR>{{index}}
     </body>
 
 
