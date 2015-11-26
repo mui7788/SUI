@@ -1,0 +1,48 @@
+.container
+{
+    width: 100%;
+    margin:5px 0;
+}
+.label
+{
+    width: 70px;
+    display: inline-block;
+    padding-left:3px;
+    color:#888;
+    font-family: "宋体";
+}
+.notice
+{
+    display: inline-block;
+    margin-left: 5px;
+    font-family: "宋体";
+}
+.font
+{
+    font-size: 12px;
+//    line-height: 35px;
+}
+.color
+{
+    color:#888;
+}
+.default-notice-color
+{
+    color:#39F;
+}
+.red-notice-color
+{
+    color:#DA5050;
+}
+.top
+{
+    vertical-align:top;
+}
+.bottom
+{
+    vertical-align:bottom;
+}
+.middle
+{
+    vertical-align:middle;
+}

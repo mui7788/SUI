@@ -1,4 +1,4 @@
-define(["avalon", "text!./avalon.input.html", "css!./avalon.input.css"], function (avalon, template) {
+define(["avalon", "text!./avalon.input.html", "css!../sui-input-common.css","css!./avalon.input.css"], function (avalon, template) {
 
     var _interface = function () {
     };

@@ -1,4 +1,4 @@
-define(["avalon", "text!./avalon.checkbox.html", "css!./avalon.checkbox.css"], function (avalon, template) {
+define(["avalon", "text!./avalon.checkbox.html", "css!../sui-input-common.css","css!./avalon.checkbox.css"], function (avalon, template) {
 
     var _interface = function () {
     };
@@ -48,7 +48,9 @@ define(["avalon", "text!./avalon.checkbox.html", "css!./avalon.checkbox.css"], f
             vm.onInit(vm);
             vm._click=function(e,index)
             {
-                vm.onClick(e,vm.$model.value,index);
+                //兼容GG
+                setTimeout(function(){
+                vm.onClick(e,vm.value,index)},0)
             }
             vm.check = function ()
             {
