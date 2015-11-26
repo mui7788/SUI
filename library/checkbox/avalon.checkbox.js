@@ -87,13 +87,14 @@ define(["avalon", "text!./avalon.checkbox.html", "css!../sui-input-common.css","
                 {
                     if (vm.isRequired)
                     {
-                        vm._showNoticeImage = false;
+                        vm._showNoticeImage = true;
                         vm.notice = vm._notice;
                     }
                 }
                 else
                 {
                     vm.notice = "";
+                    vm._showNoticeImage = false;
                 }
                 vm.onChange(n, o, vm.value);
             })
