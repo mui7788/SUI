@@ -28,12 +28,32 @@ define(["avalon", "text!./avalon.select.html", "css!../sui-input-common.css", "c
         isShowNoticeImage: false,
         isShowCustomOption: false,
         customData: [],
+        type:"",
         //模板
         $template: template,
         //替换自定义标签
         $replace: 1,
         $construct: function (defaultConfig, vmConfig, eleConfig) {
             var options = avalon.mix(defaultConfig, vmConfig, eleConfig)
+            
+            if(!options.data.lenth)
+            {
+                if(options.type!="")
+                {
+                    switch(options.type)
+                    {
+                        case "month":
+                            var data=[];
+                            for(var i=1;i<=12;i++)
+                            {
+                                data.push({title:i+"月",value:i});
+                            }
+                        break;
+                    }
+                    options.data=data;
+                }
+            }
+            
             return options
         },
         $init: function (vm) {
@@ -105,6 +125,20 @@ define(["avalon", "text!./avalon.select.html", "css!../sui-input-common.css", "c
                 if (vm.check())
                 {
                     vm.onChange(n, o);
+                }
+            })
+            vm.$watch("data",function(n,o)
+            {
+                if (vm.isShowCustomOption && vm.customData.length != 0)
+                {
+                    vm.value = vm.customData[0].value
+                }
+                else
+                {
+                    if(vm.data.length!=0)
+                    {
+                        vm.value=vm.data[0].value
+                    }
                 }
             })
         },
