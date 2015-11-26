@@ -8,7 +8,9 @@
             require(["input/avalon.input",
                 "radio/avalon.radio",
                 "checkbox/avalon.checkbox",
-                "select/avalon.select"], function () {
+                "select/avalon.select",
+            "button_a/avalon.button",
+        "datepicker/avalon.datepicker"], function () {
                 var vm = avalon.define({
                     $id: "test",
                     el: "lxr,lxdh,address,sex,love,love1,memo",
@@ -19,7 +21,8 @@
                         notice: "请输入联系电话",
                         isReadonly: false,
                         isDisabled: false,
-                        isRequired: true
+                        isRequired: false,
+                        width:40
                     },
                     inputOpts1: {
                         title: "联系地址",
@@ -82,17 +85,18 @@
         </script>
     </head>
     <body ms-controller="test">
-        <div><ms:input title="联  系  人"  is-Required="true" $id="lxr"></ms:input><input type="button" value="aaa"></div>
-        <div><ms:input config="inputOpts0" $id="lxdh"></ms:input></div>
+        <div><ms:input title="联  系  人"  is-Required="false" $id="lxr"></ms:input><ms:input config="inputOpts0" $id="lxdh"></ms:input><ms:button value=" 保  存 " on-click="check"></ms:button></div>
+        <div><ms:datepicker  $id="date1" title="开始日期" did="startdate"></ms:datepicker></div>
         <div><ms:input config="inputOpts1" $id="address"></ms:input></div>        
         <div><ms:radio config="inputOpts2" $id="sex"></ms:radio></div>
         <div><ms:checkbox config="inputOpts3" $id="love"></ms:checkbox></div>
         <div><ms:select config="inputOpts3" $id="love1"></ms:select></div>
         <div><ms:input config="inputOpts4" $id="memo"></ms:input></div>
-        <input type="button" ms-click="check" value="check">
+        <div><ms:button value=" 保  存 " on-click="check" is-Disabled="true"></ms:button>&nbsp;
+            <ms:button value=" 保  存 " on-click="check"></ms:button></div>
 
 
     </body>
-
+        </html>
 
 
