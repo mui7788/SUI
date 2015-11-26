@@ -1,0 +1,30 @@
+.select
+{
+    height:25px;
+    vertical-align:middle;
+}
+
+.avalon-checkbox-item-label
+{
+    display: inline-block;
+    font-family: "宋体";
+    margin-right: 5px;
+    margin-left: 3px;
+}
+
+.large
+{
+    width:450px;
+}
+.big
+{
+    width:300px;
+}
+.normal
+{
+    width:150px;
+}
+.small
+{
+    width:70px;
+}

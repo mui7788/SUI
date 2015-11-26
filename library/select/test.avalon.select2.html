@@ -1,0 +1,92 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <META http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <META content="text/html; charset=UTF-8" http-equiv=Content-Type>
+        <script src="../avalon.js"></script> 
+        <script>
+            require(["./select/avalon.select"], function () {
+                var vm = avalon.define({
+                    $id: "test",
+                    sheng: 4,
+                    shi: null,
+                    $skipArray: ["inuptOpts3"],
+                    inputOpts3: {
+                        did: "sheng",
+                        title: "省份",
+                        value: [4],
+                        data: [
+                            {title: "河北省", value: 1},
+                            {title: "河南省", value: 2},
+                            {title: "山东省", value: 3},
+                            {title: "广东省", value: 4}
+                        ],
+                        isDisabled: false,
+                        isRequired: true,
+                        notice: "没取到，选个屁呀！",
+                        onChange: function (n, o)
+                        {
+                            vm.sheng = n;
+                        },
+                    },
+                    inputOpts4: {
+                        did: "shi",
+                        title: "城市",
+                        value: [],
+                        data: [],
+                        isRequired: true,
+                        notice: "求求啦，怎么知道的说一下吧！",
+                        isShowCustomOption: true,
+                        customData: [{title: "城市", value: "城市"}],
+                        onChange: function (n, o)
+                        {
+                            vm.method = n;
+                        }
+                    },
+                    check: function ()
+                    {
+                        if (!avalon.vmodels.sheng.check())
+                        {
+
+                        }
+                        if (!avalon.vmodels.shi.check())
+                        {
+
+                        }
+                    }
+                })
+                vm.$watch("sheng", function (n) {
+
+                    switch (n)
+                    {
+                        case 1:
+                        case "1":
+                            //alert(typeof n)
+                            avalon.vmodels.shi.data = [{title: "唐山市", value: 1}, {title: "保定市", value: 2}]
+                            break;
+                        case "2":
+                            avalon.vmodels.shi.data = [{title: "开封", value: 3}]
+                            break;
+                        case "3":
+                            avalon.vmodels.shi.data = [{title: "东营", value: 4}]
+                            break;
+                        case "4":
+                            avalon.vmodels.shi.data = [{title: "顺德", value: 5}]
+                            break;
+
+                    }
+                })
+
+                avalon.scan()
+
+            })
+        </script>
+    </head>
+    <body ms-controller="test">
+        <div><ms:select config="inputOpts3" $id="sheng"></ms:select></div>
+        <div><ms:select config="inputOpts4" $id="shi" ></ms:select></div>
+        <input type="button" ms-click="check" value="check">
+    </body>
+
+
+

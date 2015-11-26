@@ -1,0 +1,87 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <META http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <META content="text/html; charset=UTF-8" http-equiv=Content-Type>
+        <script src="../avalon.js"></script> 
+        <script>
+            require(["./select/avalon.select"], function () {
+                var vm = avalon.define({
+                    $id: "test",
+                    method:null,
+                    index:null,
+                    $skipArray: ["inuptOpts"],
+                    inputOpts3: {
+                        did: "sex",
+                        title: "兴趣爱好",
+                        value: [],
+                        data: [
+                            {title: "钓鱼", value: 1},
+                            {title: "运动", value: 2},
+                            {title: "唱歌", value: 3},
+                            {title: "睡觉", value: 5}
+                        ],
+                        isDisabled: false,
+                        isRequired: true,
+                        notice: "我靠，一个爱好也没有！",
+                        onChange: function (n, o)
+                        {
+                            vm.method = n;
+                        },
+                    },
+                    inputOpts4: {
+                        did: "method",
+                        title: "方式选择",
+                        value: [],
+                        data: [
+                            {title: "电视", value: 1},
+                            {title: "网络", value: 2},
+                            {title: "朋友", value: 3},
+                            {title: "报纸", value: 4}
+                        ],
+                        isDisabled: false,
+                        isRequired: true,
+                        notice: "求求啦，怎么知道的说一下吧！",
+                        isShowCustomOption:true,
+                        customData:[
+                            {title:"-请选择-",value:""}
+                        ],
+                        onChange: function (n, o)
+                        {
+                            vm.method = n;
+                        }
+                    },
+                    change: function (n, o, v)
+                    {
+                        // alert(v)
+                    },
+                    check: function ()
+                    {
+                        avalon.log(vm.method);
+                        //alert(JSON.stringify(vm.method))
+                        //alert(avalon.vmodels.sex.getValue())
+                        if (!avalon.vmodels.sex.check())
+                        {
+                            //return false;
+                        }
+                        if (!avalon.vmodels.method.check())
+                        {
+                            //return false;
+                        }
+                    }
+
+                })
+                avalon.scan()
+
+            })
+        </script>
+    </head>
+    <body ms-controller="test">
+        <div><ms:select config="inputOpts3" $id="sex"></ms:select></div>
+        <div><ms:select config="inputOpts4" $id="method" ></ms:select></div>
+        <input type="button" ms-click="check" value="check">
+    {{method}}
+    </body>
+
+
+
