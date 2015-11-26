@@ -1,0 +1,101 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <META http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <META content="text/html; charset=UTF-8" http-equiv=Content-Type>
+        <script src="avalon.js"></script> 
+        <script>
+            require(["input/avalon.input",
+                "radio/avalon.radio",
+                "checkbox/avalon.checkbox"], function () {
+                var vm = avalon.define({
+                    $id: "test",
+                    $skipArray: ["inuptOpts"],
+                    inputOpts0: {
+                        title: "联系电话",
+                        value: "",
+                        notice: "请输入联系电话",
+                        isReadonly: false,
+                        isDisabled: false,
+                        isRequired: true
+                    },
+                    inputOpts1: {
+                        title: "联系地址",
+                        value: "",
+                        notice: "请输入联系地址",
+                        isReadonly: false,
+                        isDisabled: false,
+                        isRequired: true,
+                        widthType: "big",
+                        onChange: function (n, o)
+                        {
+                            vm.address = n;
+                        }
+                    },
+                    inputOpts2: {
+                        did: "sex",
+                        title: "性别设置",
+                        value: 1,
+                        data: [
+                            {title: "男", value: 1},
+                            {title: "女", value: 2},
+                            {title: "保密", value: 3}
+                        ],
+                        isDisabled: false
+                    },
+                    inputOpts3: {
+                        did: "love",
+                        title: "兴趣爱好",
+                        value: [],
+                        data: [
+                            {title: "钓鱼", value: 1},
+                            {title: "运动", value: 2},
+                            {title: "唱歌", value: 3},
+                            {title: "睡觉", value: 4}
+                        ],
+                        isDisabled: false,
+                        isRequired: true,
+                        notice: "我靠，一个爱好也没有！"
+                    },
+                    inputOpts4: {
+                        title: "详细信息",
+                        value: "",
+                        widthType: "big",
+                        type: "textarea",
+                        isRequired: true
+                    },
+                    check: function ()
+                    {
+                        avalon.log(vm.method);
+                        alert(JSON.stringify(vm.method))
+                        //alert(avalon.vmodels.sex.getValue())
+                        if (!avalon.vmodels.sex.check())
+                        {
+                            //return false;
+                        }
+                        if (!avalon.vmodels.method.check())
+                        {
+                            //return false;
+                        }
+                    }
+
+                })
+                avalon.scan()
+
+            })
+        </script>
+    </head>
+    <body ms-controller="test">
+        <div><ms:input title="联  系  人"  is-Required="true" $id="lxr"></ms:input></div>
+        <div><ms:input config="inputOpts0" $id="lxdh"></ms:input></div>
+        <div><ms:input config="inputOpts1" $id="address"></ms:input></div>        
+        <div><ms:radio config="inputOpts2" $id="sex"></ms:input></div>
+        <div><ms:checkbox config="inputOpts3" $id="love"></ms:checkbox></div>
+        <div><ms:input config="inputOpts4"></ms:input></div>
+        <input type="button" ms-click="check" value="check">
+
+
+    </body>
+
+
+

@@ -29,8 +29,10 @@
 {
     border:1px #DA5050 solid;
 }
-
-
+.green-text-hover
+{
+    border:1px limegreen solid;
+}
 .large
 {
     width:450px;
