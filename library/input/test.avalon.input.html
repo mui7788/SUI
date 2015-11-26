@@ -10,7 +10,8 @@
                 var vm = avalon.define({
                     $id: "test",
                     value:"a",
-                    $skipArray: ["inuptOpts"],
+                    address:"",
+                    $skipArray: ["inuptOpts","inputOpts2","inputOpts3"],
                     inputOpts: {
                         title: "名　　称",
                         value: "",
@@ -34,7 +35,11 @@
                         isReadonly: false,
                         isDisabled: false,
                         isRequired: true,
-                        widthType: "big"
+                        widthType: "big",
+                        onChange:function(n,o)
+                        {
+                            vm.address=n;
+                        }
                     },
                     set:function()
                     {
@@ -57,6 +62,7 @@
         <div><ms:input config="inputOpts2" $id="test1"></ms:input></div>
         <div><ms:input config="inputOpts3" on-init="getVM"></ms:input></div>
         <input type="button" ms-click="set">
+        {{address}}
     </body>
 
 

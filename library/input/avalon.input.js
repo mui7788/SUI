@@ -152,11 +152,7 @@ define(["avalon", "text!./avalon.input.html", "css!./avalon.input.css"], functio
 
     })
 
-    function setlostFocus(element)
-    {
-        //var input = element.children[1];
-        //input.blur();
-    }
+
     function checkTextType(type, value)
     {
         switch (type)
