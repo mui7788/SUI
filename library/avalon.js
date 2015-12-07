@@ -5994,7 +5994,7 @@ new function () { // jshint ignore:line
                 modules[url].state = 3 //loaded
                 var isCycle = false
                 try {
-                    isCycle = checkCycle(modules[url].deps, url)
+                    isCycle = checkCycle(modules[url].deps||[], url)
                 } catch (e) {
                 }
                 if (isCycle) {
@@ -6108,11 +6108,11 @@ new function () { // jshint ignore:line
 
 
     //==============================内部方法=================================
-    function checkCycle(deps, nick) {
+    function checkCycle(deps , nick) {
         //检测是否存在循环依赖
         for (var i = 0, id; id = deps[i++]; ) {
             if (modules[id].state !== 4 &&
-                    (id === nick || checkCycle(modules[id].deps, nick))) {
+                    (id === nick || checkCycle(modules[id].deps || [], nick))) {
                 return true
             }
         }

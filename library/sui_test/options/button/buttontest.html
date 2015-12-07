@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SUI 按钮测试页</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <script src=""></script>
+        <script src="../../../avalon.js" type="text/javascript"></script>
+        <script>
+
+            avalon.library("sui", {});
+
+            require(["./sui/options/button/sui.button"],
+                function () 
+                {
+                    avalon.define({$id: "demo"}); 
+                    avalon.scan();
+                });
+        </script>
+    </head>
+    <body ms-controller="demo">
+        <fieldset>
+            <legend>size 、width 、color and disabled config</legend>
+            <div>
+                <sui:button size="small" type="labeledIcon" icon-position="left" icon="icon-search" color="success" >小按钮size small </sui:button>
+                <sui:button size="small" type="labeledIcon" icon-position="right" icon="icon-search" color="success" >小按钮size small </sui:button>
+                <sui:button size="normal" type="text" color="primary" disabled="1" >size default</sui:button>
+                <sui:button size="normal" type="icon" color="primary" icon="icon-remove"  >size default</sui:button>
+                <sui:button size="normal" type="labeledIcon" color="danger" icon="icon-remove" >size default</sui:button>
+                <sui:button size="big"  type="labeledIcon" icon-position="left-right" icon="icon-search$icon-ok" color="success">size big</sui:button>
+                <sui:button size="large"  type="labeledIcon" icon-position="left" icon="icon-search" color="success">size large</sui:button>
+                <sui:button size="large"  type="icon"  icon="icon-search" color="info">size large</sui:button>
+                <sui:button size="large"  type="text"  icon="icon-search" color="success">size large</sui:button>
+                <sui:button width="200" color="warning">200</sui:button>
+                <sui:button width="50" color="inverse" icon-position="left-right"label="我就是看看超出咋办">50</sui:button>
+                <sui:button width="50" color="primary" icon-position="left-right"label="ssssssssssaaaaassss">50</sui:button>
+            </div>
+        </fieldset>
+    </body>
+</html>
