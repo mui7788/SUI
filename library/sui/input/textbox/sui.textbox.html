@@ -1,0 +1,60 @@
+<span ms-class="sui-input-container" ms-if="visible">
+    <label ms-class="sui-input-label" ms-class-1="sui-input-font:type!='textarea'" ms-class-2="sui-input-textbox-font-area:type=='textarea'">{{title}}</label>
+    <input 
+           ms-css-width="width"
+           ms-css-height="height"
+           ms-class-1="sui-input-textbox-text"
+           ms-class-2="sui-input-big:widthType==='big'"
+           ms-class-3="sui-input-normal:widthType==='normal'"
+           ms-class-4="sui-input-small:widthType==='small'"
+           ms-class-5="sui-input-large:widthType==='large'"
+           ms-class-6="text-actived:_focusing"
+           ms-hover="{{theme}}-text-hover"
+           type="text"
+           ms-duplex="value"
+           ms-attr-disabled="isDisabled"
+           ms-attr-readonly="isReadonly"
+           ms-blur="_blur"
+           ms-focus="_focus"
+           ms-keyup="_keyup"
+           ms-keydown="_keydown"
+           ms-keypress="_keypress"
+           ms-attr-id="input_id"
+           ms-if="type=='text'"
+           />
+        <input 
+           ms-class-1="sui-input-textbox-text"
+           ms-class-2="sui-input-big:widthType==='big'"
+           ms-class-3="sui-input-normal:widthType==='normal'"
+           ms-class-4="sui-input-small:widthType==='small'"
+           ms-class-5="sui-input-large:widthType==='large'"
+           ms-class-6="text-actived:_focusing"
+           ms-hover="{{theme}}-text-hover"
+           type="password"
+           ms-duplex="value"
+           ms-attr-disabled="isDisabled"
+           ms-attr-readonly="isReadonly"
+           ms-blur="_blur"
+           ms-focus="_focus"
+           ms-keyup="_keyup"
+           ms-attr-id="input_id"
+           ms-if="type=='password'"
+           />
+        <textarea
+           ms-class-1="sui-input-textbox-text-area"
+           ms-class-2="sui-input-big:widthType==='big'"
+           ms-class-3="sui-input-normal:widthType==='normal'"
+           ms-class-4="sui-input-small:widthType==='small'"
+           ms-class-5="sui-input-large:widthType==='large'"
+           ms-class-6="sui-input-text-actived:_focusing"
+           ms-hover="{{theme}}-text-hover"
+           ms-duplex="value"
+           ms-attr-disabled="isDisabled"
+           ms-attr-readonly="isReadonly"
+           ms-blur="_blur"
+           ms-focus="_focus"
+           ms-attr-id="input_id"
+           ms-if="type=='textarea'"></textarea>
+        <img src="notice.png" ms-if="_showNoticeImage && isShowNoticeImage" ms-class="sui-input-middle">
+        <label ms-class="sui-input-msg sui-input-font" ms-class-1="sui-input-msg-color" >{{notice}}</label>
+</span>

@@ -1,0 +1,59 @@
+.sui-input-container
+{
+    margin:3px 0;
+    display: inline-block;
+}
+.sui-input-label
+{
+    width: 60px;
+    display: inline-block;
+    padding-left:3px;
+    color:#888;
+    font-family: "宋体";
+}
+.sui-input-msg
+{
+    display: inline-block;
+    margin-left: 5px;
+    font-family: "宋体";
+}
+.sui-input-font
+{
+    font-size: 12px;
+}
+.sui-input-color
+{
+    color:#888;
+}
+.sui-input-msg-color
+{
+    color:#39F;
+}
+.sui-input-top
+{
+    vertical-align:top;
+}
+.sui-input-bottom
+{
+    vertical-align:bottom;
+}
+.sui-input-middle
+{
+    vertical-align:middle;
+}
+.sui-input-large
+{
+    width:450px;
+}
+.sui-input-big
+{
+    width:300px;
+}
+.sui-input-normal
+{
+    width:150px;
+}
+.sui-input-small
+{
+    width:70px;
+}

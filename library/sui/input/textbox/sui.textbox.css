@@ -1,0 +1,35 @@
+
+.sui-input-textbox-font-area
+{
+    font-size: 12px;
+}
+.sui-input-textbox-text
+{
+    border:1px #CCC solid;
+    height:25px;
+    vertical-align:middle;
+    line-height: 25px;
+}
+.sui-input-textbox-text-area
+{
+    border:1px #CCC solid;
+    height:80px;
+    vertical-align:middle;
+}
+.text-actived
+{
+    border:1px #ccc solid;
+}
+
+.default-text-hover
+{
+    border:1px #39F solid;
+}
+.red-text-hover
+{
+    border:1px #DA5050 solid;
+}
+.green-text-hover
+{
+    border:1px limegreen solid;
+}
