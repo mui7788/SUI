@@ -29,9 +29,8 @@
                         disabled: false,
                         require: true,
                         regexType:"int",
-                        //customRegex:"^\\d{2}$",
-                        customRegex:"^[a-z]{2}$",
-                        regexErrMsg:"手机号输入不正确"
+                        customRegex: "^[a-z]+$",
+                        regexErrMsg: "手机号输入不正确"
                     },
                     inputOpts3: {
                         input_id: "lxdz",
@@ -42,17 +41,50 @@
                         disabled: false,
                         require: true,
                         styleType: "normal",
-                        maxLength:5,
+                        maxLength: 5,
                         onChange: function (n, o)
                         {
                             vm.address = n;
+                        },
+                        onKeydown: function (e)
+                        {
+                            if (!(e.keyCode >= 65 && e.keyCode <= 91 || e.keyCode==8 || e.keyCode==46))
+                            {
+                                window.event.keyCode = 0;
+                                if (event.preventDefault)
+                                {
+                                    event.preventDefault();
+                                }
+                                else
+                                {
+                                    window.event.returnValue = false;
+                                    return false;
+                                }
+                            }
+                        },
+                        onFocus: function (e)
+                        {
+
+                        },
+                        onKeyup: function (e)
+                        {
+                            if (e.which == 13)
+                            {
+                                e.target.blur();
+                            }
+                        },
+                        onKeypress:function(e)
+                        {
+                            alert(e.keyCode);
                         }
+
                     },
                     set: function ()
                     {
-                        alert(avalon.vmodels.a.value)
+                        //alert(avalon.vmodels.a.value)
                         //avalon.log(tvm.value)
                         tvm.disabled = true;
+                        avalon.vmodels.test1.setFocus();
                     },
                     getVM: function (vm)
                     {
@@ -126,10 +158,10 @@
         <div><sui:textbox config="inputOpts2" $id="test1" placeholder="请输入"></sui:textbox></div>
         <div><sui:textbox config="inputOpts3" on-init="getVM" ></sui:textbox></div>
         <div><sui:textbox config="inputOpts3" type="password" title="密码"></sui:textbox></div>
-        <div><sui:textbox config="inputOpts3" type="textarea" title="备注" style-Type="big"></sui:textbox></div>
+        <div><sui:textbox config="inputOpts3" type="textarea" title="备注" style-Type="big" on-Blur="set"></sui:textbox></div>
         <input type="button" ms-click="set">
         {{address}}
     </body>
 
 
- 
+
