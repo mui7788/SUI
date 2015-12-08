@@ -1,34 +1,4 @@
-.sui-input-container
-{
-    margin:3px 0;
-    display: inline-block;
-}
-.sui-input-label
-{
-    width: 60px;
-    display: inline-block;
-    padding-left:3px;
-    color:#888;
-    font-family: "宋体";
-}
-.sui-input-msg
-{
-    display: inline-block;
-    margin-left: 5px;
-    font-family: "宋体";
-}
-.sui-input-font
-{
-    font-size: 12px;
-}
-.sui-input-color
-{
-    color:#888;
-}
-.sui-input-msg-color
-{
-    color:#39F;
-}
+/*input 表单控件 垂直对齐方式*/
 .sui-input-top
 {
     vertical-align:top;
@@ -41,6 +11,7 @@
 {
     vertical-align:middle;
 }
+/*input 表单控件 宽度*/
 .sui-input-large
 {
     width:450px;
@@ -57,3 +28,41 @@
 {
     width:70px;
 }
+/*input 表单控件 容器*/
+.sui-input-container-default
+{
+    margin:3px 0;
+    display: inline-block;
+}
+/*input 表单控件 标题样式*/
+.sui-input-label-default
+{
+    width: 60px;
+    display: inline-block;
+    padding-left:3px;
+    color:#888;
+    font-family: "宋体";
+}
+/*input 表单控件 提示信息样式*/
+.sui-input-msg-default
+{
+    display: inline-block;
+    margin-left: 5px;
+    font-family: "宋体";
+}
+/*input 表单控件 标题，提示信息字体大小*/
+.sui-input-font-default
+{
+    font-size: 12px;
+}
+/*input 表单控件 标题颜色*/
+.sui-input-color-default
+{
+    color:#888;
+}
+/*input 表单控件 提示信息颜色*/
+.sui-input-msg-color-default
+{
+    color:#39F;
+}
+

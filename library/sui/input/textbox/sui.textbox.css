@@ -1,35 +1,26 @@
-
-.sui-input-textbox-font-area
-{
-    font-size: 12px;
-}
-.sui-input-textbox-text
+/*textbox 文本框样式*/
+.sui-input-textbox-text-default
 {
     border:1px #CCC solid;
     height:25px;
     vertical-align:middle;
     line-height: 25px;
 }
-.sui-input-textbox-text-area
+/*textbox 多行文本框样式*/
+.sui-input-textbox-text-area-default
 {
     border:1px #CCC solid;
     height:80px;
     vertical-align:middle;
 }
-.text-actived
+/*textbox 点击样式*/
+.text-actived-default
 {
-    border:1px #ccc solid;
+    border:1px #CCC solid;
 }
-
-.default-text-hover
+/*textbox 经过样式*/
+.text-hover-default
 {
     border:1px #39F solid;
 }
-.red-text-hover
-{
-    border:1px #DA5050 solid;
-}
-.green-text-hover
-{
-    border:1px limegreen solid;
-}
+

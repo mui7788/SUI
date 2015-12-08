@@ -1,15 +1,12 @@
-<span ms-class="sui-input-container" ms-visible="visible">
-    <label ms-class="sui-input-label" ms-class-1="sui-input-font:type!='textarea'" ms-class-2="sui-input-textbox-font-area:type=='textarea'">{{title}}</label>
+<span ms-class="sui-input-container-{{theme}}" ms-visible="visible">
+    <label ms-class="sui-input-label-{{theme}}" ms-class-1="sui-input-font-{{theme}}">{{title}}</label>
     <input 
            ms-css-width="width"
            ms-css-height="height"
-           ms-class-1="sui-input-textbox-text"
-           ms-class-2="sui-input-big:styleType==='big'"
-           ms-class-3="sui-input-normal:styleType==='normal'"
-           ms-class-4="sui-input-small:styleType==='small'"
-           ms-class-5="sui-input-large:styleType==='large'"
-           ms-class-6="text-actived:_focusing"
-           ms-hover="{{theme}}-text-hover"
+           ms-class-1="sui-input-textbox-text-{{theme}}"
+           ms-class-2="sui-input-{{styleType}}"
+           ms-class-6="text-actived-{{theme}}:_focusing"
+           ms-hover="text-hover-{{theme}}"
            type="text"
            ms-duplex="value"
            ms-attr-disabled="disabled"
@@ -23,13 +20,10 @@
            ms-if="type=='text'"
            />
         <input 
-           ms-class-1="sui-input-textbox-text"
-           ms-class-2="sui-input-big:styleType==='big'"
-           ms-class-3="sui-input-normal:styleType==='normal'"
-           ms-class-4="sui-input-small:styleType==='small'"
-           ms-class-5="sui-input-large:styleType==='large'"
-           ms-class-6="text-actived:_focusing"
-           ms-hover="{{theme}}-text-hover"
+           ms-class-1="sui-input-textbox-text-{{theme}}"
+           ms-class-2="sui-input-{{styleType}}"
+           ms-class-6="text-actived-{{theme}}:_focusing"
+           ms-hover="text-hover-{{theme}}"
            type="password"
            ms-duplex="value"
            ms-attr-disabled="disabled"
@@ -43,13 +37,10 @@
            ms-if="type=='password'"
            />
         <textarea
-           ms-class-1="sui-input-textbox-text-area"
-           ms-class-2="sui-input-big:styleType==='big'"
-           ms-class-3="sui-input-normal:styleType==='normal'"
-           ms-class-4="sui-input-small:styleType==='small'"
-           ms-class-5="sui-input-large:styleType==='large'"
-           ms-class-6="sui-input-text-actived:_focusing"
-           ms-hover="{{theme}}-text-hover"
+           ms-class-1="sui-input-textbox-text-area-{{theme}}"
+           ms-class-2="sui-input-{{styleType}}"
+           ms-class-6="text-actived-{{theme}}:_focusing"
+           ms-hover="text-hover-{{theme}}"
            ms-duplex="value"
            ms-attr-disabled="disabled"
            ms-attr-readonly="readonly"
@@ -61,5 +52,5 @@
            ms-attr-id="input_id"
            ms-if="type=='textarea'"></textarea>
         <img src="notice.png" ms-if="_showNoticeImage && isShowNoticeImage" ms-class="sui-input-middle">
-        <label ms-class="sui-input-msg sui-input-font" ms-class-1="sui-input-msg-color" >{{msg}}</label>
+        <label ms-class="sui-input-msg-{{theme}} sui-input-font-{{theme}} sui-input-msg-color-{{theme}}" >{{msg}}</label>
 </span>
