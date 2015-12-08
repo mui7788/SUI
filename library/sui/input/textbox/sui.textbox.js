@@ -23,7 +23,7 @@ define(["avalon", "text!./sui.textbox.html", "css!../sui-input-common.css", "css
         onKeyup: _interface,
         onKeypress: _interface,
         //公有方法
-        check: _interface,
+        valid: _interface,
         setFocus: _interface,
         //配置项
         input_id: "", //文本框id
@@ -83,7 +83,6 @@ define(["avalon", "text!./sui.textbox.html", "css!../sui-input-common.css", "css
             vm.onInit(vm);
             vm.check = function ()
             {
-                avalon.log("check");
                 if (vm.require && vm.value == "")
                 {
                     vm._showNoticeImage = true;
@@ -98,7 +97,6 @@ define(["avalon", "text!./sui.textbox.html", "css!../sui-input-common.css", "css
                 //校验长度
                 if (vm.maxLength && vm.value != "")
                 {
-                    //var tmpreg = "^.{0," + vm.maxLength + "}$";
                     if (vm.type != "textarea")
                     {
                         var tmpreg = "^.{0," + vm.maxLength + "}$";
@@ -107,7 +105,7 @@ define(["avalon", "text!./sui.textbox.html", "css!../sui-input-common.css", "css
                     {
                         var tmpreg = "^[\\s\\S\\n\\r]{0," + vm.maxLength + "}$";
                     }
-                    var re = new RegExp(tmpreg,"g");
+                    var re = new RegExp(tmpreg);
                     if (!re.test(vm.value))
                     {
                         vm._showNoticeImage = true;
@@ -120,7 +118,7 @@ define(["avalon", "text!./sui.textbox.html", "css!../sui-input-common.css", "css
                         vm.msg = "";
                     }
                 }
-                
+
                 //校验自定义正则
                 if (vm.customRegex != "" && vm.value != "")
                 {
@@ -135,8 +133,8 @@ define(["avalon", "text!./sui.textbox.html", "css!../sui-input-common.css", "css
                     {
                         vm._showNoticeImage = false;
                         vm.msg = "";
+                        return true;
                     }
-
                 }
 
                 //校验类型
@@ -169,34 +167,16 @@ define(["avalon", "text!./sui.textbox.html", "css!../sui-input-common.css", "css
                 vm._focusing = false;
                 vm.onBlur(e);
                 vm.check();
-                
             }
             vm._keyup = function (e)
             {
-//                if (e.which == 13)
-//                {
-//                    //window.event.keyCode=9
-//                    e.target.blur();
-//                }
                 vm.onKeyup(e);
             }
             vm._keydown = function (e)
             {
-
-//                window.event.keyCode = 0;
-//                if (event.preventDefault)
-//                {
-//                    event.preventDefault();
-//                }
-//                else
-//                {
-//                    window.event.returnValue = false;
-//                    return false; 
-//                }
                 vm.onKeydown(e);
             }
             //vm._keydown=vm.bindKeydown;
-
             vm._keypress = function (e)
             {
                 vm.onKeypress(e);
@@ -220,7 +200,6 @@ define(["avalon", "text!./sui.textbox.html", "css!../sui-input-common.css", "css
         }
 
     })
-
 
     function checkTextType(type, value)
     {
@@ -292,7 +271,8 @@ define(["avalon", "text!./sui.textbox.html", "css!../sui-input-common.css", "css
         }
     }
 
-    function idCard(val) {
+    function idCard(val)
+    {
         if ((/^\d{15}$/).test(val)) {
             return true;
         } else if ((/^\d{17}[0-9xX]$/).test(val)) {
@@ -307,7 +287,8 @@ define(["avalon", "text!./sui.textbox.html", "css!../sui-input-common.css", "css
         }
     }
 
-    function isCorrectDate(value) {
+    function isCorrectDate(value)
+    {
         if (typeof value === "string" && value) { //是字符串但不能是空字符
             var arr = value.split("-") //可以被-切成3份，并且第1个是4个字符
             if (arr.length === 3 && arr[0].length === 4) {
