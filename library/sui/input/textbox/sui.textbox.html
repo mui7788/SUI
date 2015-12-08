@@ -11,6 +11,7 @@
            ms-duplex="value"
            ms-attr-disabled="disabled"
            ms-attr-readonly="readonly"
+           ms-attr-placeholder="placeholder"
            ms-blur="_blur"
            ms-focus="_focus"
            ms-keyup="_keyup"
@@ -28,6 +29,7 @@
            ms-duplex="value"
            ms-attr-disabled="disabled"
            ms-attr-readonly="readonly"
+           ms-attr-placeholder="placeholder"
            ms-blur="_blur"
            ms-focus="_focus"
            ms-keyup="_keyup"
@@ -44,6 +46,7 @@
            ms-duplex="value"
            ms-attr-disabled="disabled"
            ms-attr-readonly="readonly"
+           ms-attr-placeholder="placeholder"
            ms-blur="_blur"
            ms-focus="_focus"
            ms-keyup="_keyup"
@@ -51,6 +54,6 @@
            ms-keypress="_keypress"
            ms-attr-id="input_id"
            ms-if="type=='textarea'"></textarea>
-        <img src="notice.png" ms-if="_showNoticeImage && isShowNoticeImage" ms-class="sui-input-middle">
-        <label ms-class="sui-input-msg-{{theme}} sui-input-font-{{theme}} sui-input-msg-color-{{theme}}" >{{msg}}</label>
+        <img src="notice.png" ms-if="_showNoticeImage && isShowNoticeImage" ms-class="sui-input-middle" ms-visible="isShowMsg">
+        <label ms-class="sui-input-msg-{{theme}} sui-input-font-{{theme}} sui-input-msg-color-{{theme}}" ms-visible="isShowMsg">{{msg}}</label>
 </span>

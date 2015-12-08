@@ -83,6 +83,7 @@ define(["avalon", "text!./sui.textbox.html", "css!../sui-input-common.css", "css
             vm.onInit(vm);
             vm.check = function ()
             {
+                avalon.log("check");
                 if (vm.require && vm.value == "")
                 {
                     vm._showNoticeImage = true;
@@ -104,9 +105,9 @@ define(["avalon", "text!./sui.textbox.html", "css!../sui-input-common.css", "css
                     }
                     else
                     {
-                        var tmpreg = "^[\s\S\n\r]{0," + vm.maxLength + "}$";
+                        var tmpreg = "^[\\s\\S\\n\\r]{0," + vm.maxLength + "}$";
                     }
-                    var re = new RegExp(tmpreg);
+                    var re = new RegExp(tmpreg,"g");
                     if (!re.test(vm.value))
                     {
                         vm._showNoticeImage = true;
@@ -119,6 +120,7 @@ define(["avalon", "text!./sui.textbox.html", "css!../sui-input-common.css", "css
                         vm.msg = "";
                     }
                 }
+                
                 //校验自定义正则
                 if (vm.customRegex != "" && vm.value != "")
                 {
