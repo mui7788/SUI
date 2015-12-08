@@ -27,7 +27,11 @@
                         msg: "请输入联系电话",
                         readonly: false,
                         disabled: false,
-                        require: true
+                        require: true,
+                        regexType:"int",
+                        //customRegex:"^\\d{2}$",
+                        customRegex:"^[a-z]{2}$",
+                        regexErrMsg:"手机号输入不正确"
                     },
                     inputOpts3: {
                         input_id: "lxdz",
@@ -38,6 +42,7 @@
                         disabled: false,
                         require: true,
                         styleType: "normal",
+                        maxLength:5,
                         onChange: function (n, o)
                         {
                             vm.address = n;
@@ -115,16 +120,16 @@
             }
 
         </style>
-    </head>
+    </head>   
     <body ms-controller="test">
-        <div><sui:textbox title="联  系  人" value="abc" require="true" ms-attr-identifier="value" ></sui:textbox></div>
-        <div><sui:textbox config="inputOpts2" $id="test1"></sui:textbox></div>
-        <div><sui:textbox config="inputOpts3" on-init="getVM" theme="custom"></sui:textbox></div>
+        <div><sui:textbox title="联  系  人"  is-Show-Msg="false" require="true" ms-attr-identifier="value" ></sui:textbox></div>
+        <div><sui:textbox config="inputOpts2" $id="test1" placeholder="请输入"></sui:textbox></div>
+        <div><sui:textbox config="inputOpts3" on-init="getVM" ></sui:textbox></div>
         <div><sui:textbox config="inputOpts3" type="password" title="密码"></sui:textbox></div>
-        <div><sui:textbox config="inputOpts3" type="textarea" title="备注"></sui:textbox></div>
+        <div><sui:textbox config="inputOpts3" type="textarea" title="备注" style-Type="big"></sui:textbox></div>
         <input type="button" ms-click="set">
         {{address}}
     </body>
 
 
-
+ 
