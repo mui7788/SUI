@@ -5,8 +5,8 @@ define(["avalon", "text!./sui.textbox.html", "css!../sui-input-common.css", "css
 
     avalon.component("sui:textbox", {
         //内部变量
-        _focusing: false,
-        _notice: "",
+        _focusing: false, //是否获得焦点
+        _msg: "",
         _showNoticeImage: false,
         //内部方法
         _blur: _interface,
@@ -14,36 +14,38 @@ define(["avalon", "text!./sui.textbox.html", "css!../sui-input-common.css", "css
         _keyup: _interface,
         _keydown: _interface,
         _keypress: _interface,
+        //回调方法
         onInit: _interface, //必须定义此接口
         onChange: _interface, //值修改时触发外部事件
         onFocus: _interface,
+        onBlur: _interface,
         onKeydown: _interface,
         onKeyup: _interface,
+        onKeypress: _interface,
+        //公有方法
         check: _interface,
         setFocus: _interface,
-        setVisible: _interface,
         //配置项
-        did: "",
-        title: "",
-        value: "",
-        notice: "该项为必填项",
-        isRequired: false,
-        isDisabled: false,
-        isReadonly: false,
-        widthType: "normal",
-        width: 0,
-        height: 0,
-        //自定义正则表达式
-        regexContent: "",
-        //校验类型
-        regexType: "",
-        //类型校验错误信息
-        regexErrorNotice: "",
+        input_id: "", //文本框id
+        title: "", //标签标题
+        value: "", //默认值
+        msg: "该项为必填项", //默认提示信息    
+        require: false, //是否必填项  
+        disabled: false, //是否禁用
+        readonly: false, //是否只读
+        visible: true, //是否可见
+        styleType: "normal", //文本框风格
+        width: 0, //自定义文本框宽度
+        height: 0, //自定义文本框高度
+        customRegex: "", //自定义正则表达式
+        regexType: "", //控件内置校验类型
+        maxLength: "", //文本框最大长度 功能需要修改
+        regexErrMsg: "", //自定义校验错误信息
         theme: "default",
-        type: "text",
+        type: "text", //文本框类型，text,textarea,password 
         isShowNoticeImage: false,
-        visible: true,
-        maxlength: "",
+        placeholder: "",
+        isShowMsg: true, //是否显示提示信息
         //模板
         $template: template,
         //替换自定义标签
@@ -61,15 +63,15 @@ define(["avalon", "text!./sui.textbox.html", "css!../sui-input-common.css", "css
             return options
         },
         $init: function (vm) {
-            vm._notice = vm.notice;
+            vm._msg = vm.msg;
             vm.title = vm.title + "：";
-            if (vm.isRequired && vm.value == "")
+            if (vm.require && vm.value == "")
             {
-                vm.notice = "*";
+                vm.msg = "*";
             }
             else
             {
-                vm.notice = "";
+                vm.msg = "";
             }
             //监控属性
             vm.$watch("value", function (n, o) {
@@ -81,56 +83,56 @@ define(["avalon", "text!./sui.textbox.html", "css!../sui-input-common.css", "css
             vm.onInit(vm);
             vm.check = function ()
             {
-                if (vm.isRequired && vm.value == "")
+                if (vm.require && vm.value == "")
                 {
                     vm._showNoticeImage = true;
-                    vm.notice = vm._notice;
+                    vm.msg = vm._msg;
                     return false;
                 }
                 else
                 {
                     vm._showNoticeImage = false;
-                    vm.notice = "";
+                    vm.msg = "";
                 }
                 //校验长度
-                if (vm.maxlength && vm.value != "")
+                if (vm.maxLength && vm.value != "")
                 {
-                    //var tmpreg = "^.{0," + vm.maxlength + "}$";
+                    //var tmpreg = "^.{0," + vm.maxLength + "}$";
                     if (vm.type != "textarea")
                     {
-                        var tmpreg = "^.{0," + vm.maxlength + "}$";
+                        var tmpreg = "^.{0," + vm.maxLength + "}$";
                     }
                     else
                     {
-                        var tmpreg = "^[\s\S\n\r]{0," + vm.maxlength + "}$";
+                        var tmpreg = "^[\s\S\n\r]{0," + vm.maxLength + "}$";
                     }
                     var re = new RegExp(tmpreg);
                     if (!re.test(vm.value))
                     {
                         vm._showNoticeImage = true;
-                        vm.notice = "请少于" + vm.maxlength + "个字符";
+                        vm.msg = "请少于" + vm.maxLength + "个字符";
                         return false;
                     }
                     else
                     {
                         vm._showNoticeImage = false;
-                        vm.notice = "";
+                        vm.msg = "";
                     }
                 }
                 //校验自定义正则
-                if (vm.regexContent != "" && vm.value != "")
+                if (vm.customRegex != "" && vm.value != "")
                 {
-                    var re = new RegExp(vm.regexContent);
+                    var re = new RegExp(vm.customRegex);
                     if (!re.test(vm.value))
                     {
                         vm._showNoticeImage = true;
-                        vm.notice = vm.regexErrorNotice;
+                        vm.msg = vm.regexErrMsg;
                         return false;
                     }
                     else
                     {
                         vm._showNoticeImage = false;
-                        vm.notice = "";
+                        vm.msg = "";
                     }
 
                 }
@@ -138,24 +140,24 @@ define(["avalon", "text!./sui.textbox.html", "css!../sui-input-common.css", "css
                 //校验类型
                 if (vm.regexType != "" && vm.value != "")
                 {
-                    var msg = checkTextType(vm.regexType, vm.value);
-                    if (msg != undefined)
+                    var tmpMsg = checkTextType(vm.regexType, vm.value);
+                    if (tmpMsg != undefined)
                     {
                         vm._showNoticeImage = true;
-                        if (vm.regexErrorNotice != "")
+                        if (vm.regexErrMsg != "")
                         {
-                            vm.notice = vm.regexErrorNotice;
+                            vm.msg = vm.regexErrMsg;
                         }
                         else
                         {
-                            vm.notice = msg;
+                            vm.msg = tmpMsg;
                         }
                         return false;
                     }
                     else
                     {
                         vm._showNoticeImage = false;
-                        vm.notice = "";
+                        vm.msg = "";
                     }
                 }
                 return true;
@@ -163,18 +165,19 @@ define(["avalon", "text!./sui.textbox.html", "css!../sui-input-common.css", "css
             vm._blur = function (e)
             {
                 vm._focusing = false;
+                vm.onBlur(e);
                 vm.check();
+                
             }
             vm._keyup = function (e)
             {
+//                if (e.which == 13)
+//                {
+//                    //window.event.keyCode=9
+//                    e.target.blur();
+//                }
                 vm.onKeyup(e);
-                if (e.which == 13)
-                {
-                    //window.event.keyCode=9
-                    e.target.blur();
-                }
             }
-            avalon.bind(element,"keydown",vm.bindKeydown)
             vm._keydown = function (e)
             {
 
@@ -190,27 +193,24 @@ define(["avalon", "text!./sui.textbox.html", "css!../sui-input-common.css", "css
 //                }
                 vm.onKeydown(e);
             }
-             //vm._keydown=vm.bindKeydown;
+            //vm._keydown=vm.bindKeydown;
 
             vm._keypress = function (e)
             {
+                vm.onKeypress(e);
             }
             vm._focus = function (e)
             {
                 vm._focusing = true;
-                vm.onFocus();
+                vm.onFocus(e);
             }
             vm.setFocus = function ()
             {
-                if (vm.did)
+                if (vm.input_id)
                 {
-                    document.getElementById(vm.did).focus();
+                    document.getElementById(vm.input_id).focus();
                 }
-            },
-                    vm.setVisible = function (v)
-                    {
-                        vm.visible = v;
-                    }
+            }
         },
         $dispose: function (vm, element)
         {
