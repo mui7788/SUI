@@ -9,58 +9,119 @@
             require(["./sui/input/textbox/sui.textbox"], function () {
                 var vm = avalon.define({
                     $id: "test",
-                    value:"a",
-                    address:"",
-                    $skipArray: ["inuptOpts","inputOpts2","inputOpts3"],
+                    value: "a",
+                    address: "",
+                    $skipArray: ["inuptOpts", "inputOpts2", "inputOpts3"],
                     inputOpts: {
                         title: "名　　称",
                         value: "",
-                        notice: "请输入名称",
-                        isReadonly: false,
-                        isDisabled: false,
-                        isRequired: false,
+                        msg: "请输入名称",
+                        readonly: false,
+                        disabled: false,
+                        require: false
                     },
                     inputOpts2: {
+                        input_id: "lxdh",
                         title: "联系电话",
                         value: "",
-                        notice: "请输入联系电话",
-                        isReadonly: false,
-                        isDisabled: false,
-                        isRequired: true,
+                        msg: "请输入联系电话",
+                        readonly: false,
+                        disabled: false,
+                        require: true
                     },
                     inputOpts3: {
+                        input_id: "lxdz",
                         title: "联系地址",
                         value: "",
-                        notice: "请输入联系地址",
-                        isReadonly: false,
-                        isDisabled: false,
-                        isRequired: true,
-                        widthType: "big",
-                        onChange:function(n,o)
+                        msg: "请输入联系地址",
+                        readonly: false,
+                        disabled: false,
+                        require: true,
+                        styleType: "normal",
+                        onChange: function (n, o)
                         {
-                            vm.address=n;
+                            vm.address = n;
                         }
                     },
-                    set:function()
+                    set: function ()
                     {
                         alert(avalon.vmodels.a.value)
                         //avalon.log(tvm.value)
-                        tvm.isDisabled=true;
+                        tvm.disabled = true;
                     },
-                    getVM:function(vm)
+                    getVM: function (vm)
                     {
-                        tvm=vm
+                        tvm = vm
                     }
                 })
                 avalon.scan()
-                
+
             })
         </script>
+        <style>
+
+            .sui-input-container-custom
+            {
+                margin:3px 0;
+                display: inline-block;
+            }
+            .sui-input-label-custom
+            {
+                width: 60px;
+                display: inline-block;
+                padding-left:3px;
+                color:red;
+                font-family: "宋体";
+            }
+            .sui-input-msg-custom
+            {
+                display: inline-block;
+                margin-left: 5px;
+                font-family: "宋体";
+            }
+            .sui-input-font-custom
+            {
+                font-size: 12px;
+            }
+            .sui-input-color-custom
+            {
+                color:#888;
+            }
+            .sui-input-msg-color-custom
+            {
+                color:#39F;
+            }
+
+            .sui-input-textbox-text-custom
+            {
+                border:1px #CCC solid;
+                height:25px;
+                vertical-align:middle;
+                line-height: 25px;
+            }
+            .sui-input-textbox-text-area-custom
+            {
+                border:1px #CCC solid;
+                height:80px;
+                vertical-align:middle;
+            }
+            .text-actived-custom
+            {
+                border:1px #CCC solid;
+            }
+            .text-hover-custom
+            {
+                border:1px #39F solid;
+            }
+
+        </style>
     </head>
     <body ms-controller="test">
-        <div><sui:textbox title="联  系  人" value="abc" is-Required="true" ms-attr-identifier="value" ></sui:textbox></div>
+        <div><sui:textbox title="联  系  人" value="abc" require="true" ms-attr-identifier="value" ></sui:textbox></div>
         <div><sui:textbox config="inputOpts2" $id="test1"></sui:textbox></div>
-        <div><sui:textbox config="inputOpts3" on-init="getVM"></sui:textbox></div>
+        <div><sui:textbox config="inputOpts3" on-init="getVM" theme="custom"></sui:textbox></div>
+        <div><sui:textbox config="inputOpts3" type="password" title="密码"></sui:textbox></div>
+        <div><sui:textbox config="inputOpts3" type="textarea" title="备注"></sui:textbox></div>
         <input type="button" ms-click="set">
         {{address}}
     </body>
