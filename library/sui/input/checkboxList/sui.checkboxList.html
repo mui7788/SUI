@@ -1,0 +1,22 @@
+<span ms-class="sui-input-container-{{theme}}" ms-visible="visible">
+    <label ms-class="sui-input-label-{{theme}} sui-input-font-{{theme}} sui-input-middle">{{title}}</label>
+    <span class="sui-input-checkbox-container">
+    <input 
+           ms-class-1="sui-input-checkbox-{{theme}}"
+           type="checkbox"
+           /><label ms-class="sui-input-checkbox-item-label-{{theme}}">全选</label>
+        </span>
+    <span class="sui-input-checkbox-container">
+    <span  ms-repeat="data"><input 
+           ms-class-1="sui-input-checkbox-{{theme}}"
+           type="checkbox"
+           ms-duplex-number="value" 
+           ms-attr-value="el.value"
+           ms-attr-disabled="disabled"
+           ms-attr-id="{{inputid}}_{{$index}}"
+           ms-click="_click($event,$index)"
+           /><label ms-class="sui-input-checkbox-item-label-{{theme}}">{{el.title}}</label></span>
+        </span>
+        <img src="notice.png" ms-if="_showNoticeImage && isShowNoticeImage" ms-class="sui-input-middle" ms-visible="isShowMsg">
+        <label ms-class="sui-input-msg-{{theme}} sui-input-font-{{theme}} sui-input-msg-color-{{theme}}" ms-visible="isShowMsg">{{msg}}</label>
+</span>
