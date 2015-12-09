@@ -36,6 +36,10 @@
                         {
                             alert(ex)
                         }
+                    },
+                    setValue:function()
+                    {
+                        avalon.vmodels.a.value="abc";
                     }
                 })
                 avalon.scan()
@@ -46,6 +50,7 @@
     <body ms-controller="test">
         <div><sui:textbox config="opts" $id="a"></sui:textbox></div>
         <input type="button" ms-click="getValue" value="getValue">
+        <input type="button" ms-click="setValue" value="setValue">
         {{value}}
     </body>
 

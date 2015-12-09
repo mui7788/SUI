@@ -9,21 +9,22 @@
             require(["./sui/input/textbox/sui.textbox","./sui/input/checkboxList/sui.checkboxList"], function () {
                 var vm = avalon.define({
                     $id: "test",
-                    value:"",
-                    $skipArray: ["opts"],
-                    opts: {
+                    value1:[],
+                    $opts: {
                         inputid:"name",
                         title: "兴趣爱好",
                         value: [],
-                        data:[{title:"没有一个爱好1",value:"1"},{title:"没有一个爱好2",value:"2"},{title:"没有一个爱好3",value:"3"},{title:"没有一个爱好4",value:"4"}],
+                        data:[{text:"没有一个爱好1",value:"a1"},{text:"没有一个爱好2",value:"a2"},{text:"没有一个爱好3",value:"a3"},{text:"没有一个爱好4",value:"a4"}],
+                        //data:["a","b","c"],
                         msg: "没有一个爱好？",
                         require: true,
                         count:0,
-                        onChange:function(n)
+                        isShowAll:true,
+                        onChange:function(e,v,i)
                         {
-                            vm.value=n;
+                            vm.value1=v;
                         }
-                    },opts1: {
+                    },$opts1: {
                         inputid:"name",
                         title: "请输入姓",
                         value: "",
@@ -48,6 +49,10 @@
                         {
                             alert(ex)
                         }
+                    },
+                    showModel:function()
+                    {
+                        alert(JSON.stringify(vm.$model))
                     }
                 })
                 avalon.scan()
@@ -56,12 +61,13 @@
         </script>
     </head>   
     <body ms-controller="test">
-        <div><sui:textbox config="opts1" $id="a"></sui:textbox></div>
-        <div><sui:textbox config="opts1" $id="a"></sui:textbox></div>
-        <div><sui:checkboxList config="opts" $id="a"></sui:checkboxList></div>
-        <div><sui:textbox config="opts1" $id="a" ></sui:textbox></div>
+        <div><sui:textbox config="$opts1" $id="a"></sui:textbox></div>
+        <div><sui:textbox config="$opts1" $id="a"></sui:textbox></div>
+        <div><sui:checkboxList config="$opts" $id="a"></sui:checkboxList></div>
+        <div><sui:textbox config="$opts1" $id="a" ></sui:textbox></div>
         <input type="button" ms-click="getValue" value="getValue">
-        {{value}}
+        {{value1}}
+        <input type="button" ms-click="showModel" value="showModel">
     </body>
 
 
