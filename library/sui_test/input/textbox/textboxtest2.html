@@ -1,0 +1,53 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <META http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <META content="text/html; charset=UTF-8" http-equiv=Content-Type>
+        <script src="../../../avalon.js"></script> 
+        <script>
+            avalon.library("sui", {});
+            require(["./sui/input/textbox/sui.textbox"], function () {
+                var vm = avalon.define({
+                    $id: "test",
+                    value:"",
+                    $skipArray: ["opts"],
+                    opts: {
+                        inputid:"name",
+                        title: "请输入姓名",
+                        value: "",
+                        msg: "请输入姓名",
+                        require: false,
+                        maxLength:10,
+                        regexType:"alpha_dash",
+                        styleType:"normal",
+                        type:"password",
+                        onChange:function(n)
+                        {
+                            vm.value=n;
+                        }
+                    },
+                    getValue: function ()
+                    {
+                        try
+                        {
+                            avalon.vmodels.a.getValue()
+                        }
+                        catch (ex)
+                        {
+                            alert(ex)
+                        }
+                    }
+                })
+                avalon.scan()
+
+            })
+        </script>
+    </head>   
+    <body ms-controller="test">
+        <div><sui:textbox config="opts" $id="a"></sui:textbox></div>
+        <input type="button" ms-click="getValue" value="getValue">
+        {{value}}
+    </body>
+
+
+

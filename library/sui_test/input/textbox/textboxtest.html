@@ -9,6 +9,7 @@
             require(["./sui/input/textbox/sui.textbox"], function () {
                 var vm = avalon.define({
                     $id: "test",
+                    lxr:"",
                     value: "a",
                     address: "",
                     $skipArray: ["inuptOpts", "inputOpts2", "inputOpts3"],
@@ -21,7 +22,7 @@
                         require: false
                     },
                     inputOpts2: {
-                        input_id: "lxdh",
+                        inputid: "lxdh",
                         title: "联系电话",
                         value: "",
                         msg: "请输入联系电话",
@@ -33,7 +34,7 @@
                         regexErrMsg: "手机号输入不正确"
                     },
                     inputOpts3: {
-                        input_id: "lxdz",
+                        inputid: "lxdz",
                         title: "联系地址",
                         value: "",
                         msg: "请输入联系地址",
@@ -89,6 +90,21 @@
                     getVM: function (vm)
                     {
                         tvm = vm
+                    },
+                    changeValue:function(n,o)
+                    {
+                        vm.lxr=n;
+                    },
+                    getValue:function()
+                    {
+                        try
+                        {
+                        avalon.vmodels.a.getValue()
+                        }
+                        catch(ex)
+                        {
+                            alert(ex)
+                        }
                     }
                 })
                 avalon.scan()
@@ -154,13 +170,14 @@
         </style>
     </head>   
     <body ms-controller="test">
-        <div><sui:textbox title="联  系  人"  is-Show-Msg="false" require="true" ms-attr-identifier="value" ></sui:textbox></div>
+        <div><sui:textbox title="联  系  人"  require="true" ms-attr-identifier="value" on-Change="changeValue" regex-Type="int" inputid="test_a"></sui:textbox></div>
         <div><sui:textbox config="inputOpts2" $id="test1" placeholder="请输入"></sui:textbox></div>
         <div><sui:textbox config="inputOpts3" on-init="getVM" ></sui:textbox></div>
         <div><sui:textbox config="inputOpts3" type="password" title="密码"></sui:textbox></div>
         <div><sui:textbox config="inputOpts3" type="textarea" title="备注" style-Type="big" on-Blur="set"></sui:textbox></div>
-        <input type="button" ms-click="set">
-        {{address}}
+        <input type="button" ms-click="set" value="set">
+        <input type="button" ms-click="getValue" value="getValue">
+        {{lxr}}<br>{{address}}
     </body>
 
 
