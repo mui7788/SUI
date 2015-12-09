@@ -58,13 +58,12 @@ define(["avalon", "text!./sui.checkboxList.html", "css!../sui-input-common.css",
         $ready: function (vm, element) {
             vm._clickAllCheckbox = function ()
             {
-                //vm._isClick = false;
-                vm._clickAll();
+                vm._isClick = false;
             }
             vm._click = function (e, index)
             {
                 vm._isClick = true;
-                vm.all = vm.value.length === vm.data.length;
+                //vm.all = vm.value.length === vm.data.length;
                 setTimeout(function () {
                     vm.all = vm.value.length === vm.data.length;
                     vm.onChange(e, vm.value, index)
@@ -119,6 +118,15 @@ define(["avalon", "text!./sui.checkboxList.html", "css!../sui-input-common.css",
             //监控属性
             vm.$watch("value.length", function (n, o) {
                 vm.check();
+            })
+            //临控全选属性
+            vm.$watch("all", function () {
+                if (vm.all || (vm._isClick==false && vm.all==false))
+                {
+                    vm._isClick=false;
+                    vm._clickAll();
+                }
+
             })
         },
         $dispose: function (vm, element)
