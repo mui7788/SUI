@@ -1,0 +1,68 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <META http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <META content="text/html; charset=UTF-8" http-equiv=Content-Type>
+        <script src="../../../avalon.js"></script> 
+        <script>
+            avalon.library("sui", {});
+            require(["./sui/input/textbox/sui.textbox","./sui/input/checkboxList/sui.checkboxList"], function () {
+                var vm = avalon.define({
+                    $id: "test",
+                    value:"",
+                    $skipArray: ["opts"],
+                    opts: {
+                        inputid:"name",
+                        title: "兴趣爱好",
+                        value: [],
+                        data:[{title:"没有一个爱好1",value:"1"},{title:"没有一个爱好2",value:"2"},{title:"没有一个爱好3",value:"3"},{title:"没有一个爱好4",value:"4"}],
+                        msg: "没有一个爱好？",
+                        require: true,
+                        count:0,
+                        onChange:function(n)
+                        {
+                            vm.value=n;
+                        }
+                    },opts1: {
+                        inputid:"name",
+                        title: "请输入姓",
+                        value: "",
+                        msg: "请输入姓名",
+                        require: true,
+                        maxLength:10,
+                        regexType:"alpha_dash",
+                        styleType:"normal",
+                        type:"password",
+                        onChange:function(n)
+                        {
+                            vm.value=n;
+                        }
+                    },
+                    getValue: function ()
+                    {
+                        try
+                        {
+                            avalon.vmodels.a.getValue()
+                        }
+                        catch (ex)
+                        {
+                            alert(ex)
+                        }
+                    }
+                })
+                avalon.scan()
+
+            })
+        </script>
+    </head>   
+    <body ms-controller="test">
+        <div><sui:textbox config="opts1" $id="a"></sui:textbox></div>
+        <div><sui:textbox config="opts1" $id="a"></sui:textbox></div>
+        <div><sui:checkboxList config="opts" $id="a"></sui:checkboxList></div>
+        <div><sui:textbox config="opts1" $id="a" ></sui:textbox></div>
+        <input type="button" ms-click="getValue" value="getValue">
+        {{value}}
+    </body>
+
+
+
