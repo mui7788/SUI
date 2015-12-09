@@ -23,10 +23,11 @@ define(["avalon", "text!./sui.textbox.html", "css!../sui-input-common.css", "css
         onKeyup: _interface,
         onKeypress: _interface,
         //公有方法
-        valid: _interface,
+        check: _interface,
         setFocus: _interface,
+        getValue: _interface,
         //配置项
-        input_id: "", //文本框id
+        inputid: "", //文本框id
         title: "", //标签标题
         value: "", //默认值
         msg: "该项为必填项", //默认提示信息    
@@ -75,14 +76,17 @@ define(["avalon", "text!./sui.textbox.html", "css!../sui-input-common.css", "css
             }
             //监控属性
             vm.$watch("value", function (n, o) {
-                vm.onChange(n, o)
-                vm.check();
+                if (vm.check())
+                {
+                    vm.onChange(n, o)
+                }
             })
         },
         $ready: function (vm, element) {
             vm.onInit(vm);
             vm.check = function ()
             {
+                //校验是否必填项
                 if (vm.require && vm.value == "")
                 {
                     vm._showNoticeImage = true;
@@ -94,6 +98,7 @@ define(["avalon", "text!./sui.textbox.html", "css!../sui-input-common.css", "css
                     vm._showNoticeImage = false;
                     vm.msg = "";
                 }
+                
                 //校验长度
                 if (vm.maxLength && vm.value != "")
                 {
@@ -188,9 +193,21 @@ define(["avalon", "text!./sui.textbox.html", "css!../sui-input-common.css", "css
             }
             vm.setFocus = function ()
             {
-                if (vm.input_id)
+                if (vm.inputid)
                 {
-                    document.getElementById(vm.input_id).focus();
+                    document.getElementById(vm.inputid).focus();
+                }
+            }
+            vm.getValue = function ()
+            {
+                if (vm.check())
+                {
+                    return vm.value;
+                }
+                else
+                {
+                    vm.setFocus();
+                    throw vm.msg;
                 }
             }
         },
@@ -264,7 +281,7 @@ define(["avalon", "text!./sui.textbox.html", "css!../sui-input-common.css", "css
                 {
                     return "请输入字母或数字及下划线等特殊字符";
                 }
-                break;
+                break;             
             default:
                 return  "不支持的验证类型";
                 break;
