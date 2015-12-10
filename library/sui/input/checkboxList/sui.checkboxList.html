@@ -1,28 +1,29 @@
 <span ms-class="sui-input-container-{{theme}}" ms-visible="visible">
     <label ms-class="sui-input-label-{{theme}} sui-input-font-{{theme}} sui-input-middle">{{title}}</label>
     <span  ms-if="count==0">
-    <span  ms-if="isShowAll">
-        <input 
-           ms-class-1="sui-input-checkbox-{{theme}}"
-           type="checkbox"
-           ms-duplex-checked="all"
-           ms-click="_clickAllCheckbox"
-           /><label ms-class="sui-input-checkbox-item-label-{{theme}}">全选</label>
+        <span  ms-if="isShowAll">
+            <input 
+               ms-class-1="sui-input-checkbox-{{theme}}"
+               type="checkbox"
+               ms-duplex-checked="all"
+               ms-click="_clickAllCheckbox"
+               /><label ms-class="sui-input-checkbox-item-label-{{theme}}">全选</label>
         </span>
-    
-    <span ms-repeat="data"><input 
-           ms-class-1="sui-input-checkbox-{{theme}}"
-           type="checkbox"
-           ms-duplex-string="value" 
-           ms-attr-value="el.value||el"
-           ms-attr-disabled="disabled"
-           ms-attr-id="{{inputid}}_{{$index}}"
-           ms-click="_click($event,$index)"
-           /><label ms-class="sui-input-checkbox-item-label-{{theme}}">{{el.text||el}}</label></span>
+        <span ms-repeat="data">
+            <input 
+            ms-class-1="sui-input-checkbox-{{theme}}"
+            type="checkbox"
+            ms-duplex-string="value" 
+            ms-attr-value="el.value||el"
+            ms-attr-disabled="disabled"
+            ms-attr-id="{{inputid}}_{{$index}}"
+            ms-click="_click($event,$index)"
+            /><label ms-class="sui-input-checkbox-item-label-{{theme}}">{{el.text||el}}</label>
         </span>
+    </span>
     <!-- -->
-    <span  ms-repeat-el="tmpData" style="display: inline-table" ms-if="count>0">
-        <div  ms-if="isShowAll && $index==0">
+    <span class="sui-input-checkbox-container" ms-if="isShowAll && count>0">
+        <div>
         <input 
            ms-class-1="sui-input-checkbox-{{theme}}"
            type="checkbox"
@@ -30,7 +31,10 @@
            ms-click="_clickAllCheckbox"
            /><label ms-class="sui-input-checkbox-item-label-{{theme}}">全选</label>
         </div>
-        <div ms-repeat-item="el"><input 
+    </span>
+    <span  ms-repeat-el="tmpData" class="sui-input-checkbox-container" ms-if="count>0">
+        <div ms-repeat-item="el">
+            <input 
            ms-class-1="sui-input-checkbox-{{theme}}"
            type="checkbox"
            ms-duplex-string="value" 
@@ -38,7 +42,7 @@
            ms-attr-disabled="disabled"
            ms-attr-id="{{inputid}}_{{$outer.$index}}_{{$index}}"
            ms-click="_click($event,item.index)"
-           /><label ms-class="sui-input-checkbox-item-label-{{theme}}">{{item.text}}</label>
+           /><span ms-class="sui-input-checkbox-item-span-{{theme}}">{{item.text}}</span>
         </div>
     </span>
         <img src="notice.png" ms-if="_showNoticeImage && isShowNoticeImage" ms-class="sui-input-middle" ms-visible="isShowMsg">
