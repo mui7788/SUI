@@ -2,7 +2,7 @@
     <label ms-class="sui-input-label-{{theme}} sui-input-font-{{theme}} sui-input-middle">{{title}}</label>
     <span  ms-if="count==0">
     <span  ms-if="isShowAll">
-    <input 
+        <input 
            ms-class-1="sui-input-checkbox-{{theme}}"
            type="checkbox"
            ms-duplex-checked="all"
@@ -22,8 +22,8 @@
         </span>
     <!-- -->
     <span  ms-repeat-el="tmpData" style="display: inline-table" ms-if="count>0">
-    <div  ms-if="isShowAll">
-    <input 
+        <div  ms-if="isShowAll && $index==0">
+        <input 
            ms-class-1="sui-input-checkbox-{{theme}}"
            type="checkbox"
            ms-duplex-checked="all"
@@ -34,12 +34,13 @@
            ms-class-1="sui-input-checkbox-{{theme}}"
            type="checkbox"
            ms-duplex-string="value" 
-           ms-attr-value="item.value||item"
+           ms-attr-value="item.value"
            ms-attr-disabled="disabled"
-           ms-attr-id="{{inputid}}_{{$index}}"
-           ms-click="_click($event,$index)"
-           /><label ms-class="sui-input-checkbox-item-label-{{theme}}">{{item.text||item}}</label></div>
-        </span>
+           ms-attr-id="{{inputid}}_{{$outer.$index}}_{{$index}}"
+           ms-click="_click($event,item.index)"
+           /><label ms-class="sui-input-checkbox-item-label-{{theme}}">{{item.text}}</label>
+        </div>
+    </span>
         <img src="notice.png" ms-if="_showNoticeImage && isShowNoticeImage" ms-class="sui-input-middle" ms-visible="isShowMsg">
         <label ms-class="sui-input-msg-{{theme}} sui-input-font-{{theme}} sui-input-msg-color-{{theme}}" ms-visible="isShowMsg">{{msg}}</label>
 </span>

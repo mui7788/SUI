@@ -24,7 +24,7 @@ define(["avalon", "text!./sui.checkboxList.html", "css!../sui-input-common.css",
         title: "", //标签标题
         value: [], //默认值
         data: [],
-        tmpData:[],//根据count每行显示数量动态设置2维数组,0时不启用
+        tmpData: [], //根据count每行显示数量动态设置2维数组,0时不启用
         msg: "请至少选择一项", //默认提示信息
         require: false, //是否必填项  
         disabled: false, //是否禁用
@@ -42,23 +42,35 @@ define(["avalon", "text!./sui.checkboxList.html", "css!../sui-input-common.css",
         $construct: function (defaultConfig, vmConfig, eleConfig) {
             var options = avalon.mix(defaultConfig, vmConfig, eleConfig)
             //把data平配到数组中
-            if(options.count!=0 && options.data && options.data.length>0)
+            if (options.count != 0 && options.data && options.data.length > 0)
             {
-                var tmpData=[];
-                for(var i=0;i<options.count;i++)
+                var tmpData = [];
+                for (var i = 0; i < options.count; i++)
                 {
                     tmpData.push([]);
                 }
-                var i=0;
-                avalon.each(options.data,function(index,item){
-                    tmpData[i].push(item)
-                    i=i+1;
-                    if(i>=options.count)
+                var i = 0;
+                avalon.each(options.data, function (index, item) {
+
+                    if (typeof item == "object")
                     {
-                        i=0;
+                        item['index'] = index;
+                        tmpData[i].push(item);
+                    }
+                    else
+                    {
+                        var tmpObj = null;
+                        tmpObj = {text: item, value: item, index: index};
+                        tmpData[i].push(tmpObj);
+                    }
+
+                    i = i + 1;
+                    if (i >= options.count)
+                    {
+                        i = 0;
                     }
                 })
-               options.tmpData=tmpData;
+                options.tmpData = tmpData;
                 avalon.log(tmpData);
             }
             return options
