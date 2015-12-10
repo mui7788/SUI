@@ -34,13 +34,30 @@ define(["avalon", "text!./sui.checkboxList.html", "css!../sui-input-common.css",
         isShowMsg: true, //是否显示提示信息
         count: 0, //每行显示个数
         isShowAll: false, //是否显示全选按钮
-        all: false,
+        all: false, //全选按钮值
+        width:0, //checkboxlist容器宽度，为0自动延身,当设置高度后如果显示内容超出高度自动出滚动条
+        height:0, //checkboxlist容器高度，为0自动延身,当设置高度后如果显示内容超出高度自动出滚动条
+        itemWidth:80, //checkbox 项宽度，包含checkbox选择框，count为0时失效
+        isControlItem:true, //是否控制checkbox项宽度 true控制宽度为itemWidth,count为0时失效
         //模板
         $template: template,
         //替换自定义标签
         $replace: 1,
         $construct: function (defaultConfig, vmConfig, eleConfig) {
             var options = avalon.mix(defaultConfig, vmConfig, eleConfig)
+            //查看是否自定义宽高
+            if(options.width==0)
+            {
+                options.width="";
+            }
+            if(options.height==0)
+            {
+                options.height="";
+            }
+            if(!options.isControlItem)
+            {
+                options.itemWidth="";
+            }
             //把data平配到数组中
             if (options.count != 0 && options.data && options.data.length > 0)
             {

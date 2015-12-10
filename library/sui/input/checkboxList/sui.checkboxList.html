@@ -1,4 +1,9 @@
-<span ms-class="sui-input-container-{{theme}}" ms-visible="visible" >
+<span 
+    ms-class="sui-input-container-{{theme}}"
+    ms-visible="visible"
+    ms-class-1="sui-input-container-overflow"
+    ms-css-width="width"
+    ms-css-height="height">
     <label ms-class="sui-input-label-{{theme}} sui-input-font-{{theme}} sui-input-middle">{{title}}</label>
     <span  ms-if="count==0">
         <span  ms-if="isShowAll">
@@ -18,7 +23,7 @@
             ms-attr-disabled="disabled"
             ms-attr-id="{{inputid}}_{{$index}}"
             ms-click="_click($event,$index)"
-            /><label ms-class="sui-input-checkbox-item-label-{{theme}}">{{el.text||el}}</label>
+            /><span ms-class="sui-input-checkbox-item-span-{{theme}}">{{el.text||el}}</span>
         </span>
     </span>
     <!-- -->
@@ -32,7 +37,7 @@
            /><label ms-class="sui-input-checkbox-item-label-{{theme}}">全选</label>
         </div>
     </span>
-    <span  ms-repeat-el="tmpData" class="sui-input-checkbox-container" ms-if="count>0">
+    <span  ms-repeat-el="tmpData" class="sui-input-checkbox-container"  ms-if="count>0">
         <div ms-repeat-item="el">
             <input 
            ms-class-1="sui-input-checkbox-{{theme}}"
@@ -42,7 +47,7 @@
            ms-attr-disabled="disabled"
            ms-attr-id="{{inputid}}_{{$outer.$index}}_{{$index}}"
            ms-click="_click($event,item.index)"
-           /><span ms-class="sui-input-checkbox-item-span-{{theme}}">{{item.text}}</span>
+           /><span ms-class="sui-input-checkbox-item-span-{{theme}}" ms-css-width="itemWidth">{{item.text}}</span>
         </div>
     </span>
         <img src="notice.png" ms-if="_showNoticeImage && isShowNoticeImage" ms-class="sui-input-middle" ms-visible="isShowMsg">
