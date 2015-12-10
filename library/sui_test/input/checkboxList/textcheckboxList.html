@@ -10,19 +10,21 @@
                 var vm = avalon.define({
                     $id: "test",
                     value1:[],
+                    index:"",
                     $opts: {
                         inputid:"name",
                         title: "兴趣爱好",
                         value: [],
-                        data:[{text:"没有一个爱好1",value:"a1"},{text:"没有一个爱好2",value:"a2"},{text:"没有一个爱好3",value:"a3"},{text:"没有一个爱好4",value:"a4"}],
+                        data:[{text:"没有",value:"a1"},{text:"没有一个爱好2",value:"a2"},{text:"没有一个爱好3",value:"a3"},{text:"没有一个爱好4",value:"a4"},{text:"没有一个爱好5",value:"a5"}],
                         //data:["a","b","c"],
                         msg: "没有一个爱好？",
                         require: true,
-                        count:0,
-                        isShowAll:true,
+                        count:2,
+                        isShowAll:false,
                         onChange:function(e,v,i)
                         {
                             vm.value1=v;
+                            vm.index=i;
                         }
                     },$opts1: {
                         inputid:"name",
@@ -66,7 +68,8 @@
         <div><sui:checkboxList config="$opts" $id="a"></sui:checkboxList></div>
         <div><sui:textbox config="$opts1" $id="a" ></sui:textbox></div>
         <input type="button" ms-click="getValue" value="getValue">
-        {{value1}}
+        {{value1}}<br>
+        {{index}}
         <input type="button" ms-click="showModel" value="showModel">
     </body>
 
