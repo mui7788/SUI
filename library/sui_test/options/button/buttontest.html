@@ -8,12 +8,24 @@
         <script src="../../../avalon.js" type="text/javascript"></script>
         <script>
 
-            avalon.library("sui", {});
-
+            avalon.library("sui", {}); //   必须添加，否则其它低版本浏览器
             require(["./sui/options/button/sui.button"],
                 function () 
                 {
-                    avalon.define({$id: "demo"}); 
+                    avalon.define({$id: "demo",
+                                   click1:function(e)
+                                   {
+                                        alert(1)
+                                        document.getElementById("btn").setAttribute("ms-click","click2");
+                                        avalon.scan();
+                                   },
+                                   click2:function()
+                                   {
+                                       alert(2);
+                                        document.getElementById("btn").setAttribute("ms-click","click1");
+                                        avalon.scan();
+                                   }
+                                  }); 
                     avalon.scan();
                 });
         </script>
@@ -22,7 +34,7 @@
         <fieldset>
             <legend>size 、width 、color and disabled config</legend>
             <div>
-                <sui:button size="small" type="labeledIcon" icon-position="left" icon="icon-search" color="success" >小按钮size small </sui:button>
+                <sui:button size="small" type="labeledIcon" icon-position="left" icon="icon-search" color="success" ms-click="click2" >小按钮size small </sui:button>
                 <sui:button size="small" type="labeledIcon" icon-position="right" icon="icon-search" color="success" >小按钮size small </sui:button>
                 <sui:button size="normal" type="text" color="primary" disabled="1" >size default</sui:button>
                 <sui:button size="normal" type="icon" color="primary" icon="icon-remove"  >size default</sui:button>
