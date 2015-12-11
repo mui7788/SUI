@@ -33,6 +33,7 @@
 {
     margin:3px 0;
     display: inline-block;
+    white-space:nowrap; 
 }
 /*input 表单控件 标题样式*/
 .sui-input-label-default
