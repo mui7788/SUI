@@ -14,20 +14,8 @@
 {
     display:inline-table;
 }
-/*单行checkbox标签样式*/
-.sui-input-checkbox-item-label-default
-{
-    display: inline-block;
-    font-family: "宋体";
-    margin-right: 5px;
-    margin-left: 3px;
-    font-size:12px;
-    color:#888;
-    white-space:nowrap; 
-    overflow:hidden; 
-    text-overflow:ellipsis;
-}
-/*多列checkbox标签样式*/
+
+/*checkbox标签样式*/
 .sui-input-checkbox-item-span-default
 {
     display: inline-block;
