@@ -3,47 +3,54 @@
     <head> 
         <META http-equiv="X-UA-Compatible" content="IE=edge"/>
         <META content="text/html; charset=UTF-8" http-equiv=Content-Type>
+        <style>
+            .ms-controller
+            { 
+                visibility: hidden 
+            } 
+        </style>
         <script src="../../../avalon.js"></script> 
         <script>
             avalon.library("sui", {});
-            require(["./sui/input/textbox/sui.textbox","./sui/input/checkboxList/sui.checkboxList"], function () {
+            require(["./sui/input/textbox/sui.textbox", "./sui/input/checkboxList/sui.checkboxList"], function () {
                 var vm = avalon.define({
                     $id: "test",
-                    value1:[],
-                    index:"",
+                    value1: [],
+                    index: "",
                     $opts: {
-                        inputid:"name",
+                        inputid: "name",
                         title: "兴趣爱好",
-                        value: [],
-                        data:[{text:"没有",value:"a1"},{text:"没有一个爱好2",value:"a2"},{text:"没有一个爱好3没有一个爱好3没有一个爱好3",value:"a3"},{text:"没有一个爱好4",value:"a4"},{text:"没有",value:"a5"},{text:"没有一个爱好6",value:"a6"},{text:"没有a7",value:"a7"}],
+                        value: [1],
+                        //data: [{text: "没有", value: "a1"}, {text: "没有一个爱好2", value: "a2"}, {text: "没有一个爱好3没有一个爱好3没有一个爱好3", value: "a3"}, {text: "没有一个爱好4", value: "a4"}, {text: "没有", value: "a5"}, {text: "没有一个爱好6", value: "a6"}, {text: "没有a7", value: "a7"}],
                         //data:["a","b","c","d","e","f","g"],
+                        data:[1,2,3,4]
                         msg: "没有一个爱好？",
                         require: true,
-                        count:3,
-                        width:0,
-                        height:0,
-                        isShowAll:false,
-                        isShowMsg:false,
-                        itemWidth:80,
-                        isControlItem:false,
-                        onChange:function(e,v,i)
+                        count: 0,
+                        width: 0,
+                        height: 0,
+                        isShowAll: 0,
+                        isShowMsg: false,
+                        itemWidth: 80,
+                        isControlItem: true,
+                        onChange: function (e, v, i)
                         {
-                            vm.value1=v;
-                            vm.index=i;
+                            vm.value1 = v;
+                            vm.index = i;
                         }
-                    },$opts1: {
-                        inputid:"name",
+                    }, $opts1: {
+                        inputid: "name",
                         title: "请输入姓",
                         value: "",
                         msg: "请输入姓名",
                         require: true,
-                        maxLength:10,
-                        regexType:"alpha_dash",
-                        styleType:"normal",
-                        type:"password",
-                        onChange:function(n)
+                        maxLength: 10,
+                        regexType: "alpha_dash",
+                        styleType: "normal",
+                        type: "password",
+                        onChange: function (n)
                         {
-                            vm.value=n;
+                            vm.value = n;
                         }
                     },
                     getValue: function ()
@@ -57,7 +64,7 @@
                             alert(ex)
                         }
                     },
-                    showModel:function()
+                    showModel: function ()
                     {
                         alert(JSON.stringify(vm.$model))
                     }
@@ -66,8 +73,9 @@
 
             })
         </script>
+
     </head>   
-    <body ms-controller="test">
+    <body ms-controller="test" class="ms-controller">
         <div><sui:textbox config="$opts1" $id="a"></sui:textbox></div>
         <div><sui:textbox config="$opts1" $id="a"></sui:textbox></div>
         <div><sui:checkboxlist config="$opts" $id="a"></sui:checkboxlist></div>
