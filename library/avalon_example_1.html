@@ -1,0 +1,63 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <title></title> 
+        <META content="text/html; charset=UTF-8" http-equiv=Content-Type>
+        <script src="avalon.js" type="text/javascript"></script>
+        <script>
+            var vm = avalon.define({
+                $id: "login",
+                loginName: "",
+                passWord: "",
+                show: function ()
+                {
+                    alert(JSON.stringify(vm.$model));
+                }
+            })
+
+            var vm2 = avalon.define({
+                $id: "body",
+                aaa: "",
+                bbb: "",
+                ccc: new Date() - 0,
+                ddd: "<b>hahaha</b>",
+                list: [
+                    {name: "aaa", age: 20},
+                    {name: "bbb", age: 25},
+                    {name: "ccc", age: 30}
+                ],
+                add: function ()
+                {
+                    vm2.bbb = "1234";
+                    vm2.aaa = "<div>{{bbb}}<div>";
+                }
+            })
+        </script>
+    </head>
+    <body ms-controller="body"> 
+        <div ms-controller="login">
+            用&nbsp;&nbsp;户&nbsp;&nbsp;名
+            <input type="text" ms-duplex="loginName"/>{{loginName}}<br><br>
+            登录密码
+            <input type="text" ms-duplex="passWord"/>{{passWord}}<br>
+            <input type="button" ms-click="show" value="model"/><br>
+            <input type="button" ms-click="add" value="adddiv"/> 
+        </div>
+
+
+
+        {{aaa|html}}
+
+
+        <br><br>
+        {{ddd}}<br>{{ddd|html}}<br>
+        {{ccc}}<br>{{ccc|date("yyyy MM dd:HH:mm:ss")}}
+
+        <div>
+            <ul>
+                <li ms-repeat="list" ms-if-loop="el.age>=25">{{el.name}}-{{el.age}}
+                </li>
+            </ul>
+        </div>
+    </body> 
+</html> 

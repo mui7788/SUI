@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>cookie组件</title>
+        <meta charset="UTF-8">
+        <script src="../../avalon.js" type="text/javascript"></script>
+        <style >
+            .cookieerror input{
+                border:1px  solid red;
+                background: orangered;
+            }
+            ul{
+                margin: 10px 0 30px;
+            }
+        </style>
+        <script>
+            require(["./scb/browse/scb.browser"], function(scb) {
+                avalon.define( {
+                    $id:"test",
+                    browser : scb.browser,
+                    engine : scb.engine,
+                    platform : scb.platform
+                })
+
+                avalon.scan()
+            })
+        </script>
+    </head>
+    <body>
+        <div ms-controller="test">
+            <div>操作系统</div>
+            <ul style="list-style-type:circle">
+                <li ms-repeat="platform" >{{$key}}:{{$val}}</li>
+            </ul>
+            <div>浏览器</div>
+            <ul  >
+                <li ms-repeat="browser" >{{$key}}:{{$val}}</li>
+            </ul>
+            <div>渲染引擎</div>
+            <ul style="list-style-type:square">
+                <li ms-repeat="engine"  >{{$key}}:{{$val}}</li>
+            </ul>
+        </div>
+    </body>
+</html>
