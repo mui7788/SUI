@@ -3,7 +3,6 @@
     
     <span class="datepicker-container" id="datepicker-container">
            <input 
-
            ms-class-1="sui-input-textbox-text-{{theme}}"
            ms-class-2="sui-input-{{styleType}}"
            ms-class-6="text-actived-{{theme}}:_focusing"
@@ -39,12 +38,9 @@
                           >{{day.title}}</label>
                </span>
                <div ms-if="isShowTime" class="datepicker-time-container">
-                   <lable>时:</lable>
-                   <input type="textbox" class="time-text" ms-duplex="_hour" />
-                   <lable>分:</lable>
-                   <input type="textbox" class="time-text" ms-duplex="_minute"/>
-                   <lable>秒:</lable>
-                   <input type="textbox" class="time-text" ms-duplex="hour"/>
+                   <input type="textbox" class="time-text" ms-duplex="_chour" /><lable>时:</lable>
+                   <input type="textbox" class="time-text" ms-duplex="_cminute"/><lable>分:</lable>
+                   <input type="textbox" class="time-text" ms-duplex="_csecond"/><lable>秒:</lable>
                    <input type="button" value="确定" ms-click="_timeClick">
                </div>
            </div>

@@ -17,9 +17,9 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
         _hour: 0, //当前小时
         _minute: 0, //当前分钟
         _second: 0, //当前秒
-        _syear: 0, //用户选择年份
-        _smonth: 0, //用户选择月份
-        _sday: 0, //用户选择日期
+        _syear: 0, //用户移动选择年份
+        _smonth: 0, //用户移动选择月份
+        _sday: 0, //用户移动选择日期
         _cyear: 0, //默认值年份
         _cmonth: 0, //默认值月份
         _cday: 0, //默认值日期
@@ -134,7 +134,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                         {
                             if (!vm.check())
                             {
-                                vm.value = "";
+                                //vm.value = "";
                             }
                             vm._closePicker();
                         }
@@ -169,20 +169,25 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
             }
             vm._blur = function (e)
             {
-                //vm.check();
-            }
-            vm._focus = function ()
-            {
-                if (vm.value)
+
+                if (!vm.isShowTime)
                 {
-                    if (!isCorrectDateTime(vm.value, vm.isShowTime, vm.isShowSecond))
+                    if (vm.value && isCorrectDateTime(vm.value, vm.isShowTime, vm.isShowSecond))
                     {
-                        vm._cyear = 0;
-                        vm._cmonth = 0;
-                        vm._cday = 0;
-                        //vm.value = "";
+
+                        vm.value = convertDate(vm.value)
                     }
                 }
+                else
+                {
+
+                }
+
+            }
+            vm._focus = function (e)
+            {
+                e.target.select();
+
                 avalon.bind(arr[0][0], arr[0][1], arr[0][2])
                 vm._focusing = true;
                 setPicker(vm);
@@ -218,7 +223,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                     var tmpday = (vm._cday + "").length == 1 ? "0" + vm._cday : vm._cday;
                     var tmpdate = vm._cyear + "-" + tmpmonth + "-" + tmpday;
                 }
-                var tmptime = vm._hour + ":" + vm._minute + ":" + vm._second;
+                var tmptime = vm._chour + ":" + vm._cminute + ":" + vm._csecond;
                 vm.value = tmpdate + " " + tmptime;
                 vm._closePicker();
             }
@@ -383,13 +388,25 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
 //转换长日期格式
     function convertDate(pDate)
     {
-        var currentDate = new Date(pDate);
-        var currentYear = currentDate.getFullYear();
-        var currentMonth = currentDate.getMonth() + 1 + "";
-        var currentDay = currentDate.getDate() + "";
-        currentMonth = currentMonth.length == 1 ? "0" + currentMonth : currentMonth;
-        currentDay = currentDay.length == 1 ? "0" + currentDay : currentDay;
-        return currentYear + "-" + currentMonth + "-" + currentDay
+        if (typeof pDate == "object" || (typeof pDate == "string" && pDate.indexOf("-") > 0))
+        {
+            var currentDate = new Date(pDate);
+            var currentYear = currentDate.getFullYear();
+            var currentMonth = currentDate.getMonth() + 1 + "";
+            var currentDay = currentDate.getDate() + "";
+            currentMonth = currentMonth.length == 1 ? "0" + currentMonth : currentMonth;
+            currentDay = currentDay.length == 1 ? "0" + currentDay : currentDay;
+            return currentYear + "-" + currentMonth + "-" + currentDay
+        }
+        else
+        {
+            var currentYear = pDate.substr(0, 4);
+            var currentMonth = pDate.substr(4, 2) + "";
+            var currentDay = pDate.substr(6, 2) + "";
+            currentMonth = currentMonth.length == 1 ? "0" + currentMonth : currentMonth;
+            currentDay = currentDay.length == 1 ? "0" + currentDay : currentDay;
+            return currentYear + "-" + currentMonth + "-" + currentDay
+        }
     }
 
 //设置日历日期
@@ -417,6 +434,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
         }
         else
         {
+
             //判断是否存在默认值
             if (vm.value == "")
             {
@@ -427,84 +445,99 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
             }
             else
             {
-                //读取日期
-                if (!vm.isShowTime)
+                //判断默认值是否正确
+                if (!isCorrectDateTime(vm.value, vm.isShowTime, vm.isShowSecond))
                 {
-                    if (vm.value.indexOf("-") > 0)
-                    {
-                        var arr = vm.value.split("-") //可以被-切成3份，并且第1个是4个字符
-                        if (arr.length === 3 && arr[0].length === 4) {
-                            var currentYear = vm._syear = vm._cyear = ~~arr[0] //全部转换为非负整数
-                            var currentMonth = vm._smonth = vm._cmonth = ~~arr[1] - 1
-                            var currentDay = vm._sday = vm._cday = ~~arr[2]
-                        }
-                    }
-                    else
-                    {
-                        if (vm.value.length == 8)
-                        {
-                            var currentYear = vm._syear = vm._cyear = ~~vm.value.substr(0, 4) //全部转换为非负整数
-                            var currentMonth = vm._smonth = vm._cmonth = ~~vm.value.substr(4, 2) - 1
-                            var currentDay = vm._sday = vm._cday = ~~vm.value.substr(6, 2)
-                        }
-                    }
+                    vm._cyear = 0;
+                    vm._cmonth = 0;
+                    vm._cday = 0;
+                    //vm.value = "";
+                    var currentDate = new Date();
+                    var currentYear = vm._syear = currentDate.getFullYear();
+                    var currentMonth = vm._smonth = currentDate.getMonth();
+                    var currentDay = vm._sday = currentDate.getDate();
                 }
                 else
                 {
-                    //日期时间
-                    var tmpdate = null;
-                    var tmptime = null;
-                    if (vm.value.indexOf("-") > 0 && vm.value.indexOf(":") > 0 && vm.value.indexOf(" ") > 0)
+                    //读取日期
+                    if (!vm.isShowTime)
                     {
-                        var tmparr = vm.value.split(" ");
-                        tmpdate = tmparr[0];
-                        tmptime = tmparr[1];
-                    }
-                    else
-                    {
-                        if (vm.value.length == 14)
+                        if (vm.value.indexOf("-") > 0)
                         {
-                            tmpdate = vm.value.substr(0, 8);
-                            tmptime = vm.value.substr(8, 6);
+                            var arr = vm.value.split("-") //可以被-切成3份，并且第1个是4个字符
+                            if (arr.length === 3 && arr[0].length === 4) {
+                                var currentYear = vm._syear = vm._cyear = ~~arr[0] //全部转换为非负整数
+                                var currentMonth = vm._smonth = vm._cmonth = ~~arr[1] - 1
+                                var currentDay = vm._sday = vm._cday = ~~arr[2]
+                            }
                         }
-                    }
-                    //日期
-                    if (tmpdate.indexOf("-") > 0)
-                    {
-                        var arr = tmpdate.split("-") //可以被-切成3份，并且第1个是4个字符
-                        if (arr.length === 3 && arr[0].length === 4) {
-                            var currentYear = vm._syear = vm._cyear = ~~arr[0] //全部转换为非负整数
-                            var currentMonth = vm._smonth = vm._cmonth = ~~arr[1] - 1
-                            var currentDay = vm._sday = vm._cday = ~~arr[2]
+                        else
+                        {
+                            if (vm.value.length == 8)
+                            {
+                                var currentYear = vm._syear = vm._cyear = ~~vm.value.substr(0, 4) //全部转换为非负整数
+                                var currentMonth = vm._smonth = vm._cmonth = ~~vm.value.substr(4, 2) - 1
+                                var currentDay = vm._sday = vm._cday = ~~vm.value.substr(6, 2)
+                            }
                         }
                     }
                     else
                     {
-                        if (tmpdate.length == 8)
+                        //日期时间
+                        var tmpdate = null;
+                        var tmptime = null;
+                        if (vm.value.indexOf("-") > 0 && vm.value.indexOf(":") > 0 && vm.value.indexOf(" ") > 0)
                         {
-                            var currentYear = vm._syear = vm._cyear = ~~tmpdate.substr(0, 4) //全部转换为非负整数
-                            var currentMonth = vm._smonth = vm._cmonth = ~~tmpdate.substr(4, 2) - 1
-                            var currentDay = vm._sday = vm._cday = ~~tmpdate.substr(6, 2)
+                            var tmparr = vm.value.split(" ");
+                            tmpdate = tmparr[0];
+                            tmptime = tmparr[1];
                         }
-                    }
-                    //时间
-                    if (tmptime.indexOf(":") > 0)
-                    {
-                        var arr = tmptime.split(":");
-                        if (arr.length === 3)
+                        else
                         {
-                            var currentHour = vm._chour = ~~arr[0];
-                            var currentMinute = vm._cminute = ~~arr[1];
-                            var currentSecond = vm._csecond = ~~arr[2];
+                            if (vm.value.length == 14)
+                            {
+                                tmpdate = vm.value.substr(0, 8);
+                                tmptime = vm.value.substr(8, 6);
+                            }
                         }
-                    }
-                    else
-                    {
-                        if (tmptime.length == 6)
+                        //日期
+                        if (tmpdate.indexOf("-") > 0)
                         {
-                            var currentHour = vm._chour = ~~tmptime.substr(0, 2);
-                            var currentMinute = vm._cminute = ~~tmptime.substr(2, 2);
-                            var currentSecond = vm._csecond = ~~tmptime.substr(4, 2);
+                            var arr = tmpdate.split("-") //可以被-切成3份，并且第1个是4个字符
+                            if (arr.length === 3 && arr[0].length === 4) {
+                                var currentYear = vm._syear = vm._cyear = ~~arr[0] //全部转换为非负整数
+                                var currentMonth = vm._smonth = vm._cmonth = ~~arr[1] - 1
+                                var currentDay = vm._sday = vm._cday = ~~arr[2]
+                            }
+                        }
+                        else
+                        {
+                            if (tmpdate.length == 8)
+                            {
+                                var currentYear = vm._syear = vm._cyear = ~~tmpdate.substr(0, 4) //全部转换为非负整数
+                                var currentMonth = vm._smonth = vm._cmonth = ~~tmpdate.substr(4, 2) - 1
+                                var currentDay = vm._sday = vm._cday = ~~tmpdate.substr(6, 2)
+                            }
+                        }
+                        //时间
+                        if (tmptime.indexOf(":") > 0)
+                        {
+                            var arr = tmptime.split(":");
+                            if (arr.length === 3)
+                            {
+                                var currentHour = vm._chour = ~~arr[0];
+                                var currentMinute = vm._cminute = ~~arr[1];
+                                var currentSecond = vm._csecond = ~~arr[2];
+                            }
+                        }
+                        else
+                        {
+                            if (tmptime.length == 6)
+                            {
+                                var currentHour = vm._chour = ~~tmptime.substr(0, 2);
+                                var currentMinute = vm._cminute = ~~tmptime.substr(2, 2);
+                                var currentSecond = vm._csecond = ~~tmptime.substr(4, 2);
+                            }
                         }
                     }
                 }
