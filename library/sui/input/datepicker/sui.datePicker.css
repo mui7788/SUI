@@ -1,0 +1,65 @@
+.datepicker-container
+{
+    position: relative;
+    white-space:normal;
+}
+.datepicker
+{
+    width:210px;
+    border:1px #ccc solid;
+    position: absolute;
+    top:30;
+    left:0;
+    background:aliceblue;
+    overflow:hidden;
+    z-index: 999;
+}
+.week-name
+{
+    width:30px;height:30px;border-bottom:1px #ccc solid;display: inline-block;text-align:center;line-height: 30px;font-size:12px;
+}
+.day-name
+{
+    width:30px;height:30px;background:#FFF;border-bottom:1px #ccc solid;display: inline-block;text-align:center;line-height: 30px;font-size:12px;cursor:pointer 
+}
+.day-name-hover
+{
+    background: aliceblue!important;
+}
+.day-name-active
+{
+    background: #fff
+}
+.day-name-current
+{
+    background:pink
+}
+.day-name-selected
+{
+    background: wheat
+}
+.day-name-not-month{
+    color:#ccc;
+}
+.datepicker-time-container
+{
+    width:100%;
+    padding:5px 0;
+}
+.datepicker-time-container lable
+{
+    display:inline-block;
+    font-size:12px;
+    color:#888;
+    font-family: "宋体";
+    margin-left:1px;
+}
+.datepicker-time-container input[type='textbox']
+{
+    width:20px;
+    vertical-align: middle;
+}
+.datepicker-time-container input[type='button']
+{
+    vertical-align: middle;
+}
