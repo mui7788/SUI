@@ -12,33 +12,13 @@
         <script src="../../../avalon.js"></script> 
         <script>
             avalon.library("sui", {});
-            require(["./sui/input/textbox/sui.textbox", "./sui/input/checkboxList/sui.checkboxList"], function () {
+            require(["./sui/input/datepicker/sui.datepicker","./sui/input/textbox/sui.textbox"], function () {
                 var vm = avalon.define({
                     $id: "test",
                     value1: [],
+                    value2:"",
                     index: "",
-                    $opts: {
-                        inputid: "name",
-                        title: "兴趣爱好",
-                        value: [1],
-                        //data: [{text: "没有", value: "a1"}, {text: "没有一个爱好2", value: "a2"}, {text: "没有一个爱好3没有一个爱好3没有一个爱好3", value: "a3"}, {text: "没有一个爱好4", value: "a4"}, {text: "没有", value: "a5"}, {text: "没有一个爱好6", value: "a6"}, {text: "没有a7", value: "a7"}],
-                        //data:["a","b","c","d","e","f","g"],
-                        data:[1,2,3,4],
-                        msg: "没有一个爱好？",
-                        require: true,
-                        count: 0,
-                        width: 0,
-                        height: 0,
-                        isShowAll: 0,
-                        isShowMsg: false,
-                        itemWidth: 80,
-                        isControlItem: true,
-                        onChange: function (e, v, i)
-                        {
-                            vm.value1 = v;
-                            vm.index = i;
-                        }
-                    }, $opts1: {
+                    $opts1: {
                         inputid: "name",
                         title: "请输入姓",
                         value: "",
@@ -51,6 +31,18 @@
                         onChange: function (n)
                         {
                             vm.value = n;
+                        }
+                    },
+                      $opts2: {
+                        inputid: "date1",
+                        title: "开始日期",
+                        value: "2015-12-16 21:22:10",
+                        msg: "请输入开始日期",
+                        require: true,
+                        isShowTime:true,
+                        onChange: function (n)
+                        {
+                            vm.value2 = n;
                         }
                     },
                     getValue: function ()
@@ -77,13 +69,8 @@
     </head>   
     <body ms-controller="test" class="ms-controller">
         <div><sui:textbox config="$opts1" $id="a"></sui:textbox></div>
-        <div><sui:textbox config="$opts1" $id="a"></sui:textbox></div>
-        <div><sui:checkboxlist config="$opts" $id="a"></sui:checkboxlist></div>
-        <div><sui:textbox config="$opts1" $id="a" ></sui:textbox></div>
-        <input type="button" ms-click="getValue" value="getValue">
-        {{value1}}<br>
-        {{index}}
-        <input type="button" ms-click="showModel" value="showModel">
+        <div><sui:datepicker config="$opts2" $id="date1"></sui:datepicker></div>
+{{value2}}
     </body>
 
 
