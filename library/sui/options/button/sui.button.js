@@ -1,5 +1,5 @@
 /**
- * @version sui 1.0.0.0
+ * @version sui.button 1.0.0.0
  * @cnName 按钮
  * @enName button
  * @introduce
