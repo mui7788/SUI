@@ -27,6 +27,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
         _cminute: 0, ///默认值分钟
         _csecond: 0, ///默认值秒
         _keydownBlur: false, //由于_keydown引起的blur
+        __days:[], //记录日期数组
         //内部方法
         _blur: _interface,
         _focus: _interface,
@@ -520,6 +521,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
     {
         var vm = arguments[0];
         vm._days.removeAll();
+        vm.__days.removeAll();
         if (arguments.length == 4)
         {
             var currentYear = vm._syear = arguments[1];
@@ -699,6 +701,22 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
         {
             vm._days.push({title: (i + 1), value: new Date(currentYear, currentMonth, (i + 1)), year: currentYear, month: currentMonth, day1: (i + 1), isThisMonth: false})
         }
+
+        //对_days进行分组
+        for (var i = 0; i < 6; i++)
+        {
+            vm.__days.push([])
+        }
+            var tmpi = 0;
+            avalon.each(vm._days, function (index, item) {
+                vm.__days[tmpi].push(item);
+                if((index+1) % 7==0)
+                {
+                    tmpi=tmpi+1;
+                }
+            })
+            avalon.log(vm.__days)
+        
     }
     return avalon
 })

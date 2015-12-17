@@ -24,11 +24,11 @@
                    <a href="javascript:void(0)" ms-click="_setPicker(_syear,_smonth+1,_sday)">>></a>&nbsp;
                    <a href="javascript:void(0)" ms-click="_setPicker(_syear+1,_smonth,_sday)">>|</a>
                </div>
-               <span>
+               <div>
                    <label ms-repeat-week="_weekName" class="week-name">{{week}}</label>
-               </span>
-               <span>
-                   <label ms-repeat-day="_days"
+               </div>
+               <div ms-repeat-week="__days">
+                   <label ms-repeat-day="week"
                           class="day-name"
                           ms-click="_dayClick($event,day.value,day.year,day.month,day.day1)"
                           ms-hover="day-name-hover:_focusing"
@@ -37,7 +37,7 @@
                           ms-class-2="day-name-selected:day.year===_cyear && day.month===_cmonth && day.day1===_cday"
                           ms-class-3="day-name-not-month:!day.isThisMonth"
                           >{{day.title}}</label>
-               </span>
+               </div>
                <div ms-if="isShowTime" class="datepicker-time-container">
                    <input type="textbox" class="time-text" ms-duplex="_chour" /><lable>时:</lable>
                    <input type="textbox" class="time-text" ms-duplex="_cminute"/><lable>分:</lable>

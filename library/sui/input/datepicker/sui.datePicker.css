@@ -1,7 +1,6 @@
 .datepicker-container
 {
     position: relative;
-    white-space:normal;
 }
 .datepicker
 {
@@ -25,6 +24,7 @@
 .day-name-hover
 {
     background: aliceblue!important;
+    color:#000!important;
 }
 .day-name-active
 {
@@ -32,11 +32,13 @@
 }
 .day-name-current
 {
-    background:pink
+    color:red;
+    font-weight: bold;
 }
 .day-name-selected
 {
-    background: wheat
+    background:#009999;
+    color:white;
 }
 .day-name-not-month{
     color:#ccc;
