@@ -34,7 +34,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
         _keydown: _interface,
         _dayClick: _interface, //日期单击
         _timeClick: _interface, //时间单击
-        _collectTime:_interface, //收集时间
+        _collectTime: _interface, //收集时间
         _setPicker: _interface,
         _closePicker: _interface,
         onInit: _interface, //必须定义此接口
@@ -118,7 +118,6 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                 }
                 vm.onChange(n, o)
                 vm.check()
-                //vm.check();
             })
 
         },
@@ -166,25 +165,25 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                         return false;
                     }
                 }
-
                 return true;
             }
             vm._blur = function (e)
             {
                 if (!vm._keydownBlur)
                 {
-                    avalon.log("_blur");
                     if (!vm.isShowTime)
                     {
                         if (vm.value && isCorrectDateTime(vm.value, vm.isShowTime, vm.isShowSecond))
                         {
-
                             vm.value = convertDate(vm.value)
                         }
                     }
                     else
                     {
-
+                        if (vm.value && isCorrectDateTime(vm.value, vm.isShowTime, vm.isShowSecond))
+                        {
+                            vm.value = convertDateTime(vm.value)
+                        }
                     }
                 }
                 vm._keydownBlur = false;
@@ -200,13 +199,24 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
             }
             vm._keydown = function (e)
             {
+                
                 //alert(e.keyCode+"-" +e.shiftKey);
                 //允许数字:- 退格键 del键 回车键 esc键
-                if ((((e.keyCode >= 48 && e.keyCode <= 57) || e.keyCode == 32 || e.keyCode == 8 || e.keyCode == 46 || e.keyCode == 189) && e.shiftKey == false) || (e.shiftKey && e.keyCode == 186) || e.keyCode == 13 || e.keyCode == 27)
+                if ((((e.which >= 48 && e.which <= 57) || e.which == 32 || e.which == 8 || e.which == 46 || e.which == 189) && e.shiftKey == false) || (e.shiftKey && e.which == 186) || e.which == 13 || e.which == 27)
                 {
-                    if (e.keyCode == 13 || e.keyCode == 27)
+                    if (e.which == 13 || e.which == 27)
                     {
-                        vm.value = convertDate(vm.value);
+                        if (vm.value && isCorrectDateTime(vm.value, vm.isShowTime, vm.isShowSecond))
+                        {
+                            if (!vm.isShowTime)
+                            {
+                                vm.value = convertDate(vm.value);
+                            }
+                            else
+                            {
+                                vm.value = convertDateTime(vm.value);
+                            }
+                        }
                         vm._closePicker();
                         vm._keydownBlur = true;
                         e.target.blur();
@@ -214,7 +224,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                 }
                 else
                 {
-                    window.event.keyCode = 0;
+                   // window.event.keyCode = 0;
                     if (event.preventDefault)
                     {
                         event.preventDefault();
@@ -271,7 +281,10 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                     var tmpday = (vm._cday + "").length == 1 ? "0" + vm._cday : vm._cday;
                     var tmpdate = vm._cyear + "-" + tmpmonth + "-" + tmpday;
                 }
-                var tmptime = vm._chour + ":" + vm._cminute + ":" + vm._csecond;
+                var tmphour = (vm._chour + "").length == 1 ? "0" + vm._chour : vm._chour;
+                var tmpminute = (vm._cminute + "").length == 1 ? "0" + vm._cminute : vm._cminute;
+                var tmpsecond = (vm._csecond + "").length == 1 ? "0" + vm._csecond : vm._csecond;
+                var tmptime = tmphour + ":" + tmpminute + ":" + tmpsecond;
                 vm.value = tmpdate + " " + tmptime;
             }
         },
@@ -459,10 +472,47 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
         }
 
     }
-//转换长时间格式
-    function convertDateTime()
+//转换时间格式    
+    function convertTime(pTime)
     {
-        
+        if (pTime.indexOf(":") > 0)
+        {
+            arr = pTime.split(":")
+            var tmphour = (~~arr[0] + "").length == 1 ? "0" + ~~arr[0] : arr[0];
+            var tmpminute = (~~arr[1] + "").length == 1 ? "0" + ~~arr[1] : arr[1];
+            var tmpsecond = (~~arr[2] + "").length == 1 ? "0" + ~~arr[2] : arr[2];
+        }
+        else
+        {
+            var tmphour = pTime.substr(0, 2) + "";
+            var tmpminute = pTime.substr(2, 2) + "";
+            var tmpsecond = pTime.substr(4, 2) + "";
+            tmphour = tmphour.length == 1 ? "0" + tmphour : tmphour;
+            tmpminute = tmpminute.length == 1 ? "0" + tmpminute : tmpminute;
+            tmpsecond = tmpsecond.length == 1 ? "0" + tmpsecond : tmpsecond;
+        }
+        return tmphour + ":" + tmpminute + ":" + tmpsecond;
+    }
+//转换长时间格式
+    function convertDateTime(pDateTime)
+    {
+        var tmpdate = null;
+        var tmptime = null;
+        if (pDateTime.indexOf("-") > 0 && pDateTime.indexOf(":") > 0 && pDateTime.indexOf(" ") > 0)
+        {
+            var tmparr = pDateTime.split(" ");
+            tmpdate = tmparr[0];
+            tmptime = tmparr[1];
+        }
+        else
+        {
+            if (pDateTime.length == 14)
+            {
+                tmpdate = pDateTime.substr(0, 8);
+                tmptime = pDateTime.substr(8, 6);
+            }
+        }
+        return convertDate(tmpdate) + " " + convertTime(tmptime);
     }
 
 //设置日历日期
