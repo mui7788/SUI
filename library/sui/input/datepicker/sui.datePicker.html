@@ -39,9 +39,9 @@
                           >{{day.title}}</label>
                </div>
                <div ms-if="isShowTime" class="datepicker-time-container">
-                   <input type="textbox" class="time-text" ms-duplex="_chour" /><lable>时:</lable>
-                   <input type="textbox" class="time-text" ms-duplex="_cminute"/><lable>分:</lable>
-                   <input type="textbox" class="time-text" ms-duplex="_csecond"/><lable>秒:</lable>
+                   <input type="textbox" class="time-text" ms-duplex="_chour" ms-keydown="_inputKeydown" maxlength="2" /><lable>时</lable>
+                   <input type="textbox" class="time-text" ms-duplex="_cminute" ms-keydown="_inputKeydown" maxlength="2" /><lable>分</lable>
+                   <input type="textbox" class="time-text" ms-duplex="_csecond" ms-keydown="_inputKeydown" maxlength="2" ms-visible="isShowSecond" /><lable ms-visible="isShowSecond">秒</lable>
                    <input type="button" value="确定" ms-click="_timeClick">
                </div>
            </div>

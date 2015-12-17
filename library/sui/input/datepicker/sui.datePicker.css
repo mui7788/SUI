@@ -15,11 +15,25 @@
 }
 .week-name
 {
-    width:30px;height:30px;border-bottom:1px #ccc solid;display: inline-block;text-align:center;line-height: 30px;font-size:12px;
+    width:30px;
+    height:30px;
+    border-bottom:1px #ccc solid;
+    display: inline-block;
+    text-align:center;
+    line-height: 30px;
+    font-size:12px;
 }
 .day-name
 {
-    width:30px;height:30px;background:#FFF;border-bottom:1px #ccc solid;display: inline-block;text-align:center;line-height: 30px;font-size:12px;cursor:pointer 
+    width:30px;
+    height:30px;
+    background:#FFF;
+    border-bottom:1px #ccc solid;
+    display: inline-block;
+    text-align:center;
+    line-height: 30px;
+    font-size:12px;
+    cursor:pointer 
 }
 .day-name-hover
 {
@@ -54,14 +68,16 @@
     font-size:12px;
     color:#888;
     font-family: "宋体";
-    margin-left:1px;
+    margin-left:2px;
 }
 .datepicker-time-container input[type='textbox']
 {
     width:20px;
     vertical-align: middle;
+    margin-left:4px;
 }
 .datepicker-time-container input[type='button']
 {
     vertical-align: middle;
+    margin-left:4px;
 }

@@ -38,6 +38,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
         _collectTime: _interface, //收集时间
         _setPicker: _interface,
         _closePicker: _interface,
+        _inputKeydown:_interface,
         onInit: _interface, //必须定义此接口
         onChange: _interface, //值修改时触发外部事件
         check: _interface,
@@ -183,7 +184,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                     {
                         if (vm.value && isCorrectDateTime(vm.value, vm.isShowTime, vm.isShowSecond))
                         {
-                            vm.value = convertDateTime(vm.value)
+                            vm.value = convertDateTime(vm.value,vm.isShowSecond)
                         }
                     }
                 }
@@ -200,7 +201,6 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
             }
             vm._keydown = function (e)
             {
-                
                 //alert(e.keyCode+"-" +e.shiftKey);
                 //允许数字:- 退格键 del键 回车键 esc键
                 if ((((e.which >= 48 && e.which <= 57) || e.which == 32 || e.which == 8 || e.which == 46 || e.which == 189) && e.shiftKey == false) || (e.shiftKey && e.which == 186) || e.which == 13 || e.which == 27)
@@ -215,12 +215,13 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                             }
                             else
                             {
-                                vm.value = convertDateTime(vm.value);
+                                vm.value = convertDateTime(vm.value,vm.isShowSecond);
                             }
                         }
                         vm._closePicker();
                         vm._keydownBlur = true;
                         e.target.blur();
+                        //e.target.parentElement.focus();
                     }
                 }
                 else
@@ -237,6 +238,26 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                     }
                 }
 
+            }
+            vm._inputKeydown=function(e)
+            {
+                if ((((e.which >= 48 && e.which <= 57) || e.which == 8 || e.which == 46) && e.shiftKey == false))
+                {
+
+                }
+                else
+                {
+                   // window.event.keyCode = 0;
+                    if (event.preventDefault)
+                    {
+                        event.preventDefault();
+                    }
+                    else
+                    {
+                        window.event.returnValue = false;
+                        return false;
+                    }
+                }
             }
             vm._dayClick = function (e, v, y, m, d)
             {
@@ -324,6 +345,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
         }
     }
 
+//验证时间格式 时间格式允许 22:12:00 或 221200
     function isCorrentTime(value, isShowSecond)
     {
         if (typeof value === "string" && value)
@@ -436,7 +458,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                 break;
         }
     }
-
+    
 //转换长日期格式
     function convertDate(pDate)
     {
@@ -473,8 +495,9 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
         }
 
     }
+    
 //转换时间格式    
-    function convertTime(pTime)
+    function convertTime(pTime,pIsShowSecond)
     {
         if (pTime.indexOf(":") > 0)
         {
@@ -492,10 +515,11 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
             tmpminute = tmpminute.length == 1 ? "0" + tmpminute : tmpminute;
             tmpsecond = tmpsecond.length == 1 ? "0" + tmpsecond : tmpsecond;
         }
-        return tmphour + ":" + tmpminute + ":" + tmpsecond;
+        return tmphour + ":" + tmpminute + ":" + (!!pIsShowSecond?tmpsecond:"00");
     }
+    
 //转换长时间格式
-    function convertDateTime(pDateTime)
+    function convertDateTime(pDateTime,pIsShowSecond)
     {
         var tmpdate = null;
         var tmptime = null;
@@ -513,9 +537,9 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                 tmptime = pDateTime.substr(8, 6);
             }
         }
-        return convertDate(tmpdate) + " " + convertTime(tmptime);
+        return convertDate(tmpdate) + " " + convertTime(tmptime,pIsShowSecond);
     }
-
+    
 //设置日历日期
     function setPicker()
     {
@@ -635,7 +659,14 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                             {
                                 var currentHour = vm._chour = ~~arr[0];
                                 var currentMinute = vm._cminute = ~~arr[1];
+                                if(vm.isShowSecond)
+                                {
                                 var currentSecond = vm._csecond = ~~arr[2];
+                                }
+                                else
+                                {
+                                    var currentSecond = vm._csecond ="00"
+                                }
                             }
                         }
                         else
@@ -644,7 +675,14 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                             {
                                 var currentHour = vm._chour = ~~tmptime.substr(0, 2);
                                 var currentMinute = vm._cminute = ~~tmptime.substr(2, 2);
+                                if(vm.isShowSecond)
+                                {
                                 var currentSecond = vm._csecond = ~~tmptime.substr(4, 2);
+                                }
+                                else
+                                {
+                                    var currentSecond = vm._csecond="00"
+                                }
                             }
                         }
                     }
@@ -718,6 +756,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
             avalon.log(vm.__days)
         
     }
+    
     return avalon
 })
 
