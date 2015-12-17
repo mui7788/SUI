@@ -26,7 +26,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
         _chour: 0, ///默认值小时
         _cminute: 0, ///默认值分钟
         _csecond: 0, ///默认值秒
-        _keydownBlur:false, //由于_keydown引起的blur
+        _keydownBlur: false, //由于_keydown引起的blur
         //内部方法
         _blur: _interface,
         _focus: _interface,
@@ -34,6 +34,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
         _keydown: _interface,
         _dayClick: _interface, //日期单击
         _timeClick: _interface, //时间单击
+        _collectTime:_interface, //收集时间
         _setPicker: _interface,
         _closePicker: _interface,
         onInit: _interface, //必须定义此接口
@@ -126,9 +127,8 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
             var arr = [
                 [document, "click", function (e) {
                         var target = e.target;
-                        avalon.log(target);
-                        var cc = document.getElementById("datepicker-container-" + vm.inputid)
-                        if (vm._focusing && (cc.contains(target)))
+                        var container = document.getElementById("datepicker-container-" + vm.inputid)
+                        if (vm._focusing && (container.contains(target)))
                         {
 
                         }
@@ -138,7 +138,6 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                             {
                                 //vm.value = "";
                             }
-                            avalon.log("documentclick");
                             vm._closePicker();
                         }
                     }]
@@ -172,29 +171,28 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
             }
             vm._blur = function (e)
             {
-                if(!vm._keydownBlur)
+                if (!vm._keydownBlur)
                 {
-                avalon.log("_blur");
-                if (!vm.isShowTime)
-                {
-                    if (vm.value && isCorrectDateTime(vm.value, vm.isShowTime, vm.isShowSecond))
+                    avalon.log("_blur");
+                    if (!vm.isShowTime)
+                    {
+                        if (vm.value && isCorrectDateTime(vm.value, vm.isShowTime, vm.isShowSecond))
+                        {
+
+                            vm.value = convertDate(vm.value)
+                        }
+                    }
+                    else
                     {
 
-                        vm.value = convertDate(vm.value)
                     }
                 }
-                else
-                {
-
-                }
-                }
-                vm._keydownBlur=false;
+                vm._keydownBlur = false;
 
             }
             vm._focus = function (e)
             {
                 e.target.select();
-
                 avalon.bind(arr[0][0], arr[0][1], arr[0][2])
                 vm._focusing = true;
                 setPicker(vm);
@@ -210,7 +208,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                     {
                         vm.value = convertDate(vm.value);
                         vm._closePicker();
-                        vm._keydownBlur=true;
+                        vm._keydownBlur = true;
                         e.target.blur();
                     }
                 }
@@ -245,6 +243,20 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
             }
             vm._timeClick = function (e)
             {
+                vm._collectTime();
+                vm._closePicker();
+            }
+            vm._setPicker = function (y, m, d)
+            {
+                setPicker(vm, y, m, d)
+            }
+            vm._closePicker = function ()
+            {
+                vm._focusing = false;
+                avalon.unbind(arr[0][0], arr[0][1], arr[0][2])
+            }
+            vm._collectTime = function ()
+            {
                 if (vm._cyear == 0)
                 {
                     var tmpmonth = vm._month + 1 + "";
@@ -261,17 +273,6 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                 }
                 var tmptime = vm._chour + ":" + vm._cminute + ":" + vm._csecond;
                 vm.value = tmpdate + " " + tmptime;
-                vm._closePicker();
-            }
-            vm._setPicker = function (y, m, d)
-            {
-                setPicker(vm, y, m, d)
-            }
-            vm._closePicker = function ()
-            {
-                avalon.log("_closePicker");
-                vm._focusing = false;
-                avalon.unbind(arr[0][0], arr[0][1], arr[0][2])
             }
         },
         $dispose: function (vm, element)
@@ -425,15 +426,25 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
 //转换长日期格式
     function convertDate(pDate)
     {
-        avalon.log("converDate");
         if (typeof pDate == "object" || (typeof pDate == "string" && pDate.indexOf("-") > 0))
         {
-            var currentDate = new Date(pDate);
-            var currentYear = currentDate.getFullYear();
-            var currentMonth = currentDate.getMonth() + 1 + "";
-            var currentDay = currentDate.getDate() + "";
+            if (typeof pDate == "object")
+            {
+                var currentDate = new Date(pDate);
+                var currentYear = currentDate.getFullYear();
+                var currentMonth = currentDate.getMonth() + 1 + "";
+                var currentDay = currentDate.getDate() + "";
+            }
+            else
+            {
+                arr = pDate.split("-");
+                var currentYear = ~~arr[0] //全部转换为非负整数
+                var currentMonth = ~~arr[1] + ""
+                var currentDay = ~~arr[2] + ""
+            }
             currentMonth = currentMonth.length == 1 ? "0" + currentMonth : currentMonth;
             currentDay = currentDay.length == 1 ? "0" + currentDay : currentDay;
+            avalon.log(currentYear + "-" + currentMonth + "-" + currentDay);
             return currentYear + "-" + currentMonth + "-" + currentDay
         }
         else
@@ -443,8 +454,15 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
             var currentDay = pDate.substr(6, 2) + "";
             currentMonth = currentMonth.length == 1 ? "0" + currentMonth : currentMonth;
             currentDay = currentDay.length == 1 ? "0" + currentDay : currentDay;
+            avalon.log(currentYear + "-" + currentMonth + "-" + currentDay);
             return currentYear + "-" + currentMonth + "-" + currentDay
         }
+
+    }
+//转换长时间格式
+    function convertDateTime()
+    {
+        
     }
 
 //设置日历日期
