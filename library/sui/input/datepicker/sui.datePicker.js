@@ -43,6 +43,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
         onChange: _interface, //值修改时触发外部事件
         check: _interface,
         setFocus: _interface,
+        getValue:_interface,
         //配置项
         did: "",
         title: "",
@@ -66,6 +67,10 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
         $replace: 0,
         $construct: function (defaultConfig, vmConfig, eleConfig) {
             var options = avalon.mix(defaultConfig, vmConfig, eleConfig)
+            if(options.value && options.isShowTime && options.isShowSecond==false)
+            {
+                options.value=convertDateTime(options.value,options.isShowSecond)
+            }
             return options
         },
         $init: function (vm) {
@@ -118,7 +123,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                     vm._cminute = 0;
                     vm._csecond = 0;
                 }
-                vm.onChange(n, o)
+                vm.onChange(vm.isShowTime && vm.isShowSecond?n:n+":00", o)
                 vm.check()
             })
 
@@ -306,8 +311,29 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                 var tmphour = (vm._chour + "").length == 1 ? "0" + vm._chour : vm._chour;
                 var tmpminute = (vm._cminute + "").length == 1 ? "0" + vm._cminute : vm._cminute;
                 var tmpsecond = (vm._csecond + "").length == 1 ? "0" + vm._csecond : vm._csecond;
-                var tmptime = tmphour + ":" + tmpminute + ":" + tmpsecond;
+                
+                var tmptime = tmphour + ":" + tmpminute + (vm.isShowSecond?":" + tmpsecond:"");
                 vm.value = tmpdate + " " + tmptime;
+            }
+            vm.setFocus=function()
+            {
+                if(vm.inputid)
+                {
+                var target=document.getElementById(vm.inputid)
+                target.focus();
+                vm._focusing=true;
+                }
+            }
+            vm.getValue=function()
+            {
+                if(vm.check())
+                {
+                   return vm.isShowSecond?vm.value:vm.value+":00";
+                }
+                else
+                {
+                    throw vm.msg;
+                }
             }
         },
         $dispose: function (vm, element)
@@ -340,6 +366,11 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                     tmpdate = value.substr(0, 8);
                     tmptime = value.substr(8, 6);
                 }
+                if (value.length == 12 && isShowSecond==false)
+                {
+                    tmpdate = value.substr(0, 8);
+                    tmptime = value.substr(8, 4);
+                }
             }
             return isCorrectDate(tmpdate) && isCorrentTime(tmptime, isShowSecond)
         }
@@ -363,6 +394,15 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                         return true;
                     }
                 }
+                if(arr.length===2 && isShowSecond==false)
+                {
+                    var currentHour = ~~arr[0];
+                    var currentMinute = ~~arr[1];
+                    if (currentHour >= 0 && currentHour <= 23 && currentMinute >= 0 && currentMinute <= 59)
+                    {
+                        return true;
+                    }
+                }
             }
             else
             {
@@ -376,6 +416,15 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                         return true;
                     }
                 }
+                if (value.length == 4)
+                {
+                    var currentHour = ~~value.substr(0, 2);
+                    var currentMinute = ~~value.substr(2, 2);
+                    if (currentHour >= 0 && currentHour <= 23 && currentMinute >= 0 && currentMinute <= 59 )
+                    {
+                        return true;
+                    }
+                }                
             }
         }
 
@@ -515,7 +564,8 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
             tmpminute = tmpminute.length == 1 ? "0" + tmpminute : tmpminute;
             tmpsecond = tmpsecond.length == 1 ? "0" + tmpsecond : tmpsecond;
         }
-        return tmphour + ":" + tmpminute + ":" + (!!pIsShowSecond?tmpsecond:"00");
+        //return tmphour + ":" + tmpminute + ":" + (!!pIsShowSecond?tmpsecond:"00");
+        return tmphour + ":" + tmpminute + (!!pIsShowSecond?":"+tmpsecond:"");
     }
     
 //转换长时间格式
@@ -536,6 +586,11 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                 tmpdate = pDateTime.substr(0, 8);
                 tmptime = pDateTime.substr(8, 6);
             }
+            if (pDateTime.length == 12 && pIsShowSecond==false)
+            {
+                tmpdate = pDateTime.substr(0, 8);
+                tmptime = pDateTime.substr(8, 4);
+            }            
         }
         return convertDate(tmpdate) + " " + convertTime(tmptime,pIsShowSecond);
     }
@@ -631,6 +686,11 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                                 tmpdate = vm.value.substr(0, 8);
                                 tmptime = vm.value.substr(8, 6);
                             }
+                            if (vm.value.length == 12 && vm.isShowSecond==false)
+                            {
+                                tmpdate = vm.value.substr(0, 8);
+                                tmptime = vm.value.substr(8, 4);
+                            }
                         }
                         //日期
                         if (tmpdate.indexOf("-") > 0)
@@ -659,30 +719,30 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                             {
                                 var currentHour = vm._chour = ~~arr[0];
                                 var currentMinute = vm._cminute = ~~arr[1];
-                                if(vm.isShowSecond)
-                                {
                                 var currentSecond = vm._csecond = ~~arr[2];
-                                }
-                                else
-                                {
-                                    var currentSecond = vm._csecond ="00"
-                                }
+                            }
+                            if(arr.length === 2 && vm.isShowSecond==false)
+                            {
+                                var currentHour = vm._chour = ~~arr[0];
+                                var currentMinute = vm._cminute = ~~arr[1];
+                                var currentSecond = vm._csecond ="00"
                             }
                         }
                         else
                         {
+                            
                             if (tmptime.length == 6)
                             {
                                 var currentHour = vm._chour = ~~tmptime.substr(0, 2);
                                 var currentMinute = vm._cminute = ~~tmptime.substr(2, 2);
-                                if(vm.isShowSecond)
-                                {
                                 var currentSecond = vm._csecond = ~~tmptime.substr(4, 2);
-                                }
-                                else
-                                {
-                                    var currentSecond = vm._csecond="00"
-                                }
+                            }
+                           if (tmptime.length == 4 && vm.isShowSecond==false)
+                            {
+                                var currentHour = vm._chour = ~~tmptime.substr(0, 2);
+                                var currentMinute = vm._cminute = ~~tmptime.substr(2, 2);
+                                var currentSecond = vm._csecond="00"
+                                avalon.log(tmptime);
                             }
                         }
                     }
@@ -753,7 +813,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                     tmpi=tmpi+1;
                 }
             })
-            avalon.log(vm.__days)
+            //avalon.log(vm.__days)
         
     }
     
