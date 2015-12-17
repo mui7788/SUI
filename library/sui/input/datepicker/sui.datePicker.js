@@ -8,7 +8,6 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
         _focusing: false,
         _msg: "",
         _showNoticeImage: false,
-        _showDateGrid: false,
         _weekName: ["日", "一", "二", "三", "四", "五", "六"],
         _days: [], //日期数组长度42，包含上月及下月日期
         _year: 0, //当前年份
@@ -27,7 +26,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
         _cminute: 0, ///默认值分钟
         _csecond: 0, ///默认值秒
         _keydownBlur: false, //由于_keydown引起的blur
-        __days:[], //记录日期数组
+        __days: [], //记录日期数组
         //内部方法
         _blur: _interface,
         _focus: _interface,
@@ -36,14 +35,14 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
         _dayClick: _interface, //日期单击
         _timeClick: _interface, //时间单击
         _collectTime: _interface, //收集时间
-        _setPicker: _interface,
-        _closePicker: _interface,
-        _inputKeydown:_interface,
+        _setPicker: _interface, //设置日历
+        _closePicker: _interface, //关闭日历
+        _inputKeydown: _interface, //小时分钟秒文本框keydown事件
         onInit: _interface, //必须定义此接口
         onChange: _interface, //值修改时触发外部事件
         check: _interface,
         setFocus: _interface,
-        getValue:_interface,
+        getValue: _interface,
         //配置项
         did: "",
         title: "",
@@ -59,18 +58,27 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
         theme: "default",
         styleType: "normal",
         isShowNoticeImage: false,
-        isShowTime: false,
-        isShowSecond: true,
+        isShowTime: false, //是否显示时间
+        isShowSecond: true, //是还是显示秒
         //模板
         $template: template,
         //替换自定义标签
         $replace: 0,
         $construct: function (defaultConfig, vmConfig, eleConfig) {
             var options = avalon.mix(defaultConfig, vmConfig, eleConfig)
-            if(options.value && options.isShowTime && options.isShowSecond==false)
+            if (options.value && options.isShowTime && options.isShowSecond == false)
             {
-                options.value=convertDateTime(options.value,options.isShowSecond)
+                options.value = convertDateTime(options.value, options.isShowSecond)
             }
+            if (options.width == 0)
+            {
+                options.width = ""
+            }
+            if (options.height == 0)
+            {
+                options.height = ""
+            }
+
             return options
         },
         $init: function (vm) {
@@ -111,7 +119,6 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                         vm._chour = 0;
                         vm._cminute = 0;
                         vm._csecond = 0;
-
                     }
                 }
                 else
@@ -123,7 +130,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                     vm._cminute = 0;
                     vm._csecond = 0;
                 }
-                vm.onChange(vm.isShowTime && vm.isShowSecond?n:n+":00", o)
+                vm.onChange(vm.isShowTime && vm.isShowSecond ? n : n + ":00", o)
                 vm.check()
             })
 
@@ -189,12 +196,11 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                     {
                         if (vm.value && isCorrectDateTime(vm.value, vm.isShowTime, vm.isShowSecond))
                         {
-                            vm.value = convertDateTime(vm.value,vm.isShowSecond)
+                            vm.value = convertDateTime(vm.value, vm.isShowSecond)
                         }
                     }
                 }
                 vm._keydownBlur = false;
-
             }
             vm._focus = function (e)
             {
@@ -202,7 +208,6 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                 avalon.bind(arr[0][0], arr[0][1], arr[0][2])
                 vm._focusing = true;
                 setPicker(vm);
-
             }
             vm._keydown = function (e)
             {
@@ -220,7 +225,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                             }
                             else
                             {
-                                vm.value = convertDateTime(vm.value,vm.isShowSecond);
+                                vm.value = convertDateTime(vm.value, vm.isShowSecond);
                             }
                         }
                         vm._closePicker();
@@ -231,7 +236,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                 }
                 else
                 {
-                   // window.event.keyCode = 0;
+                    // window.event.keyCode = 0;
                     if (event.preventDefault)
                     {
                         event.preventDefault();
@@ -244,7 +249,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                 }
 
             }
-            vm._inputKeydown=function(e)
+            vm._inputKeydown = function (e)
             {
                 if ((((e.which >= 48 && e.which <= 57) || e.which == 8 || e.which == 46) && e.shiftKey == false))
                 {
@@ -252,7 +257,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                 }
                 else
                 {
-                   // window.event.keyCode = 0;
+                    // window.event.keyCode = 0;
                     if (event.preventDefault)
                     {
                         event.preventDefault();
@@ -311,24 +316,24 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                 var tmphour = (vm._chour + "").length == 1 ? "0" + vm._chour : vm._chour;
                 var tmpminute = (vm._cminute + "").length == 1 ? "0" + vm._cminute : vm._cminute;
                 var tmpsecond = (vm._csecond + "").length == 1 ? "0" + vm._csecond : vm._csecond;
-                
-                var tmptime = tmphour + ":" + tmpminute + (vm.isShowSecond?":" + tmpsecond:"");
+
+                var tmptime = tmphour + ":" + tmpminute + (vm.isShowSecond ? ":" + tmpsecond : "");
                 vm.value = tmpdate + " " + tmptime;
             }
-            vm.setFocus=function()
+            vm.setFocus = function ()
             {
-                if(vm.inputid)
+                if (vm.inputid)
                 {
-                var target=document.getElementById(vm.inputid)
-                target.focus();
-                vm._focusing=true;
+                    var target = document.getElementById(vm.inputid)
+                    target.focus();
+                    vm._focusing = true;
                 }
             }
-            vm.getValue=function()
+            vm.getValue = function ()
             {
-                if(vm.check())
+                if (vm.check())
                 {
-                   return vm.isShowSecond?vm.value:vm.value+":00";
+                    return vm.isShowSecond ? vm.value : vm.value + ":00";
                 }
                 else
                 {
@@ -342,7 +347,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
         }
 
     })
-
+//验证是否为正确的日期时间格式
     function isCorrectDateTime(value, isShowTime, isShowSecond)
     {
         if (!isShowTime)
@@ -353,25 +358,9 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
         {
             var tmpdate = null;
             var tmptime = null;
-            if (value.indexOf("-") > 0 && value.indexOf(":") > 0 && value.indexOf(" ") > 0)
-            {
-                var tmparr = value.split(" ");
-                tmpdate = tmparr[0];
-                tmptime = tmparr[1];
-            }
-            else
-            {
-                if (value.length == 14)
-                {
-                    tmpdate = value.substr(0, 8);
-                    tmptime = value.substr(8, 6);
-                }
-                if (value.length == 12 && isShowSecond==false)
-                {
-                    tmpdate = value.substr(0, 8);
-                    tmptime = value.substr(8, 4);
-                }
-            }
+            var tmparr = splitDateTime(value, isShowSecond)
+            tmpdate = tmparr[0];
+            tmptime = tmparr[1];
             return isCorrectDate(tmpdate) && isCorrentTime(tmptime, isShowSecond)
         }
     }
@@ -394,7 +383,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                         return true;
                     }
                 }
-                if(arr.length===2 && isShowSecond==false)
+                if (arr.length === 2 && isShowSecond == false)
                 {
                     var currentHour = ~~arr[0];
                     var currentMinute = ~~arr[1];
@@ -416,15 +405,15 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                         return true;
                     }
                 }
-                if (value.length == 4)
+                if (value.length == 4 && isShowSecond == false)
                 {
                     var currentHour = ~~value.substr(0, 2);
                     var currentMinute = ~~value.substr(2, 2);
-                    if (currentHour >= 0 && currentHour <= 23 && currentMinute >= 0 && currentMinute <= 59 )
+                    if (currentHour >= 0 && currentHour <= 23 && currentMinute >= 0 && currentMinute <= 59)
                     {
                         return true;
                     }
-                }                
+                }
             }
         }
 
@@ -507,7 +496,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                 break;
         }
     }
-    
+
 //转换长日期格式
     function convertDate(pDate)
     {
@@ -544,9 +533,9 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
         }
 
     }
-    
+
 //转换时间格式    
-    function convertTime(pTime,pIsShowSecond)
+    function convertTime(pTime, pIsShowSecond)
     {
         if (pTime.indexOf(":") > 0)
         {
@@ -565,11 +554,22 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
             tmpsecond = tmpsecond.length == 1 ? "0" + tmpsecond : tmpsecond;
         }
         //return tmphour + ":" + tmpminute + ":" + (!!pIsShowSecond?tmpsecond:"00");
-        return tmphour + ":" + tmpminute + (!!pIsShowSecond?":"+tmpsecond:"");
+        return tmphour + ":" + tmpminute + (!!pIsShowSecond ? ":" + tmpsecond : "");
+    }
+
+//转换长时间格式
+    function convertDateTime(pDateTime, pIsShowSecond)
+    {
+        var tmpdate = null;
+        var tmptime = null;
+        var tmparr = splitDateTime(pDateTime, pIsShowSecond);
+        tmpdate=tmparr[0];
+        tmptime=tmparr[1];
+        return convertDate(tmpdate) + " " + convertTime(tmptime, pIsShowSecond);
     }
     
-//转换长时间格式
-    function convertDateTime(pDateTime,pIsShowSecond)
+//分割日期时间
+    function splitDateTime(pDateTime, pIsShowSecond)
     {
         var tmpdate = null;
         var tmptime = null;
@@ -586,21 +586,25 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                 tmpdate = pDateTime.substr(0, 8);
                 tmptime = pDateTime.substr(8, 6);
             }
-            if (pDateTime.length == 12 && pIsShowSecond==false)
+            if (pDateTime.length == 12 && pIsShowSecond == false)
             {
                 tmpdate = pDateTime.substr(0, 8);
                 tmptime = pDateTime.substr(8, 4);
-            }            
+            }
         }
-        return convertDate(tmpdate) + " " + convertTime(tmptime,pIsShowSecond);
+        var arr = [];
+        arr.push(tmpdate);
+        arr.push(tmptime);
+        return arr;
     }
-    
+
 //设置日历日期
     function setPicker()
     {
         var vm = arguments[0];
         vm._days.removeAll();
         vm.__days.removeAll();
+        //上月下月上年下年移动
         if (arguments.length == 4)
         {
             var currentYear = vm._syear = arguments[1];
@@ -617,11 +621,9 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                 var currentYear = vm._syear = arguments[1] - 1;
                 var currentMonth = vm._smonth = 11;
             }
-
         }
         else
         {
-
             //判断是否存在默认值
             if (vm.value == "")
             {
@@ -673,25 +675,9 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                         //日期时间
                         var tmpdate = null;
                         var tmptime = null;
-                        if (vm.value.indexOf("-") > 0 && vm.value.indexOf(":") > 0 && vm.value.indexOf(" ") > 0)
-                        {
-                            var tmparr = vm.value.split(" ");
-                            tmpdate = tmparr[0];
-                            tmptime = tmparr[1];
-                        }
-                        else
-                        {
-                            if (vm.value.length == 14)
-                            {
-                                tmpdate = vm.value.substr(0, 8);
-                                tmptime = vm.value.substr(8, 6);
-                            }
-                            if (vm.value.length == 12 && vm.isShowSecond==false)
-                            {
-                                tmpdate = vm.value.substr(0, 8);
-                                tmptime = vm.value.substr(8, 4);
-                            }
-                        }
+                        var tmparr = splitDateTime(vm.value, vm.isShowSecond)
+                        tmpdate = tmparr[0];
+                        tmptime = tmparr[1];
                         //日期
                         if (tmpdate.indexOf("-") > 0)
                         {
@@ -721,28 +707,26 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                                 var currentMinute = vm._cminute = ~~arr[1];
                                 var currentSecond = vm._csecond = ~~arr[2];
                             }
-                            if(arr.length === 2 && vm.isShowSecond==false)
+                            if (arr.length === 2 && vm.isShowSecond == false)
                             {
                                 var currentHour = vm._chour = ~~arr[0];
                                 var currentMinute = vm._cminute = ~~arr[1];
-                                var currentSecond = vm._csecond ="00"
+                                var currentSecond = vm._csecond = "00"
                             }
                         }
                         else
                         {
-                            
                             if (tmptime.length == 6)
                             {
                                 var currentHour = vm._chour = ~~tmptime.substr(0, 2);
                                 var currentMinute = vm._cminute = ~~tmptime.substr(2, 2);
                                 var currentSecond = vm._csecond = ~~tmptime.substr(4, 2);
                             }
-                           if (tmptime.length == 4 && vm.isShowSecond==false)
+                            if (tmptime.length == 4 && vm.isShowSecond == false)
                             {
                                 var currentHour = vm._chour = ~~tmptime.substr(0, 2);
                                 var currentMinute = vm._cminute = ~~tmptime.substr(2, 2);
-                                var currentSecond = vm._csecond="00"
-                                avalon.log(tmptime);
+                                var currentSecond = vm._csecond = "00"
                             }
                         }
                     }
@@ -805,18 +789,17 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
         {
             vm.__days.push([])
         }
-            var tmpi = 0;
-            avalon.each(vm._days, function (index, item) {
-                vm.__days[tmpi].push(item);
-                if((index+1) % 7==0)
-                {
-                    tmpi=tmpi+1;
-                }
-            })
-            //avalon.log(vm.__days)
-        
+        var tmpi = 0;
+        avalon.each(vm._days, function (index, item) {
+            vm.__days[tmpi].push(item);
+            if ((index + 1) % 7 == 0)
+            {
+                tmpi = tmpi + 1;
+            }
+        })
+        //avalon.log(vm.__days)
     }
-    
+
     return avalon
 })
 
