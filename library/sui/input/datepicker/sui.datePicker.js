@@ -26,10 +26,12 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
         _chour: 0, ///默认值小时
         _cminute: 0, ///默认值分钟
         _csecond: 0, ///默认值秒
+        _keydownBlur:false, //由于_keydown引起的blur
         //内部方法
         _blur: _interface,
         _focus: _interface,
         _keyup: _interface,
+        _keydown: _interface,
         _dayClick: _interface, //日期单击
         _timeClick: _interface, //时间单击
         _setPicker: _interface,
@@ -125,7 +127,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                 [document, "click", function (e) {
                         var target = e.target;
                         avalon.log(target);
-                        var cc = document.getElementById("datepicker-container")
+                        var cc = document.getElementById("datepicker-container-" + vm.inputid)
                         if (vm._focusing && (cc.contains(target)))
                         {
 
@@ -136,6 +138,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                             {
                                 //vm.value = "";
                             }
+                            avalon.log("documentclick");
                             vm._closePicker();
                         }
                     }]
@@ -169,7 +172,9 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
             }
             vm._blur = function (e)
             {
-
+                if(!vm._keydownBlur)
+                {
+                avalon.log("_blur");
                 if (!vm.isShowTime)
                 {
                     if (vm.value && isCorrectDateTime(vm.value, vm.isShowTime, vm.isShowSecond))
@@ -182,6 +187,8 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                 {
 
                 }
+                }
+                vm._keydownBlur=false;
 
             }
             vm._focus = function (e)
@@ -191,6 +198,35 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                 avalon.bind(arr[0][0], arr[0][1], arr[0][2])
                 vm._focusing = true;
                 setPicker(vm);
+
+            }
+            vm._keydown = function (e)
+            {
+                //alert(e.keyCode+"-" +e.shiftKey);
+                //允许数字:- 退格键 del键 回车键 esc键
+                if ((((e.keyCode >= 48 && e.keyCode <= 57) || e.keyCode == 32 || e.keyCode == 8 || e.keyCode == 46 || e.keyCode == 189) && e.shiftKey == false) || (e.shiftKey && e.keyCode == 186) || e.keyCode == 13 || e.keyCode == 27)
+                {
+                    if (e.keyCode == 13 || e.keyCode == 27)
+                    {
+                        vm.value = convertDate(vm.value);
+                        vm._closePicker();
+                        vm._keydownBlur=true;
+                        e.target.blur();
+                    }
+                }
+                else
+                {
+                    window.event.keyCode = 0;
+                    if (event.preventDefault)
+                    {
+                        event.preventDefault();
+                    }
+                    else
+                    {
+                        window.event.returnValue = false;
+                        return false;
+                    }
+                }
 
             }
             vm._dayClick = function (e, v, y, m, d)
@@ -233,6 +269,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
             }
             vm._closePicker = function ()
             {
+                avalon.log("_closePicker");
                 vm._focusing = false;
                 avalon.unbind(arr[0][0], arr[0][1], arr[0][2])
             }
@@ -388,6 +425,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
 //转换长日期格式
     function convertDate(pDate)
     {
+        avalon.log("converDate");
         if (typeof pDate == "object" || (typeof pDate == "string" && pDate.indexOf("-") > 0))
         {
             var currentDate = new Date(pDate);

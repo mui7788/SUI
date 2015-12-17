@@ -1,7 +1,7 @@
 <span ms-class="sui-input-container-{{theme}}" ms-visible="visible">
     <label ms-class="sui-input-label-{{theme}} sui-input-font-{{theme}} sui-input-middle">{{title}}</label>
     
-    <span class="datepicker-container" id="datepicker-container">
+    <span class="datepicker-container" ms-attr-id="datepicker-container-{{inputid}}">
            <input 
            ms-class-1="sui-input-textbox-text-{{theme}}"
            ms-class-2="sui-input-{{styleType}}"
@@ -14,6 +14,7 @@
            ms-blur="_blur"
            ms-focus="_focus"
            ms-attr-id="inputid"
+           ms-keydown="_keydown"
            />
            <div class="datepicker" ms-if="_focusing">
                <div>
