@@ -1,8 +1,8 @@
-.datepicker-container
+.sui-input-datepicker-container
 {
     position: relative;
 }
-.datepicker
+.sui-input-datepicker
 {
     width:210px;
     border:1px #ccc solid;
@@ -13,7 +13,7 @@
     overflow:hidden;
     z-index: 999;
 }
-.week-name
+.sui-input-datepicker-week-name
 {
     width:30px;
     height:30px;
@@ -23,7 +23,7 @@
     line-height: 30px;
     font-size:12px;
 }
-.day-name
+.sui-input-datepicker-day-name
 {
     width:30px;
     height:30px;
@@ -33,36 +33,37 @@
     text-align:center;
     line-height: 30px;
     font-size:12px;
-    cursor:pointer 
+    cursor:pointer;
+    font-family: "宋体";
 }
-.day-name-hover
+.sui-input-datepicker-day-name-hover
 {
     background: aliceblue!important;
     color:#000!important;
 }
-.day-name-active
+.sui-input-datepicker-day-name-active
 {
     background: #fff
 }
-.day-name-current
+.sui-input-datepicker-day-name-current
 {
     color:red;
     font-weight: bold;
 }
-.day-name-selected
+.sui-input-datepicker-day-name-selected
 {
     background:#009999;
     color:white;
 }
-.day-name-not-month{
+.sui-input-datepicker-day-name-not-month{
     color:#ccc;
 }
-.datepicker-time-container
+.sui-input-datepicker-time-container
 {
     width:100%;
     padding:5px 0;
 }
-.datepicker-time-container lable
+.sui-input-datepicker-time-container lable
 {
     display:inline-block;
     font-size:12px;
@@ -70,13 +71,15 @@
     font-family: "宋体";
     margin-left:2px;
 }
-.datepicker-time-container input[type='textbox']
+.sui-input-datepicker-time-container input[type='textbox']
 {
     width:20px;
     vertical-align: middle;
     margin-left:4px;
+    font-size:12px;
+    font-family: "宋体"
 }
-.datepicker-time-container input[type='button']
+.sui-input-datepicker-time-container input[type='button']
 {
     vertical-align: middle;
     margin-left:4px;

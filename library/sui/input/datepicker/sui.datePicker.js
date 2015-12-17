@@ -149,6 +149,7 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                         {
                             if (!vm.check())
                             {
+                                //如果不正确清空value值
                                 //vm.value = "";
                             }
                             vm._closePicker();
@@ -230,8 +231,23 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
                         }
                         vm._closePicker();
                         vm._keydownBlur = true;
+
+                        //取消选择
+                        //ie10-ie8
+                        if (window.document.selection)
+                        {
+                            if (window.document.selection.createRange())
+                            {
+                                window.document.selection.empty();
+                            }
+                        }
+                        //ie11 其他标准浏览器
+                        if(window.getSelection)
+                        {
+                                e.target.setSelectionRange(0, 0);
+                        }
+                        
                         e.target.blur();
-                        //e.target.parentElement.focus();
                     }
                 }
                 else
@@ -563,11 +579,11 @@ define(["avalon", "text!./sui.datePicker.html", "css!../sui-input-common.css", "
         var tmpdate = null;
         var tmptime = null;
         var tmparr = splitDateTime(pDateTime, pIsShowSecond);
-        tmpdate=tmparr[0];
-        tmptime=tmparr[1];
+        tmpdate = tmparr[0];
+        tmptime = tmparr[1];
         return convertDate(tmpdate) + " " + convertTime(tmptime, pIsShowSecond);
     }
-    
+
 //分割日期时间
     function splitDateTime(pDateTime, pIsShowSecond)
     {
