@@ -39,7 +39,34 @@
                         value: "",
                         msg: "请输入开始日期",
                         require: true,
+
                         isShowTime:false,
+                        onChange: function (n)
+                        {
+                            vm.value2 = n;
+                        }
+                    },
+                    $opts3: {
+                        inputid: "date2",
+                        title: "结束时间",
+                        value: "2015-12-18 22:12:34",
+                        msg: "请输入结束时间",
+                        require: true,
+                        isShowTime:true,
+                        isShowSecond:false,
+                        onChange: function (n)
+                        {
+                            vm.value2 = n;
+                        }
+                    },
+                    $opts4: {
+                        inputid: "date3",
+                        title: "开始时间",
+                        value: "",
+                        msg: "请输入开始时间",
+                        require: true,
+                        isShowTime:true,
+                        isShowSecond:true,
                         onChange: function (n)
                         {
                             vm.value2 = n;
@@ -49,7 +76,7 @@
                     {
                         try
                         {
-                            alert(avalon.vmodels.a.getValue())
+                            alert(avalon.vmodels.date2.getValue())
                         }
                         catch (ex)
                         {
@@ -59,6 +86,10 @@
                     showModel: function ()
                     {
                         alert(JSON.stringify(vm.$model))
+                    },
+                    setFocus:function()
+                    {
+                        avalon.vmodels.date2.setFocus();
                     }
                 })
                 avalon.scan()
@@ -70,6 +101,10 @@
     <body ms-controller="test" class="ms-controller">
         <div><sui:textbox config="$opts1" $id="a"></sui:textbox></div>
         <div><sui:datepicker config="$opts2" $id="date1"></sui:datepicker></div>
+        <div><sui:datepicker config="$opts3" $id="date2"></sui:datepicker></div>
+        <div><sui:datepicker config="$opts4" $id="date3"></sui:datepicker></div>
+        <input type="button" value="setFocus" ms-click="setFocus">
+        <input type="button" value="getValue" ms-click="getValue">
 {{value2}}
     </body>
 
