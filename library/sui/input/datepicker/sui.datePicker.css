@@ -1,18 +1,20 @@
+/* datepicker 容器*/
 .sui-input-datepicker-container
 {
     position: relative;
 }
-.sui-input-datepicker
+/* datepicker 日历列表 */
+.sui-input-datepicker-list
 {
     width:210px;
     border:1px #ccc solid;
     position: absolute;
-    top:1;
     left:0;
     background:aliceblue;
     overflow:hidden;
     z-index: 999;
 }
+/* datepicker 星期 */
 .sui-input-datepicker-week-name
 {
     width:30px;
@@ -23,6 +25,7 @@
     line-height: 30px;
     font-size:12px;
 }
+/* datepicker 具体日期样式 */
 .sui-input-datepicker-day-name
 {
     width:30px;
@@ -36,33 +39,40 @@
     cursor:pointer;
     font-family: "宋体";
 }
+/* datepicker 具体日期样式 滑过 */
 .sui-input-datepicker-day-name-hover
 {
     background: aliceblue!important;
     color:#000!important;
 }
+/* datepicker 具体日期样式 */
 .sui-input-datepicker-day-name-active
 {
     background: #fff
 }
+/* datepicker 具体日期样式 当前日期样式 */
 .sui-input-datepicker-day-name-current
 {
     color:red;
     font-weight: bold;
 }
+/* datepicker 具体日期样式 选中日期样式 */
 .sui-input-datepicker-day-name-selected
 {
     background:#009999;
     color:white;
 }
+/* datepicker 具体日期样式 不是本月日期样式 */
 .sui-input-datepicker-day-name-not-month{
     color:#ccc;
 }
+/* datepicker 时间容器 */
 .sui-input-datepicker-time-container
 {
     width:100%;
     padding:5px 0;
 }
+/* datepicker 时间标签样式 */
 .sui-input-datepicker-time-container lable
 {
     display:inline-block;
@@ -71,6 +81,7 @@
     font-family: "宋体";
     margin-left:2px;
 }
+/* datepicker 时间文本框样式 */
 .sui-input-datepicker-time-container input[type='textbox']
 {
     width:20px;
@@ -79,6 +90,7 @@
     font-size:12px;
     font-family: "宋体"
 }
+/* datepicker 时间按钮样式 */
 .sui-input-datepicker-time-container input[type='button']
 {
     vertical-align: middle;

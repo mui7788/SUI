@@ -18,7 +18,7 @@
            ms-attr-id="inputid"
            ms-keydown="_keydown"
            />
-           <div class="sui-input-datepicker" ms-if="_focusing">
+           <div class="sui-input-datepicker-list" ms-if="_focusing">
                <div>
                    <a href="javascript:void(0)" ms-click="_setPicker(_syear-1,_smonth,_sday)">|<</a>&nbsp;
                    <a href="javascript:void(0)" ms-click="_setPicker(_syear,_smonth-1,_sday)"><<</a>
@@ -41,9 +41,9 @@
                           >{{day.title}}</label>
                </div>
                <div ms-if="isShowTime" class="sui-input-datepicker-time-container">
-                   <input type="textbox"  ms-duplex="_chour" ms-keydown="_inputKeydown" maxlength="2" /><lable>时</lable>
-                   <input type="textbox"  ms-duplex="_cminute" ms-keydown="_inputKeydown" maxlength="2" /><lable>分</lable>
-                   <input type="textbox"  ms-duplex="_csecond" ms-keydown="_inputKeydown" maxlength="2" ms-visible="isShowSecond" /><lable ms-visible="isShowSecond">秒</lable>
+                   <input type="textbox" class="time-text" ms-duplex="_chour" ms-keydown="_inputKeydown" maxlength="2" /><lable>时</lable>
+                   <input type="textbox" class="time-text" ms-duplex="_cminute" ms-keydown="_inputKeydown" maxlength="2" /><lable>分</lable>
+                   <input type="textbox" class="time-text" ms-duplex="_csecond" ms-keydown="_inputKeydown" maxlength="2" ms-visible="isShowSecond" /><lable ms-visible="isShowSecond">秒</lable>
                    <input type="button" value="确定" ms-click="_timeClick">
                </div>
            </div>
