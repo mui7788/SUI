@@ -2,6 +2,7 @@
 .sui-input-datepicker-container
 {
     position: relative;
+
 }
 /* datepicker 日历列表 */
 .sui-input-datepicker-list
@@ -12,7 +13,7 @@
     left:0;
     background:aliceblue;
     overflow:hidden;
-    z-index: 999;
+    z-index: 10;
 }
 /* datepicker 星期 */
 .sui-input-datepicker-week-name
@@ -73,7 +74,7 @@
     padding:5px 0;
 }
 /* datepicker 时间标签样式 */
-.sui-input-datepicker-time-container lable
+.sui-input-datepicker-time-container-lable
 {
     display:inline-block;
     font-size:12px;
@@ -82,16 +83,16 @@
     margin-left:2px;
 }
 /* datepicker 时间文本框样式 */
-.sui-input-datepicker-time-container input[type='textbox']
+.sui-input-datepicker-time-container-textbox
 {
     width:20px;
-    vertical-align: middle;
     margin-left:4px;
     font-size:12px;
-    font-family: "宋体"
+    font-family: "宋体";
+    vertical-align: middle;
 }
 /* datepicker 时间按钮样式 */
-.sui-input-datepicker-time-container input[type='button']
+.sui-input-datepicker-time-container-input
 {
     vertical-align: middle;
     margin-left:4px;

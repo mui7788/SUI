@@ -2,7 +2,7 @@
     <label ms-class="sui-input-label-{{theme}} sui-input-font-{{theme}} sui-input-middle">{{title}}</label>
     
     <span class="sui-input-datepicker-container" ms-attr-id="datepicker-container-{{inputid}}">
-           <input 
+        <input 
            ms-css-width="width"
            ms-css-height="height"
            ms-class-1="sui-input-textbox-text-{{theme}}"
@@ -41,10 +41,10 @@
                           >{{day.title}}</label>
                </div>
                <div ms-if="isShowTime" class="sui-input-datepicker-time-container">
-                   <input type="textbox" class="time-text" ms-duplex="_chour" ms-keydown="_inputKeydown" maxlength="2" /><lable>时</lable>
-                   <input type="textbox" class="time-text" ms-duplex="_cminute" ms-keydown="_inputKeydown" maxlength="2" /><lable>分</lable>
-                   <input type="textbox" class="time-text" ms-duplex="_csecond" ms-keydown="_inputKeydown" maxlength="2" ms-visible="isShowSecond" /><lable ms-visible="isShowSecond">秒</lable>
-                   <input type="button" value="确定" ms-click="_timeClick">
+                   <input type="textbox" class="sui-input-datepicker-time-container-textbox" ms-duplex="_chour" ms-keydown="_inputKeydown" maxlength="2" /><span class="sui-input-datepicker-time-container-lable">时</span>
+                   <input type="textbox" class="sui-input-datepicker-time-container-textbox" ms-duplex="_cminute" ms-keydown="_inputKeydown" maxlength="2" /><span class="sui-input-datepicker-time-container-lable">分</span>
+                   <input type="textbox" class="sui-input-datepicker-time-container-textbox" ms-duplex="_csecond" ms-keydown="_inputKeydown" maxlength="2" ms-visible="isShowSecond" /><span ms-visible="isShowSecond" class="sui-input-datepicker-time-container-lable">秒</span>
+                   <input type="button"  class="sui-input-datepicker-time-container-button" value="确定" ms-click="_timeClick">
                </div>
            </div>
     </span>
