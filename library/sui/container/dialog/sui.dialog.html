@@ -1,15 +1,15 @@
-<div class="oni-dialog-inner">
-    <div class="oni-dialog-header">
-        <div class="oni-dialog-close" ms-click="_close" ms-if="showClose">
-            <i class="oni-icon oni-icon-times">&#xf003;</i>
+<div class="sui-dialog-inner">
+    <div class="sui-dialog-header">
+        <div class="sui-dialog-close" ms-click="_close" ms-if="showClose">
+            <i class="sui-icon sui-icon-times">&#xf003;</i>
         </div>
-        <div class="oni-dialog-title">{{ title|html }}</div>
-        <div class="oni-dialog-content">{{content|html}}</div>
-        <div class="oni-dialog-footer oni-helper-clearfix">
-            <div class="oni-dialog-btns">
-                <oni:button color="success" ms-hover="oni-state-hover" ms-click="_confirm">{{confirmText}}</oni:button>
-                <oni:button ms-if="type =='confirm'" ms-click="_cancel">{{cancelText}}</oni:button>
-            </div>
+        <div class="sui-dialog-title">{{ title|html }}</div>
+    </div>
+    <div class="sui-dialog-content">{{content|html}}</div>
+    <div class="sui-dialog-footer sui-helper-clearfix">
+        <div class="sui-dialog-btns">
+            <oni:button color="success" ms-hover="sui-state-hover" ms-click="_confirm">{{confirmText}}</oni:button>
+            <oni:button ms-if="type =='confirm'" ms-click="_cancel">{{cancelText}}</oni:button>
         </div>
     </div>
 </div>
