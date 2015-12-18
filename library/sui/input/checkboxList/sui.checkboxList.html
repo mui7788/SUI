@@ -12,7 +12,7 @@
                type="checkbox"
                ms-duplex-checked="all"
                ms-click="_clickAllCheckbox"
-               /><label ms-class="sui-input-checkbox-item-label-{{theme}}">全选</label>
+               /><span ms-class="sui-input-checkbox-item-span-{{theme}}">全选</span>
         </span>
         <span ms-repeat="data">
             <input 
@@ -34,7 +34,7 @@
            type="checkbox"
            ms-duplex-checked="all"
            ms-click="_clickAllCheckbox"
-           /><label ms-class="sui-input-checkbox-item-label-{{theme}}">全选</label>
+           /><span ms-class="sui-input-checkbox-item-span-{{theme}}">全选</span>
         </div>
     </span>
     <span  ms-repeat-el="tmpData" class="sui-input-checkbox-container"  ms-if="count>0">
@@ -42,7 +42,7 @@
             <input 
            ms-class-1="sui-input-checkbox-{{theme}}"
            type="checkbox"
-           ms-duplex-string="value" 
+           ms-duplex="value" 
            ms-attr-value="item.value"
            ms-attr-disabled="disabled"
            ms-attr-id="{{inputid}}_{{$outer.$index}}_{{$index}}"

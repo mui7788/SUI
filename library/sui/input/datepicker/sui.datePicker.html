@@ -1,0 +1,53 @@
+<span ms-class="sui-input-container-{{theme}}" ms-visible="visible">
+    <label ms-class="sui-input-label-{{theme}} sui-input-font-{{theme}} sui-input-middle">{{title}}</label>
+    
+    <span class="sui-input-datepicker-container" ms-attr-id="datepicker-container-{{inputid}}">
+           <input 
+           ms-css-width="width"
+           ms-css-height="height"
+           ms-class-1="sui-input-textbox-text-{{theme}}"
+           ms-class-2="sui-input-{{styleType}}"
+           ms-class-6="text-actived-{{theme}}:_focusing"
+           ms-hover="text-hover-{{theme}}"
+           type="text"
+           ms-duplex="value"
+           ms-attr-disabled="disabled"
+           ms-attr-readonly="readonly"
+           ms-blur="_blur"
+           ms-focus="_focus"
+           ms-attr-id="inputid"
+           ms-keydown="_keydown"
+           />
+           <div class="sui-input-datepicker-list" ms-if="_focusing">
+               <div>
+                   <a href="javascript:void(0)" ms-click="_setPicker(_syear-1,_smonth,_sday)">|<</a>&nbsp;
+                   <a href="javascript:void(0)" ms-click="_setPicker(_syear,_smonth-1,_sday)"><<</a>
+                   {{_syear}}-{{_smonth+1}}
+                   <a href="javascript:void(0)" ms-click="_setPicker(_syear,_smonth+1,_sday)">>></a>&nbsp;
+                   <a href="javascript:void(0)" ms-click="_setPicker(_syear+1,_smonth,_sday)">>|</a>
+               </div>
+               <div>
+                   <label ms-repeat-week="_weekName" class="sui-input-datepicker-week-name">{{week}}</label>
+               </div>
+               <div ms-repeat-week="__days">
+                   <label ms-repeat-day="week"
+                          class="sui-input-datepicker-day-name"
+                          ms-click="_dayClick($event,day.value,day.year,day.month,day.day1)"
+                          ms-hover="sui-input-datepicker-day-name-hover:_focusing"
+                          ms-active="sui-input-datepicker-day-name-active"
+                          ms-class-1="sui-input-datepicker-day-name-current:day.year===_year && day.month===_month && day.day1===_day"
+                          ms-class-2="sui-input-datepicker-day-name-selected:day.year===_cyear && day.month===_cmonth && day.day1===_cday"
+                          ms-class-3="sui-input-datepicker-day-name-not-month:!day.isThisMonth"
+                          >{{day.title}}</label>
+               </div>
+               <div ms-if="isShowTime" class="sui-input-datepicker-time-container">
+                   <input type="textbox" class="time-text" ms-duplex="_chour" ms-keydown="_inputKeydown" maxlength="2" /><lable>时</lable>
+                   <input type="textbox" class="time-text" ms-duplex="_cminute" ms-keydown="_inputKeydown" maxlength="2" /><lable>分</lable>
+                   <input type="textbox" class="time-text" ms-duplex="_csecond" ms-keydown="_inputKeydown" maxlength="2" ms-visible="isShowSecond" /><lable ms-visible="isShowSecond">秒</lable>
+                   <input type="button" value="确定" ms-click="_timeClick">
+               </div>
+           </div>
+    </span>
+        <img src="notice.png" ms-if="_showNoticeImage && isShowNoticeImage" ms-class="sui-input-middle" ms-visible="isShowMsg">
+        <label ms-class="sui-input-msg-{{theme}} sui-input-font-{{theme}} sui-input-msg-color-{{theme}}" ms-visible="isShowMsg">{{msg}}</label>
+</span>
