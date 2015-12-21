@@ -1,0 +1,94 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <META http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <META content="text/html; charset=UTF-8" http-equiv=Content-Type>
+        <style>
+            .ms-controller
+            { 
+                visibility: hidden 
+            } 
+        </style>
+        <script src="../../../avalon.js"></script> 
+        <script>
+            avalon.library("sui", {});
+            require(["./sui/input/dropdownlist/sui.dropdownlist","./sui/input/textbox/sui.textbox"], function () {
+                var vm = avalon.define({
+                    $id: "test",
+                    value1: [],
+                    value2:"",
+                    index: "",
+                    $opts1: {
+                        inputid: "name",
+                        title: "请输入姓",
+                        value: "",
+                        msg: "请输入姓名",
+                        require: true,
+                        maxLength: 10,
+                        regexType: "alpha_dash",
+                        styleType: "normal",
+                        type: "password",
+                        onChange: function (n)
+                        {
+                            vm.value = n;
+                        }
+                    },
+                      $opts2: {
+                        inputid: "list1",
+                        title: "状态",
+                        data: [
+                            {"id":1,"text":"完成"},
+                            {"id":2,"text":"取消"},
+                            {"id":3,"text":"进行中"},
+                            {"id":4,"text":"4状态"},
+                            {"id":5,"text":"5状态"},
+                            {"id":6,"text":"6状态"},
+                            {"id":7,"text":"7状态"},
+                            {"id":8,"text":"8状态"},
+                            {"id":9,"text":"9状态"},
+                            {"id":10,"text":"0状态"}
+                        ],
+                        value:[3],
+                        msg: "请选择状态",
+                        require: true,
+                        readonly:false,
+                        isMultiple:true,
+                    },
+                    getValue: function ()
+                    {
+                        try
+                        {
+                            alert(avalon.vmodels.date2.getValue())
+                        }
+                        catch (ex)
+                        {
+                            alert(ex)
+                        }
+                    },
+                    showModel: function ()
+                    {
+                        alert(JSON.stringify(vm.$model))
+                    },
+                    setFocus:function()
+                    {
+                        avalon.vmodels.date2.setFocus();
+                    }
+                })
+                avalon.scan()
+
+            })
+        </script>
+
+    </head>   
+    <body ms-controller="test" class="ms-controller">
+        <div><sui:textbox config="$opts1" $id="a"></sui:textbox></div>
+        <div><sui:dropdownlist config="$opts2" $id="list1"></sui:dropdownlist></div>
+        <div><sui:textbox config="$opts1" $id="a2"></sui:textbox></div>
+        <!--<input type="button" value="setFocus" ms-click="setFocus">
+        <input type="button" value="getValue" ms-click="getValue">-->
+        
+{{value2}}
+    </body>
+
+
+
