@@ -48,11 +48,11 @@
                             {"id":9,"text":"9状态"},
                             {"id":10,"text":"0状态"}
                         ],
-                        value:[3],
+                        value:[],
                         msg: "请选择状态",
                         require: true,
                         readonly:false,
-                        isMultiple:true,
+                        isMultiple:true
                     },
                     getValue: function ()
                     {
@@ -71,7 +71,7 @@
                     },
                     setFocus:function()
                     {
-                        avalon.vmodels.date2.setFocus();
+                        avalon.vmodels.list1.data=[{"id":1,"text":"a"},{"id":2,"text":"b"}];
                     }
                 })
                 avalon.scan()
@@ -84,8 +84,8 @@
         <div><sui:textbox config="$opts1" $id="a"></sui:textbox></div>
         <div><sui:dropdownlist config="$opts2" $id="list1"></sui:dropdownlist></div>
         <div><sui:textbox config="$opts1" $id="a2"></sui:textbox></div>
-        <!--<input type="button" value="setFocus" ms-click="setFocus">
-        <input type="button" value="getValue" ms-click="getValue">-->
+        <input type="button" value="setFocus" ms-click="setFocus">
+        <input type="button" value="getValue" ms-click="getValue">
         
 {{value2}}
     </body>
