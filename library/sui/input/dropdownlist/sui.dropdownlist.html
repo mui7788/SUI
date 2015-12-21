@@ -33,7 +33,7 @@
                    ms-mouseover="_mouseover"
                    ms-repeat="_tempData" >
                    <span ms-visible="isMultiple" class="sui-input-dropdownlist-item-checkbox-span">
-                       <input type="checkbox" >
+                       <input ms-attr-id="sui-input-dropdownlist-{{inputid}}-{{$index}}" type="checkbox" ms-duplex-number="value" ms-attr-value="el[valueColumn]" ms-click="_checkboxClick">
                    </span>
                    <span class="sui-input-dropdownlist-item-span">
                    {{el[displayColumns[0]]}}
