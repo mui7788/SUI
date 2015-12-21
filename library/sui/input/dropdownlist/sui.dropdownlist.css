@@ -1,0 +1,66 @@
+/* dropdownlist 容器*/
+.sui-input-dropdownlist-container
+{
+    position: relative;
+    
+}
+/* dropdownlist 下拉列表 */
+.sui-input-dropdownlist-list
+{
+    border:1px #ccc solid;
+    position: absolute;
+    left:0;
+    background:#fff;
+    overflow-x: hidden;
+    overflow-y:auto;
+    z-index: 10;
+}
+/* 下拉图标 */
+.sui-input-dropdownlist-dropicon
+{
+    margin-left:0;
+    display: inline-block;
+    *display:inline;
+    zoom:1;
+}
+/* 下拉项样式 */
+.sui-input-dropdownlist-item
+{
+    width:100%;
+    height:24px;
+    border-bottom:1px #ccc solid;
+}
+/* 下拉项样式隔行 */
+.sui-input-dropdownlist-item-gh
+{
+   background:aliceblue;
+}
+/*下拉项样式滑过*/
+.sui-input-dropdownlist-hover
+{
+    background:#CCC;
+}
+/*下拉项样式选中*/
+.sui-input-dropdownlist-current
+{
+    background:#CCC;
+}
+
+.sui-input-dropdownlist-item-checkbox-span
+{
+    width:30px;
+    display: inline-block;
+    vertical-align: middle;
+    text-align:center;
+    border-right:1px #ccc solid;
+}
+.sui-input-dropdownlist-item-span
+{
+    padding-left:2px;
+    
+    display:inline-block;
+    font-size:12px;
+    text-align:left;
+    height:100%;
+    line-height: 25px;
+}
