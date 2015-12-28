@@ -26,7 +26,8 @@ define(["avalon", "text!./sui.dropdownlist.html", "css!../sui-input-common.css",
         setFocus: _interface,
         getValue: _interface,
         _close: _interface,
-        _checkboxClick:_interface,
+        _checkboxClick: _interface,
+        _setCurrent: _interface,
         //配置项
         did: "",
         title: "",
@@ -45,11 +46,11 @@ define(["avalon", "text!./sui.dropdownlist.html", "css!../sui-input-common.css",
         isShowNoticeImage: false,
         isMultiple: false, //是否多选
         filterColumns: ["text"], //过滤字段
-        displayColumns: ["text"], //单选显示文本
         valueColumn: "id", //值列
-        displayColumn: "text",
+        displayColumn: "text",//控件显示值
         titleColumns: [], //多列标题
         widthColumns: [], //多列列宽
+        displayColumns: ["text"], //单选显示文本
         //模板
         $template: template,
         //替换自定义标签
@@ -108,8 +109,8 @@ define(["avalon", "text!./sui.dropdownlist.html", "css!../sui-input-common.css",
                 {
                     if (vm.inputid && vm.isMultiple == false)
                     {
-                        vm._tempValue = item[vm.displayColumns[0]];
-                        document.getElementById(vm.inputid).value = item[vm.displayColumns[0]];
+                        vm._tempValue = item[vm.displayColumn];
+                        document.getElementById(vm.inputid).value = item[vm.displayColumn];
                     }
                 }
             })
@@ -134,6 +135,16 @@ define(["avalon", "text!./sui.dropdownlist.html", "css!../sui-input-common.css",
                             vm._close();
                         }
                     }]
+                        ,
+                [document, "keydown", function (e) {
+                        var target = e.target;
+                        if (vm._focusing && (!target.id || (target.id && target.id != vm.inputid)))
+                        {
+                            document.getElementById(vm.inputid).focus();
+                        }
+                        avalon.log(e.target)
+                        avalon.unbind(arr[1][0], arr[1][1], arr[1][2])
+                    }]
             ]
             vm.check = function ()
             {
@@ -157,6 +168,7 @@ define(["avalon", "text!./sui.dropdownlist.html", "css!../sui-input-common.css",
             }
             vm._focus = function (e)
             {
+                avalon.bind(arr[1][0], arr[1][1], arr[1][2])
                 vm._isHover = false;
                 if (vm.inputid)
                 {
@@ -171,10 +183,26 @@ define(["avalon", "text!./sui.dropdownlist.html", "css!../sui-input-common.css",
             }
             vm._keydown = function (e)
             {
+                //按tab键关键列表
+                if (e.which == 9)
+                {
+                    vm._focusing = false;
+                }
+                if (e.which == 27)
+                {
+                    //vm._setCurrent();
+                    //清空选项
+                    vm._tempValue = "";
+                    vm.value.removeAll();
 
+                    vm._focusing = false;
+                    e.target.blur();
+                    vm.check();
+                }
             }
             vm._keyup = function (e)
             {
+                //前端过滤
                 if (!vm.readonly)
                 {
                     var tmpv = e.target.value;
@@ -194,24 +222,14 @@ define(["avalon", "text!./sui.dropdownlist.html", "css!../sui-input-common.css",
             }
             vm._close = function ()
             {
-                if (!vm.isMultiple)
-                {
-                    if (vm.inputid)
-                    {
-                        document.getElementById(vm.inputid).value = vm._tempValue;
-                    }
-                }
-                else
-                {
-                    document.getElementById(vm.inputid).value = vm.value.sort().join(";")
-                    vm._tempData = vm.data;
-                }
+                vm._setCurrent();
 
                 vm._focusing = false;
                 if (vm.inputid)
                 {
                     avalon.unbind(arr[0][0], arr[0][1], arr[0][2])
                 }
+
             }
             vm._itemClick = function (e, index)
             {
@@ -219,7 +237,7 @@ define(["avalon", "text!./sui.dropdownlist.html", "css!../sui-input-common.css",
                 {
                     vm.value.removeAll()
                     vm.value.push(vm._tempData[index][vm.valueColumn]);
-                    vm._tempValue = vm._tempData[index][vm.displayColumns[0]];
+                    vm._tempValue = vm._tempData[index][vm.displayColumn];
 
                     vm._isHover = false;
                     vm._focusing = false;
@@ -227,14 +245,13 @@ define(["avalon", "text!./sui.dropdownlist.html", "css!../sui-input-common.css",
                 }
                 else
                 {
-                    //document.getElementById("sui-input-dropdownlist-" + vm.inputid + "-" + index).checked=!document.getElementById("sui-input-dropdownlist-" + vm.inputid + "-" + index).checked;
                     var tmpchecked = document.getElementById("sui-input-dropdownlist-" + vm.inputid + "-" + index).checked;
                     if (tmpchecked)
                     {
                         document.getElementById("sui-input-dropdownlist-" + vm.inputid + "-" + index).checked = false;
                         if (vm.value.indexOf(vm._tempData[index][vm.valueColumn]) >= 0)
                         {
-                            vm.value.splice(vm.value.indexOf(vm._tempData[index][vm.valueColumn]),1)
+                            vm.value.splice(vm.value.indexOf(vm._tempData[index][vm.valueColumn]), 1)
                         }
                     }
                     else
@@ -245,15 +262,46 @@ define(["avalon", "text!./sui.dropdownlist.html", "css!../sui-input-common.css",
                             vm.value.push(vm._tempData[index][vm.valueColumn])
                         }
                     }
+
                 }
             }
-            vm._checkboxClick=function()
+            vm._checkboxClick = function ()
             {
 //                if(event.preventDefault)
 //                {
 //               event.preventDefault();
 //                }
-                event.cancelBubble=true;
+                event.cancelBubble = true;
+            }
+            vm._setCurrent = function ()
+            {
+                //关闭时向文本框赋值，如果选上的话
+                if (!vm.isMultiple)
+                {
+                    document.getElementById(vm.inputid).value = vm._tempValue;
+                }
+                else
+                {
+                    if (vm.value.length == vm.data.length)
+                    {
+                        vm._tempValue = "全部";
+                    }
+                    else
+                    {
+                        var tempstr = "";
+                        avalon.each(vm.data, function (index, item) {
+                            if (vm.value.indexOf(item[vm.valueColumn]) >= 0)
+                            {
+                                tempstr = tempstr + item[vm.displayColumn] + ";"
+                            }
+                        })
+                        vm._tempValue = tempstr;
+                    }
+
+                    document.getElementById(vm.inputid).value = vm._tempValue;
+                    //document.getElementById(vm.inputid).value = vm.value.sort().join(";")
+                    vm._tempData = vm.data;
+                }
             }
             vm.setFocus = function ()
             {
